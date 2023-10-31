@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from osaka_app.addViews import *
 from osaka_app.models import QuestionList
+import openai
 import json
 
 def index(req):
@@ -14,3 +15,5 @@ def save_question_read(req):
         "result" : save_question.question_text
     }
     return HttpResponse(json.dumps(save_json))
+
+
