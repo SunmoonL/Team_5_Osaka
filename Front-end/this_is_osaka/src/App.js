@@ -1,23 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import Background from './pages/Background';
+import Explanation from './pages/Explanation';
+import Contents from './pages/Contents';
+import Chatting from './pages/Chatting';
+import RegionalList from './pages/RegionalList';
+import {Route, Routes} from "react-router-dom";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Background>
+        <Explanation></Explanation>
+        <Contents>
+          <Routes>
+            <Route path='/' element={<RegionalList/>}></Route>
+            <Route path='/a' element={<Chatting/>}></Route>
+          </Routes>
+        </Contents>
+      </Background>
     </div>
   );
 }
