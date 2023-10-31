@@ -20,4 +20,5 @@ from osaka_app import views
 urlpatterns = [
     path('', views.index),
     path('asd/', views.index2),
+    path('save_question_read/', views.save_question_read),
 ]
