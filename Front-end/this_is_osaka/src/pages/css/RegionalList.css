@@ -1,0 +1,16 @@
+.RegionalList {
+
+}
+
+.RegionalList > div{
+    border-radius: 1rem;
+    display: inline-block;
+    padding: 1rem;
+    background-color: rgba(0,0,0, .1);
+}
+.RegionalList > div > a{
+    font-size: 2rem;
+    font-weight: 900;
+    text-decoration: none;
+    color: #fafafa;
+}

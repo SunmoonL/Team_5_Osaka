@@ -1,5 +1,28 @@
 .Background {
+    z-index: 2;
+    position: relative;
     width: 100%;
     height: 100%;
-    background-color: #aaa;
+    background-color: transparent;
+}
+
+.Background > img {
+    z-index: -2;
+    position: absolute;
+    width: 100%;
+}
+.prevImg {
+    z-index: -1;
+    animation: opacityAnimation;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes opacityAnimation {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

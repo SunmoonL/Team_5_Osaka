@@ -8,19 +8,20 @@ import {Route, Routes} from "react-router-dom";
 import { useState, useEffect } from 'react';
 
 const App = () => {
-  const [BackgroundSrc, setBackground] = useState("");
+  const [BackgroundSrc, setBackground] = useState("main");
+  const [prevBackgroundSrc, setPrevBackground] = useState("남바");
 
   return (
     <div className="App">
-      <Background BackgroundSrc={BackgroundSrc}>
+      <Background BackgroundSrc={BackgroundSrc} prevBackgroundSrc={prevBackgroundSrc}>
         <Routes>
           <Route path='/' element={
             <>
               <TitleText/>
-              <RegionalList />
+              <RegionalList changeBackground={[BackgroundSrc, setBackground]} changePrevBackground={setPrevBackground}/>
             </>
           }></Route>
-          <Route path='/a' element={
+          <Route path='/detail_page' element={
             <>
               <Explanation></Explanation>
               <Chatting />
