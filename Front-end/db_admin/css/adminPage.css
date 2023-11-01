@@ -1,0 +1,89 @@
+*{ margin: 0; padding: 0;}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+#admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 4rem;
+    border: 1px solid black;
+    width: 40rem;
+    height: 50rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+#saveDB {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+}
+#readDB {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+}
+.titleAddress {
+    margin-top: .5rem;
+    padding: .4rem;
+    font-size: 1.2rem;
+}
+.questionText {
+    font-size: 1.2rem;
+    padding: .4rem;
+    height: 10rem;
+
+}
+#saveDB > button {
+    padding: .4rem;
+    margin: .5rem;
+    font-size: 1.5rem;
+    display: flex;
+}
+.dbList {
+    margin: .5rem;
+    border: 1px solid #666;
+    height: 100%;
+    width: 70%;
+}
+.dbList > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #666;
+    height: 2rem;
+    width: 100%;
+}
+.dbList > div:hover {
+    background-color: #ddd;
+}
+
+.dbList > div > button {
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dbQuestionText {
+    border: 1px solid #ddd;
+    display: none;
+    top: 25.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    position: absolute;
+    height: 22.5rem;
+    width: 30rem;
+    background-color: #fafafa;
+}
+.dbList > div:hover .dbQuestionText {
+    display: block;
+}
