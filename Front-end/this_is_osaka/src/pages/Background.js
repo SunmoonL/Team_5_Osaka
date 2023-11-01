@@ -8,9 +8,9 @@ const Background = ({children, BackgroundSrc, prevBackgroundSrc}) => {
     useEffect(() => {
         const target = document.getElementById("prevImg");
         console.log(target);
-        //target.classList.remove("prevImg"),
-        // void target.offsetWidth;
-        // target.classList.add("prevImg")
+        target.classList.remove("prevImg");
+        void target.offsetWidth;
+        target.classList.add("prevImg");
     });
 
     return (
