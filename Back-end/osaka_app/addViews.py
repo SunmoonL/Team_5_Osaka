@@ -26,7 +26,7 @@ class GptOb:
 
     @staticmethod
     def del_user(delete_key): #user_key대표키 (지역빠진걸로 받음) GptOb.__user_list.pop(delete_key, None)
-        for user_key in GptOb.__user_list:
+        for user_key, value in list(GptOb.__user_list.items()):
             if delete_key in user_key:
                 del GptOb.__user_list[user_key]
 
@@ -79,7 +79,7 @@ def answer_q_list(request): #질문리스트에 있는 질문 클릭,
 
 def answer_gpt(request): #사용자가 질문창으로 질문함
     selected_region = request.GET['user_key'].split("_")[1]
-    print(selected_region)
+
     GptOb.append_user_q(request.GET['user_key'], f"이곳은 {selected_region}이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
     messages = GptOb.getter_userlist(request.GET['user_key'])
     completion = openai.ChatCompletion.create(
@@ -109,7 +109,6 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
     except:
         assistant_content = completion.choices[0].message["content"].strip()
         GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
-
 
     return HttpResponse(assistant_content)
 
