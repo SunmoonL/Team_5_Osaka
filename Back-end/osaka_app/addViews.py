@@ -83,11 +83,35 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
     GptOb.append_user_q(request.GET['user_key'], f"이곳은 {selected_region}이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
     messages = GptOb.getter_userlist(request.GET['user_key'])
     completion = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=messages
+        model="gpt-3.5-turbo",
+        messages=messages,
+        functions = [
+            {
+                "name": "result",
+                "description": "주어진 주제에 답변하기",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "result": {
+                            "type": "string",
+                            "description": "주어진 주제에 답변하기",
+                        }
+                    },
+                    "required": ["result"],
+                },
+            }
+        ]
     )
-    assistant_content = completion.choices[0].message["content"].strip()
+    assistant_content = ""
+    try:
+        completion.choices[0].message["function_call"]["arguments"]
+    except:
+        assistant_content = completion.choices[0].message["content"].strip()
+        GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
+    
+    assistant_content = completion.choices[0].message["function_call"]["arguments"]["result"]
     GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
+    
     return HttpResponse(assistant_content)
 
 
