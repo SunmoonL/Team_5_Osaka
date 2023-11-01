@@ -3,7 +3,7 @@ from osaka_app.models import QuestionList
 from django.http import JsonResponse
 import openai
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 class GptOb:
     __user_list = {}
@@ -104,14 +104,13 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
     )
     assistant_content = ""
     try:
-        completion.choices[0].message["function_call"]["arguments"]
+        assistant_content = completion.choices[0].message["function_call"]["arguments"]["result"]
+        GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
     except:
         assistant_content = completion.choices[0].message["content"].strip()
         GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
-    
-    assistant_content = completion.choices[0].message["function_call"]["arguments"]["result"]
-    GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
-    
+
+
     return HttpResponse(assistant_content)
 
 

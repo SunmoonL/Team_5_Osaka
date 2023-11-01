@@ -28,5 +28,5 @@ urlpatterns = [
     path('in_region/', views.in_region),
     path('answer_q_list/', views.answer_q_list),
     path('answer_gpt/', views.answer_gpt),
-    path('del_user', views.del_user)
+    path('del_user/', views.del_user)
 ]
