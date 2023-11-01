@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-image: url(./도돈보리\ &\ 신사이바시.jpg);
+    background-repeat: no-repeat;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: .5rem;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #888;
+    height: 2rem;
+}
+
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+}
+
+::-webkit-scrollbar {
+    width: .7rem;
+    background-color: #fff;
+}
+
+#testImg {
+    width: 31.5rem;
+    height: 41rem;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+
+#helpButton {
+    cursor: pointer;
+    border: 0;
+    margin-top: 5%;
+    right: 9%;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fafafa;
+    border-radius: 50%;
+    width: 2.7rem;
+    height: 2.7rem;
+    background: linear-gradient(to bottom, #7D83EC 10%, #334BF3);
+    position: absolute;
+}
+
+#chattingBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .55);
+    border-radius: .5rem;
+    width: 31.5rem;
+    height: 41rem;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+
+#chatArticle {
+    margin-top: 5%;
+    width: 90%;
+    height: 85%;
+}
+
+#submitArticle {
+    border-radius: 50rem;
+    display: flex;
+    margin-bottom: 5%;
+    margin-top: 3%;
+    height: 7%;
+    width: 90%;
+}
+
+#chatInput {
+    outline: none;
+    font-size: 1rem;
+    padding-left: 1rem;
+    border: 0;
+    border-radius: 50rem 0 0 50rem;
+    width: 83%;
+}
+
+#chatButton {
+    cursor: pointer;
+    color: #fafafa;
+    font-weight: 900;
+    font-size: 1.02rem;
+    background: linear-gradient(to bottom, #7D83EC 10%, #334BF3);
+    border: 0;
+    border-radius: 0 50rem 50rem 0;
+    width: 17%;
+}
