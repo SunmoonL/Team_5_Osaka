@@ -1,0 +1,25 @@
+$gradation-color: linear-gradient(to bottom, #7D83EC, #334BF3);
+$font-ko: 'Noto Sans KR', sans-serif;
+$font-en: 'Almarai', sans-serif;
+
+*{
+    color:#222222;
+    font-family: $font-ko;
+    font-weight:400;
+}
+a{
+    text-decoration: none;
+}
+button{
+    cursor: pointer;
+    border:none;
+    background:none;
+}
+.contentBox{
+    width:1600px;
+    height:700px;
+    position: relative;
+    left:50%; top:50%;
+    transform: translate(-50%,-50%);
+}
+

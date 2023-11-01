@@ -1,4 +1,4 @@
-import './css/Background.css';
+import './scss/Background.scss';
 import { useState, useEffect } from 'react';
 
 const Background = ({children, BackgroundSrc, prevBackgroundSrc}) => {
@@ -15,6 +15,7 @@ const Background = ({children, BackgroundSrc, prevBackgroundSrc}) => {
 
     return (
         <div className="Background">
+            <div className="darkenBox"></div>
             <img src={nowSrc}></img>
             <img id='prevImg' className='prevImg' src={prevSrc}></img>
             {children}

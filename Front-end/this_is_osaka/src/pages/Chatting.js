@@ -1,4 +1,4 @@
-import './css/Chatting.css';
+import './scss/Chatting.scss';
 // import { useState, useEffect } from 'react';
 import {Link} from "react-router-dom";
 
@@ -12,6 +12,4 @@ const Chatting = () => {
         </div>
     );
 };
-
-
 export default Chatting;
