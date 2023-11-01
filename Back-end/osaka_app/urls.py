@@ -23,6 +23,6 @@ urlpatterns = [
     path('save_question_read/', views.save_question_read),
     path('question_list/', views.question_list),
     path('question_view/', views.qestion_view),
-    path('question_create', views.question_create),
-    path('question_delete', views.question_delete)
+    path('question_create/', views.question_create),
+    path('question_delete/', views.question_delete)
 ]
