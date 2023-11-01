@@ -1,8 +1,35 @@
 import './scss/Explanation.scss';
-//import './scss/Common.scss'
-// import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
+/*
+const GetDB = async()=>{
+    const url = `http://kkms4001.iptime.org:10093/question_list/`
+    const response = await fetch(url);
+    const data = await response.json();
+    let needData = await Object.values(data)[0]
+    return needData;
+};
+*/
+
+const QuestionImg = ()=>{
+    const listItem = []
+    for(let i=0; i<4; i++){
+        listItem.push(
+            <div>
+                <div className="darken"></div>
+                <img src="images/osaka_man/food/Takoyasu.jpg"/>
+            </div>
+        );
+    };
+    return listItem;
+}
 const Explanation = ({children, detailTitle, detailContent}) => {
+    /*
+    const [readDB, setReadDB] = useState(null); 
+    useEffect(() => {
+        GetDB().then( result => setReadDB(result) )
+    }, []);
+    */
     if (detailContent !== "" && detailTitle !== "") {
         console.log(detailContent);
     }
@@ -10,6 +37,9 @@ const Explanation = ({children, detailTitle, detailContent}) => {
         <div className="Explanation">
             <h3>{detailTitle}</h3>
             <p>{detailContent}</p>
+            <div className="questionImg">
+                {QuestionImg()}
+            </div>
             {children}
         </div>
     );
