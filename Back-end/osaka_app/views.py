@@ -3,6 +3,7 @@ from osaka_app.addViews import *
 from osaka_app.models import QuestionList
 import openai
 import json
+from django.http import JsonResponse
 
 def index(req):
     a = QuestionList.objects.filter(title_address="test_test")
@@ -15,5 +16,4 @@ def save_question_read(req):
         "result" : save_question.question_text
     }
     return HttpResponse(json.dumps(save_json))
-
 
