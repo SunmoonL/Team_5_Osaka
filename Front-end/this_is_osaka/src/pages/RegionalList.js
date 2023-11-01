@@ -5,37 +5,15 @@ import { useState, useEffect } from 'react';
 import Explanation from './Explanation';
 
 const RegionalList = ({changeBackground, changePrevBackground, setDetailTitle, setDetailContent}) => {
-    /*
-    const regionaArray = [ "오사카만 지역", "도돈보리 & 신사이바시", "남바",
-                        "덴노지사원", "오사카시북부", "오사카성과 그 주변", "사카이 & 기시와다", "이케다"]
-    
-    
-    const saveList = [];
-    const [BackgroundSrc, setBackground] = changeBackground;
-    const setPrevBackground = changePrevBackground;
-
-    regionaArray.forEach((v, i) => {
-        saveList.push(
-            <div key={i}  onMouseOver={e => {
-                if (BackgroundSrc !== regionaArray[i]) {
-                    setPrevBackground(BackgroundSrc);
-                    setBackground(regionaArray[i]);
-                }
-            }}>
-                <Link to="/detail_page" title={BackgroundSrc}>{v}</Link>
-            </div>
-        );
-    });
-    */
    const regionaArray = [ { title:"오사카만 지역", content:"수족관, 세계 수준의 놀이공원, 유니버설 스튜디오 재팬 등이 있는 최고의 관광지"},
-                            { title:"도돈보리 & 신사이바시", content: "휘황찬란한 빛과 생동감, 대도시 오사카의 풍류"},
-                            { title:"남바", content:"미식가, 애니메이션 매니아, 예술가들을 위한 장소"},
+                            { title:"도톤보리", content: "휘황찬란한 빛과 생동감, 대도시 오사카의 풍류"},
+                            { title:"난바", content:"미식가, 애니메이션 매니아, 예술가들을 위한 장소"},
                             { title:"덴노지사원", content:"오사카의 옛 도심의 부활"},
                             { title:"오사카시북부", content:"신오사카와 오사카/우메다역 인근의 식당과 쇼핑 공간"},
-                            { title:"오사카성과 그 주변", content:"도시를 떠나 휴식하기 좋은 울창한 숲이 있는 공원 "},
+                            { title:"오사카성", content:"도시를 떠나 휴식하기 좋은 울창한 숲이 있는 공원 "},
                             { title:"사카이 & 기시와다", content:"오사카에 인접한 5세기 거대고분"},
                             { title:"이케다", content:"오사카 북부의 자연 트레킹 및 브로드웨이식 공연 감상"},
-                        ]; 
+                        ];
     const saveList = [];
     const [ BackgroundSrc, setBackground ] = changeBackground;
     const setPrevBackground = changePrevBackground;

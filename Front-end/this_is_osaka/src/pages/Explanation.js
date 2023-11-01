@@ -9,6 +9,7 @@ const Explanation = ({children, detailTitle, detailContent}) => {
     return (
         <div className="Explanation">
             <h3>{detailTitle}</h3>
+            <p>{detailContent}</p>
             {children}
         </div>
     );

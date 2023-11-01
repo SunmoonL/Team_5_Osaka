@@ -3,9 +3,9 @@ import './scss/TitleText.scss';
 
 
 const TitleText = ({children}) => {
-    children = <img className="logoImg" src="/images/logo.png" alt="THIS IS OSAKA" />
     return (
         <div className="TitleText">
+            <img className="logoImg" src="/images/logo.png" alt="THIS IS OSAKA" />
             {children}
         </div>
     );

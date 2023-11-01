@@ -4,6 +4,7 @@ import Explanation from './pages/Explanation';
 import Chatting from './pages/Chatting';
 import RegionalList from './pages/RegionalList';
 import TitleText from './pages/TitleText';
+import Logo from './pages/Logo';
 import {Route, Routes} from "react-router-dom";
 import { useState, useEffect } from 'react';
 import './pages/scss/Common.scss'
@@ -14,27 +15,30 @@ const App = () => {
   const [detailTitle, setDetailTitle] = useState("");
   const [detailContent, setDetailContent] = useState("");
 
-
-
   return (
     <div className="App">
       <Background BackgroundSrc={BackgroundSrc} prevBackgroundSrc={prevBackgroundSrc}>
-        <div className="contentBox">
+        
         <Routes>
           <Route path='/' element={
             <>
+            <div className="contentBox">
               <TitleText/>
               <RegionalList setDetailContent={setDetailContent} setDetailTitle={setDetailTitle} changeBackground={[BackgroundSrc, setBackground]} changePrevBackground={setPrevBackground}/>
+            </div>
             </>
           }></Route>
           <Route path='/detail_page' element={
             <>
-              <Explanation detailTitle={detailTitle} detailContent={detailContent} ></Explanation>
-              <Chatting />
+              <Logo/>
+              <div className="contentBox">
+                <Explanation detailTitle={detailTitle} detailContent={detailContent} ></Explanation>
+                <Chatting />
+              </div>
             </>
           }></Route>
         </Routes>
-          </div>
+          
       </Background>
     </div>
   );

@@ -3,6 +3,18 @@
 .Explanation {
     width: 50%;
     height:100%;
-    background:pink;
     float:left;
+    h3{
+        font-size:60px;
+        color:white;
+        font-weight:700;
+        padding:30px 0 15px;
+    }
+    p{
+        font-size:25px;
+        line-height:40px;
+        color:white;
+        font-weight:600;
+        width:80%;
+    }
 }

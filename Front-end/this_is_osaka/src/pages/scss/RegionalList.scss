@@ -1,7 +1,7 @@
 @import './Common.scss';
 
 .RegionalList{
-    width:60%;
+    width:50%;
     display:flex;
     flex-wrap:wrap;
     justify-content: center;
@@ -15,14 +15,14 @@
             background: $gradation-color;
         }
         cursor: pointer;
-        background-color: rgba(0, 0, 0, 25%);
-        border-radius: 15px;
-        padding: 10px 15px;
+        background-color: rgba(0, 0, 0, 70%);
+        border-radius: 20px;
+        padding: 10px 20px;
         margin:10px;
         text-align:center;
         a{
             color:#fafafa;
-            font-size:30px;
+            font-size:25px;
             font-weight: 500;
         }
     }
