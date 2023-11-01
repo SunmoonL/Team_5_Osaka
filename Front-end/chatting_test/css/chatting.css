@@ -69,6 +69,8 @@ body {
     position: absolute;
 }
 #helpArticle {
+    position: relative;
+    z-index: 10;
     display: none;
     flex-direction: column;
     justify-content: space-evenly;
