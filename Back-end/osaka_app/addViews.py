@@ -57,7 +57,7 @@ def question_delete(req):
     questionItem.delete()
     return HttpResponse("succes")
 
-def hi_region(request): #어떤 지역 클릭해서 딱 들어왔을때 
+def in_region(request): #어떤 지역 클릭해서 딱 들어왔을때 
     user_key = request.GET['user_key']
     GptOb.append_user(user_key)
     region = request.GET['user_key'].split("_")[1]
@@ -91,7 +91,7 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
     return HttpResponse(assistant_content)
 
 
-def bye(request):
+def del_user(request):
     user_key = request.GET['user_key'] #_지역 없는 대표값으로 받음
     GptOb.del_user(user_key)
     return HttpResponse("sc")
