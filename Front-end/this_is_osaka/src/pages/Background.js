@@ -2,8 +2,8 @@ import './scss/Background.scss';
 import { useState, useEffect } from 'react';
 
 const Background = ({children, BackgroundSrc, prevBackgroundSrc}) => {
-    const nowSrc = `${process.env.PUBLIC_URL}/images/${BackgroundSrc}.jpg`;
-    const prevSrc = `${process.env.PUBLIC_URL}/images/${prevBackgroundSrc}.jpg`;
+    const nowSrc = `${process.env.PUBLIC_URL}/images/osaka_main_img/${BackgroundSrc}`;
+    const prevSrc = `${process.env.PUBLIC_URL}/images/osaka_main_img/${prevBackgroundSrc}`;
 
     useEffect(() => {
         const target = document.getElementById("prevImg");

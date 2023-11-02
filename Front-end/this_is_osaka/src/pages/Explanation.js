@@ -10,14 +10,15 @@ const GetDB = async()=>{
     return needData;
 };
 */
-
-const QuestionImg = ()=>{
+const ExplanationImg = ()=>{
     const listItem = []
     for(let i=0; i<4; i++){
         listItem.push(
-            <div>
+            <div className="imgBox">
+                <p className="imgTitle"># 스시</p>
                 <div className="darken"></div>
                 <img src="images/osaka_man/food/Takoyasu.jpg"/>
+                <div><a href="https://www.naver.com/"></a></div>
             </div>
         );
     };
@@ -30,6 +31,7 @@ const Explanation = ({children, detailTitle, detailContent}) => {
         GetDB().then( result => setReadDB(result) )
     }, []);
     */
+    const imgFolder = [ {folderName:""},{} ]
     if (detailContent !== "" && detailTitle !== "") {
         console.log(detailContent);
     }
@@ -38,7 +40,7 @@ const Explanation = ({children, detailTitle, detailContent}) => {
             <h3>{detailTitle}</h3>
             <p>{detailContent}</p>
             <div className="questionImg">
-                {QuestionImg()}
+                {ExplanationImg()}
             </div>
             {children}
         </div>

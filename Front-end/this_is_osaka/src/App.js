@@ -10,11 +10,12 @@ import { useState, useEffect } from 'react';
 import './pages/scss/Common.scss'
 
 const App = () => {
-  const [BackgroundSrc, setBackground] = useState("main");
-  const [prevBackgroundSrc, setPrevBackground] = useState("남바");
-  const [detailTitle, setDetailTitle] = useState("");
-  const [detailContent, setDetailContent] = useState("");
+  const [BackgroundSrc, setBackground] = useState("osaka_castle.jpg"); //메인이미지
+  const [prevBackgroundSrc, setPrevBackground] = useState("osaka_port.jpg"); //첫번째 배경 이미지
 
+  const [detailTitle, setDetailTitle] = useState("main"); //상세페이지 제목
+  const [detailContent, setDetailContent] = useState(""); //상세피이지 제목과 관련된 내용
+  
   return (
     <div className="App">
       <Background BackgroundSrc={BackgroundSrc} prevBackgroundSrc={prevBackgroundSrc}>

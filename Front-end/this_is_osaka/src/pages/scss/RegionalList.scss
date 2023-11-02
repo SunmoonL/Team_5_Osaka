@@ -10,20 +10,49 @@
     left:50%;
     bottom:0;
     transform: translateX(-50%);
-    > div{
+    .listBtn{
         &:hover{
-            background: $gradation-color;
+            background-color:rgba(55,78,242,0.7);
+            transition: all 0.2s;
+            .before{
+                top:-120%;
+                transition-duration: 0.2s;
+            }
+            .after{
+                top:0%;
+                transition-duration: 0.2s;
+            }
         }
         cursor: pointer;
         background-color: rgba(0, 0, 0, 70%);
-        border-radius: 20px;
+        border-radius: 30px;
         padding: 10px 20px;
         margin:10px;
         text-align:center;
+        overflow: hidden;
         a{
-            color:#fafafa;
+            color:rgba(0, 0, 0, 0);
             font-size:25px;
             font-weight: 500;
+            position: relative;
+            span{
+                position: absolute;
+                left:50%;
+                transform: translateX(-50%);
+                font-size:25px;
+                width:100%;
+                text-align: center;
+                font-weight:500;
+                &.before{
+                    top:0%;
+                    color:$white;
+                }
+                &.after{
+                    top:120%;
+                    color:$white;
+                }
+            }
+            
         }
     }
 }

@@ -3,18 +3,21 @@
 .Background {
     z-index: 2;
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     .darkenBox{
         width:100%; height:100%;
-        background-color:rgba(0,0,0,20%);
+        background-color:rgba(0, 0, 0, 25%);
         position:absolute;
         z-index:0;
     }
     >img{
         z-index: -2;
         position: absolute;
-        width: 100%;
+        width:100%; height:100%;
+        left:50%; top:50%;
+        transform: translate(-50%, -50%);
+        object-fit:cover;
     }
 }
 
