@@ -12,7 +12,7 @@ class GptOb:
     
     @staticmethod
     def append_user(user_key):
-        GptOb.__user_list[user_key] = []
+        GptOb.__user_list[user_key] = [{"role": "system", "content": "당신은 오사카여행 안내사이다."}] #{"role": "system", "content": "당신은 오사카 여행 추천 시스템입니다."}
 
     @staticmethod
     def getter_userlist(user_key):
@@ -31,6 +31,10 @@ class GptOb:
         for user_key, value in list(GptOb.__user_list.items()):
             if delete_key in user_key:
                 del GptOb.__user_list[user_key]
+
+test_dic = {"key1" : "김주희", "key2": "김주연"}
+for key in test_dic:
+    print(key)
 
 def index2(req):
     return HttpResponse("addViews")
@@ -64,16 +68,17 @@ def in_region(request): #어떤 지역 클릭해서 딱 들어왔을때
     GptOb.append_user(user_key) #새로운 유저리스트 추가
     region = request.GET['user_key'].split("_")[1]
     q_result = QuestionList.objects.get(title_address=f"{region}_이지역에 대해 소개해줘")
-    GptOb.append_user_q(user_key, q_result.title_address)
+    GptOb.append_user_q(user_key, q_result.title_address.split("_")[0] + q_result.title_address.split("_")[1])
     GptOb.append_assistant_a(user_key, q_result.question_text)
     print(GptOb.getter_userlist(user_key))
     return HttpResponse(q_result.question_text)
 
+
 def answer_q_list(request): #질문리스트에 있는 질문 클릭, 
     title_address = request.GET['title_address']
     user_key = request.GET['user_key']
-    q_result = QuestionList.objects.get(title_address=title_address)
-    GptOb.append_user_q(user_key, f"이곳은 {q_result.title_address.split('_')[0]}이다.{q_result.title_address.split('_')[1]}")
+    q_result = QuestionList.objects.get(title_address = user_key.split('_')[1] + "_" + title_address)
+    GptOb.append_user_q(user_key, q_result.title_address.split('_')[1])
     GptOb.append_assistant_a(user_key, q_result.question_text)
     print(GptOb.getter_userlist(user_key))
     return HttpResponse(q_result.question_text)
@@ -82,38 +87,46 @@ def answer_q_list(request): #질문리스트에 있는 질문 클릭,
 def answer_gpt(request): #사용자가 질문창으로 질문함
     selected_region = request.GET['user_key'].split("_")[1]
     print(selected_region)
-    GptOb.append_user_q(request.GET['user_key'], f"이곳은 {selected_region}이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
+    GptOb.append_user_q(request.GET['user_key'], f"{selected_region}에 갈것이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
     messages = GptOb.getter_userlist(request.GET['user_key'])
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages,
-        functions = [
-            {
-                "name": "result",
-                "description": "주어진 주제에 답변하기",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "result": {
-                            "type": "string",
-                            "description": "주어진 주제에 답변하기",
-                        }
-                    },
-                    "required": ["result"],
-                },
-            }
-        ]
-    )
-    assistant_content = ""
     try:
-        assistant_content = completion.choices[0].message["function_call"]["arguments"]["result"]
-        GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
+        completion = openai.ChatCompletion.create(
+            model = "gpt-3.5-turbo",
+            messages = messages,
+            temperature = 0,
+            top_p = 0.5,
+            stop = "4",
+            #n=1,
+            functions = [
+                {
+                    "name": "result",
+                    "description": "주어진 주제에 답변하기",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "result": {
+                                "type": "string",
+                                "description": "주어진 주제에 답변하기",
+                            }
+                        },
+                        "required": ["result"],
+                    },
+                }
+            ]
+        )
+        assistant_content = ""
+        if completion.choices[0].message.get("function_call") != None:
+            assistant_content = completion.choices[0].message["function_call"]["arguments"]["result"].lstrip()
+            GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
+            print("function_call")
+        else:
+            assistant_content = completion.choices[0].message["content"].lstrip()
+            GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
+            print("content")
     except:
-        assistant_content = completion.choices[0].message["content"].strip()
-        GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
-
+        assistant_content = "알맞은 답변을찾지못했습니다. 다시 질문해주세요."
     finally:
-        print(completion)
+        print()
     return HttpResponse(assistant_content)
 
 
