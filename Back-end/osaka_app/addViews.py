@@ -2,8 +2,10 @@ from django.shortcuts import render, HttpResponse
 from osaka_app.models import QuestionList
 from django.http import JsonResponse
 import openai
+from osaka_app import key
 
-openai.api_key = "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"
+
+openai.api_key = key.api_key
 
 class GptOb:
     __user_list = {}
