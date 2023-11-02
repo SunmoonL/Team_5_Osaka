@@ -10,15 +10,28 @@
     <section id="admin">
         <div id="saveDB">
             <div id="titleAddress">
-                <input id="address" class="titleAddress" type="text" placeholder="지역">
-                <input id="title" class="titleAddress" type="text" placeholder="질문">
+                <select id="address" name="질문" id="lang" placeholder="질문">
+                    <option value="난바">난바</option>
+                    <option value="오사카만">오사카만</option>
+                    <option value="사카이 & 기시와다">사카이 & 기시와다</option>
+                    <option value="오사카시 북부">오사카시 북부</option>
+                    <option value="시텐노지 사원">시텐노지 사원</option>
+                    <option value="도톤보리">도톤보리</option>
+                    <option value="이케다">이케다</option>
+                    <option value="오사카성">오사카성</option>
+                </select>
+                <select id="title" name="질문" id="lang" placeholder="질문">
+                    <option value="근처 관광지 추천해줘">근처 관광지 추천해줘</option>
+                    <option value="근처 맛집 추천해줘">근처 맛집 추천해줘</option>
+                    <option value="근처 숙소 추천해줘">근처 숙소 추천해줘</option>
+                </select>
                 <textarea  class="questionText" type="text" placeholder="답변"></textarea>
             </div>
             <div id="titleAddress">
-                <input id="" class="titleAddress" type="text" placeholder="링크1">
-                <input id="" class="titleAddress" type="text" placeholder="링크2">
-                <input id="" class="titleAddress" type="text" placeholder="링크3">
-                <input id="" class="titleAddress" type="text" placeholder="링크4">
+                <input id="first_link" class="titleAddress" type="text" placeholder="링크1">
+                <input id="second_link" class="titleAddress" type="text" placeholder="링크2">
+                <input id="third_link" class="titleAddress" type="text" placeholder="링크3">
+                <input id="fourth_link" class="titleAddress" type="text" placeholder="링크4">
             </div>
         </div>
             <button id="saveButton">저장</button>

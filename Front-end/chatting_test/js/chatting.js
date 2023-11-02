@@ -23,7 +23,11 @@
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
-                document.getElementById("chatWrapBox").innerHTML += `<div class="gptChat">${xhttp.responseText}</div>`;
+                document.getElementById("chatWrapBox").innerHTML += `
+                <div class="chatProfile">
+                    <div class="test"></div>
+                    <p>AI 챗봇</p>
+                <div class="gptChat">${xhttp.responseText}</div>`;
             }
         };
         xhttp.open("GET", `http://kkms4001.iptime.org:10093/in_region?user_key=${encodeURIComponent(userKey+"_오사카만")}`, true);

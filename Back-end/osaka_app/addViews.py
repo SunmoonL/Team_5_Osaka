@@ -43,19 +43,20 @@ def question_list(req): #리스트 보기
     q_list = QuestionList.objects.all()
     res_ob = { "res_list" : []}
     for q in q_list:
-        res_ob["res_list"].append({"title_address" : q.title_address, "question_text" : q.question_text})
+        print("링크", q.first_link)
+        res_ob["res_list"].append({"title_address" : q.title_address, "question_text" : q.question_text, "first_link" : q.first_link, "second_link" : q.second_link, "third_link" : q.third_link, "fourth_link" : q.fourth_link })
     return JsonResponse(res_ob)
 
 def qestion_view(req): 
     questionItem = QuestionList.objects.get(title_address = req.POST["title_address"])
-    return JsonResponse({"title_address" : questionItem.title_address, "question_text" : questionItem.question_text})
+    return JsonResponse({"title_address" : questionItem.title_address, "question_text" : questionItem.question_text, "first_link" : questionItem.first_link, "second_link" : questionItem.second_link, "third_link" : questionItem.third_link, "fourth_link" : questionItem.fourth_link})
 
 def question_create(req):
     questionItem = QuestionList.objects.filter(title_address=req.POST["title_address"])
     if questionItem:
         return HttpResponse("중복")
     else:
-        QuestionList.objects.create(title_address = req.POST["title_address"], question_text = req.POST["question_text"])
+        QuestionList.objects.create(title_address = req.POST["title_address"], question_text = req.POST["question_text"], first_link = req.POST["first_link"], second_link = req.POST["second_link"], third_link = req.POST["third_link"], fourth_link = req.POST["fourth_link"])
         return HttpResponse("succes")
 
 def question_delete(req):
