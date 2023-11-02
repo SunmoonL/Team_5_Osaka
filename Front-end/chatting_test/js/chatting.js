@@ -1,22 +1,32 @@
 (() => {
+    const userKey = `user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`;
+    console.log(userKey);
     const submitChat = (userChat) => {
         const xhttp = new XMLHttpRequest();
+        document.getElementById("chatWrapBox").innerHTML += `
+                <div class="chatProfile">
+                    <div class="test"></div>
+                    <p>AI 챗봇</p>
+                </div><div class="gptChat waitChat"></div>`;
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
                 console.log(xhttp.responseText);
+                const targetChat = document.getElementsByClassName("waitChat")[0];
+                targetChat.innerHTML = xhttp.responseText;
+                targetChat.classList.remove("waitChat"); 
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/answer_gpt?user_key=${encodeURIComponent("aaa1_오사카만")}&title_address=${encodeURIComponent(userChat)}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10093/answer_gpt?user_key=${encodeURIComponent(userKey+"_오사카만")}&title_address=${encodeURIComponent(userChat)}`, true);
         xhttp.send();
     };
     const startChat = () => {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
-                console.log(xhttp.responseText);
+                document.getElementById("chatWrapBox").innerHTML += `<div class="gptChat">${xhttp.responseText}</div>`;
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/in_region?user_key=${encodeURIComponent("aaa1_오사카만")}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10093/in_region?user_key=${encodeURIComponent(userKey+"_오사카만")}`, true);
         xhttp.send();
     };
     window.addEventListener('beforeunload', () => {
@@ -27,7 +37,7 @@
             }
         };
         
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/del_user?user_key=${encodeURIComponent("aaa1")}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10093/del_user?user_key=${encodeURIComponent(userKey)}`, true);
         xhttp.send();
     });
     startChat();
@@ -40,8 +50,9 @@
         };
     });
     document.getElementById("chatButton").addEventListener("click", () => {
-        const userChat = document.getElementById("chatInput").value;
-        document.getElementById("chatWrapBox").innerHTML += `<div class="userChat">${userChat}</div>`;
-        submitChat(userChat);
+        const userChat = document.getElementById("chatInput");
+        document.getElementById("chatWrapBox").innerHTML += `<div class="userChat">${userChat.value}</div>`;
+        submitChat(userChat.value);
+        userChat.value = "";
     });
 })();

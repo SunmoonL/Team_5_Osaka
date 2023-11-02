@@ -3,6 +3,7 @@
 html, body {
     width: 100%;
     height: 100%;
+    font-size: 10px;
 }
 
 #admin {
@@ -11,16 +12,16 @@ html, body {
     align-items: center;
     border-radius: 4rem;
     border: 1px solid black;
-    width: 40rem;
-    height: 50rem;
+    width: 120rem;
+    height: 80rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
 }
 #saveDB {
+    height: 50%;
     display: flex;
-    flex-direction: column;
     align-items: center;   
 }
 #readDB {
@@ -30,8 +31,17 @@ html, body {
     flex-direction: column;
     align-items: center;   
 }
+#titleAddress {
+    width: 30rem;
+    margin: 2rem;
+    padding-top: 5rem;
+    height: 18rem;
+    display: flex;
+    flex-direction: column;  
+    justify-content: center;  
+}
 .titleAddress {
-    margin-top: .5rem;
+    margin-bottom: .5rem;
     padding: .4rem;
     font-size: 1.2rem;
 }
@@ -41,10 +51,10 @@ html, body {
     height: 10rem;
 
 }
-#saveDB > button {
+button {
     padding: .4rem;
     margin: .5rem;
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     display: flex;
 }
 .dbList {
@@ -58,7 +68,8 @@ html, body {
     align-items: center;
     justify-content: space-between;
     border: 1px solid #666;
-    height: 2rem;
+    height: 4rem;
+    font-size: 2rem;
     width: 100%;
 }
 .dbList > div:hover {
@@ -73,6 +84,7 @@ html, body {
     justify-content: center;
 }
 .dbQuestionText {
+    padding: 2rem;
     border: 1px solid #ddd;
     display: none;
     top: 25.5%;
