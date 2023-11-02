@@ -25,7 +25,7 @@ SECRET_KEY = '3tid4bg9q+*)ij48c&yx+=0-qaoh&t_e%mdkrroyocmc!hgtnq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["kkms4001.iptime.org"]
+ALLOWED_HOSTS = ["kkms4001.iptime.org", "110.5.238.107"]
 
 
 # Application definition

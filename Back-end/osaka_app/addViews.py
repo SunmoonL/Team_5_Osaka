@@ -59,7 +59,7 @@ def question_delete(req):
 
 def in_region(request): #어떤 지역 클릭해서 딱 들어왔을때 
     user_key = request.GET['user_key']
-    GptOb.append_user(user_key)
+    GptOb.append_user(user_key) #새로운 유저리스트 추가
     region = request.GET['user_key'].split("_")[1]
     q_result = QuestionList.objects.get(title_address=f"{region}_이지역에 대해 소개해줘")
     GptOb.append_user_q(user_key, q_result.title_address)
@@ -79,7 +79,7 @@ def answer_q_list(request): #질문리스트에 있는 질문 클릭,
 
 def answer_gpt(request): #사용자가 질문창으로 질문함
     selected_region = request.GET['user_key'].split("_")[1]
-
+    print(selected_region)
     GptOb.append_user_q(request.GET['user_key'], f"이곳은 {selected_region}이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
     messages = GptOb.getter_userlist(request.GET['user_key'])
     completion = openai.ChatCompletion.create(
@@ -110,6 +110,8 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
         assistant_content = completion.choices[0].message["content"].strip()
         GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
 
+    finally:
+        print(completion)
     return HttpResponse(assistant_content)
 
 
