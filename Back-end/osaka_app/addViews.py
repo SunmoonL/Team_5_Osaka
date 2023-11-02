@@ -68,7 +68,7 @@ def in_region(request): #어떤 지역 클릭해서 딱 들어왔을때
     user_key = request.GET['user_key']
     GptOb.append_user(user_key) #새로운 유저리스트 추가
     region = request.GET['user_key'].split("_")[1]
-    q_result = QuestionList.objects.get(title_address=f"{region}_이지역에 대해 소개해줘")
+    q_result = QuestionList.objects.get(title_address=f"{region}_지역에 대해 소개해줘")
     GptOb.append_user_q(user_key, q_result.title_address.split("_")[0] + q_result.title_address.split("_")[1])
     GptOb.append_assistant_a(user_key, q_result.question_text)
     print(GptOb.getter_userlist(user_key))
