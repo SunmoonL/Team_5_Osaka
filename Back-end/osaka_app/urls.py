@@ -25,8 +25,8 @@ urlpatterns = [
     path('question_view/', views.qestion_view),
     path('question_create/', views.question_create),
     path('question_delete/', views.question_delete),
-    path('in_region/', views.in_region),
-    path('answer_q_list/', views.answer_q_list),
+    path('in_region/', views.in_region2),
+    path('answer_q_list/', views.answer_q_list2),
     path('answer_gpt/', views.answer_gpt), #
     path('del_user/', views.del_user)
 ]

@@ -12,7 +12,7 @@ class GptOb:
     
     @staticmethod
     def append_user(user_key):
-        GptOb.__user_list[user_key] = [{"role": "system", "content": "당신은 오사카여행 안내사이다."}] #{"role": "system", "content": "당신은 오사카 여행 추천 시스템입니다."}
+        GptOb.__user_list[user_key] = [{"role": "system", "content": "당신은 오사카여행 가이드이다."}] #{"role": "system", "content": "당신은 오사카 여행 추천 시스템입니다."}
 
     @staticmethod
     def getter_userlist(user_key):
@@ -31,10 +31,9 @@ class GptOb:
         for user_key, value in list(GptOb.__user_list.items()):
             if delete_key in user_key:
                 del GptOb.__user_list[user_key]
-
-test_dic = {"key1" : "김주희", "key2": "김주연"}
-for key in test_dic:
-    print(key)
+    @staticmethod
+    def del_last_q(user_key): #해당 유저 마지막요소 삭제 -(질문취소할때 사용)
+        del GptOb.__user_list[user_key][len(GptOb.__user_list[user_key]) - 1]
 
 def index2(req):
     return HttpResponse("addViews")
@@ -52,9 +51,10 @@ def qestion_view(req):
     return JsonResponse({"title_address" : questionItem.title_address, "question_text" : questionItem.question_text, "first_link" : questionItem.first_link, "second_link" : questionItem.second_link, "third_link" : questionItem.third_link, "fourth_link" : questionItem.fourth_link})
 
 def question_create(req):
-    questionItem = QuestionList.objects.filter(title_address=req.POST["title_address"])
-    if questionItem:
-        return HttpResponse("중복")
+    #questionItem = QuestionList.objects.filter(title_address=req.POST["title_address"])
+    if QuestionList.objects.filter(title_address=req.POST["title_address"]).exists():
+        QuestionList.objects.update(title_address = req.POST["title_address"], question_text = req.POST["question_text"], first_link = req.POST["first_link"], second_link = req.POST["second_link"], third_link = req.POST["third_link"], fourth_link = req.POST["fourth_link"])
+        return HttpResponse("succes")
     else:
         QuestionList.objects.create(title_address = req.POST["title_address"], question_text = req.POST["question_text"], first_link = req.POST["first_link"], second_link = req.POST["second_link"], third_link = req.POST["third_link"], fourth_link = req.POST["fourth_link"])
         return HttpResponse("succes")
@@ -85,6 +85,7 @@ def in_region2(request): #이걸로 바꿀거
     for region_q in region_q_list:
         GptOb.append_user_q(user_key, region_q.title_address.split("_")[1])
         GptOb.append_assistant_a(user_key, region_q.question_text)
+    print(GptOb.getter_userlist(user_key))
     return HttpResponse(q_result.question_text)
 
 def answer_q_list(request): #질문리스트에 있는 질문 클릭, 
@@ -108,6 +109,8 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
     print(selected_region)
     GptOb.append_user_q(request.GET['user_key'], f"{selected_region}에 갈것이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
     messages = GptOb.getter_userlist(request.GET['user_key'])
+    
+            
     try:
         completion = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
@@ -135,17 +138,19 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
         )
         assistant_content = ""
         if completion.choices[0].message.get("function_call") != None:
-            assistant_content = completion.choices[0].message["function_call"]["arguments"]["result"].lstrip()
+            assistant_content = completion.choices[0].message["function_call"]["arguments"]["result"].strip()
             GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
             print("function_call")
         else:
-            assistant_content = completion.choices[0].message["content"].lstrip()
+            assistant_content = completion.choices[0].message["content"].strip()
             GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
             print("content")
-    except:
+    except Exception as e:
+        GptOb.del_last_q(request.GET['user_key'])
         assistant_content = "알맞은 답변을찾지못했습니다. 다시 질문해주세요."
+        print(e)
     finally:
-        print()
+        print(GptOb.getter_userlist(request.GET['user_key']))
     return HttpResponse(assistant_content)
 
 
