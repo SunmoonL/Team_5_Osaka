@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Explanation from './Explanation';
 
 const RegionalList = ( {changeBackground, changePrevBackground, setDetailTitle, setDetailContent, setImgFolder} ) => {
-   const regionaArray = [ { title:"오사카만 지역", content:"수족관, 세계 수준의 놀이공원, 유니버설 스튜디오 재팬 등이 있는 최고의 관광지",
+   const regionaArray = [ { title:"오사카만", content:"수족관, 세계 수준의 놀이공원, 유니버설 스튜디오 재팬 등이 있는 최고의 관광지",
                             imgFolder:"osaka_man", backgroundSrc:"osaka_port.jpg"},
                             { title:"도톤보리", content: "휘황찬란한 빛과 생동감, 대도시 오사카의 풍류",
                             imgFolder:"osaka_man", backgroundSrc:"dotonbori.jpg"},
@@ -38,11 +38,15 @@ const RegionalList = ( {changeBackground, changePrevBackground, setDetailTitle, 
 
     regionaArray.forEach((v, i) => {
         saveList.push(
-            <div className="listBtn" key={i}  onMouseOver={e => {
+            <div className="listBtn" key={i}  onMouseEnter={e => {
                 if (BackgroundSrc !== regionaArray[i].backgroundSrc ) {
                     mouseOverFunc(i);
                 }
-            }} onClick={e => { mouseClickFunc(i); }}>
+            }} onClick={e => { mouseClickFunc(i); }}
+            onMouseLeave={() => {
+                setPrevBackground("main");
+                setBackground("osaka_castle.jpg");
+            }}>
                 <Link to="/detail_page" >{v.title}<span className="before">{v.title}</span><span className="after">{v.title}</span></Link>
             </div>
         );

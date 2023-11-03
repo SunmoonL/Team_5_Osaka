@@ -2,7 +2,7 @@ import './scss/Chatting.scss';
 import { useState, useEffect } from 'react';
 //import {Link} from "react-router-dom";
 
-const Chatting = () => {
+const Chatting = ({userKey, regional}) => {
     const [helpArticleDisplay, sethelpArticle] = useState("");
     const [nowChat, setChat] = useState("");
     const [gptChatDelay, setDelay] = useState(false);
@@ -27,25 +27,25 @@ const Chatting = () => {
             if (thisChat === "\n") { targetChat.innerHTML += "<br>"; }
             else { targetChat.innerHTML += thisChat; }
             chatUl.scrollTop = chatUl.scrollHeight;
-            setTimeout(oneWordInit, Math.random() * 80);
+            setTimeout(oneWordInit, Math.random() * 70);
         };
         oneWordInit();
     };
-    const userKey = "1234";//`user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`;
     const submitChat = (userChat, routString) => {
         if (gptChatDelay) {
             chatAlert();
             return;
         }
         else {
-            addChat([...chatList, <>
-                    <div class="userChat">{userChat}</div>
-                    <div class="chatProfile">
+            addChat([...chatList, 
+                <div key={chatList.length}>
+                    <div className="userChat">{userChat}</div>
+                    <div className="chatProfile">
                         <img className="profileImg" src={`${chatProfileSrc}`} />
                         <p>AI 챗봇</p>
                     </div>
-                    <div class="gptChat waitChat"></div>`
-                </>
+                    <div className="gptChat waitChat"></div>`
+                </div>
             ]);
             sethelpArticle('');
             setDelay(true);
@@ -63,7 +63,7 @@ const Chatting = () => {
                 slowChat(initChat, chatUl, targetChat);
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/${routString}?user_key=${encodeURIComponent(userKey + "_오사카만")}&title_address=${encodeURIComponent(userChat)}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10093/${routString}?user_key=${encodeURIComponent(userKey +"_"+regional)}&title_address=${encodeURIComponent(userChat)}`, true);
         xhttp.send();
     };
     const startChat = () => {
@@ -71,13 +71,14 @@ const Chatting = () => {
             chatAlert();
             return;
         }
-        addChat([...chatList, <>
+        addChat([...chatList, 
+            <div key={chatList.length}>
                 <div className="chatProfile">
                     <img className="profileImg" src={`${chatProfileSrc}`} />
                     <p>AI 챗봇</p>
                 </div>
                 <div className="gptChat"></div>
-            </>
+            </div>
         ]);
         setDelay(true);
         const xhttp = new XMLHttpRequest();
@@ -90,17 +91,10 @@ const Chatting = () => {
                 slowChat(initChat, chatUl, targetChat);
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/in_region?user_key=${encodeURIComponent(userKey + "_오사카만")}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10093/in_region?user_key=${encodeURIComponent(userKey +"_"+regional)}`, true);
         xhttp.send();
     };
-    useEffect(() => {
-        window.addEventListener('beforeunload', () => {
-            const xhttp = new XMLHttpRequest();
-            xhttp.open("GET", `http://kkms4001.iptime.org:10093/del_user?user_key=${encodeURIComponent(userKey)}`, true);
-            xhttp.send();
-        });
-        startChat();
-    }, []);
+
     const chatInputEvent = (e) => setChat(e.target.value);
     const chatInputSbmitEvent = (e) => {
         if (e.key === "Enter") {
@@ -120,6 +114,9 @@ const Chatting = () => {
         const userChat = e.target.innerHTML;
         submitChat(userChat, "answer_q_list");
     };
+    useEffect(() => {
+        startChat();
+    }, []);
     return (
         <div className="Chatting">
             <section id="chattingBox">
