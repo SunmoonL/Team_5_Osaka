@@ -10,35 +10,55 @@ const GetDB = async()=>{
     return needData;
 };
 */
-const ExplanationImg = ()=>{
-    const listItem = []
-    for(let i=0; i<4; i++){
-        listItem.push(
-            <div className="imgBox">
-                <p className="imgTitle"># 스시</p>
-                <div className="darken"></div>
-                <img src="images/osaka_man/food/Takoyasu.jpg"/>
-                <div><a href="https://www.naver.com/"></a></div>
-            </div>
-        );
-    };
-    return listItem;
-}
-const Explanation = ({children, detailTitle, detailContent}) => {
+
+
+
+const Explanation = ({children, detailTitle, detailContent, imgFolder}) => {
     /*
     const [readDB, setReadDB] = useState(null); 
     useEffect(() => {
         GetDB().then( result => setReadDB(result) )
     }, []);
     */
-    const imgFolder = [ {folderName:""},{} ]
+    
+    const [changeCategory, setChangeCategory] = useState("")
+
+    const imgSrc = imgFolder/changeCategory
+
+    const QuestionList = ()=>{
+        console.log(changeCategory)
+        return (
+            <ul id="questionList">
+                <li onClick={ () => setChangeCategory('food') }>음식</li>
+                <li onClick={ () => setChangeCategory('hotel') }>호텔</li>
+                <li onClick={ () => setChangeCategory('place') }>관광지</li>
+            </ul>
+        )
+    }
+    const ExplanationImg = ()=>{
+        const listItem = []
+        for(let i=0; i<4; i++){
+            listItem.push(
+                <div className="imgBox">
+                    <p className="imgTitle"># 스시</p>
+                    <div className="darken"></div>
+                    <img src='images/{imgFolder}/{changeCategory}/${i}' />
+                    <div><a href="https://www.naver.com/"></a></div>
+                </div>
+            );
+        };
+        return listItem;
+    }
+
     if (detailContent !== "" && detailTitle !== "") {
         console.log(detailContent);
     }
+
     return (
         <div className="Explanation">
             <h3>{detailTitle}</h3>
             <p>{detailContent}</p>
+            {QuestionList()}
             <div className="questionImg">
                 {ExplanationImg()}
             </div>
