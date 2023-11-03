@@ -18,14 +18,17 @@
                             <div class="qu">
                                 <p>${title_address}</p>
                                 <div class="dbQuestionText">
-                                    ${text}
+                                    <div id="${title_address}0">${text}</div>
                                     <br>
-                                    <br><div>링크1: <a href="${first_link}">${first_link}</a></div>
-                                    <br><div>링크2: <a href="${second_link}">${second_link}</a></div>
-                                    <br><div>링크3: <a href="${third_link}">${third_link}</a></div>
-                                    <br><div>링크4: <a href="${fourth_link}">${fourth_link}</a></div>
+                                    <br><div>링크1: <a id="${title_address}1" href="${first_link}">${first_link}</a></div>
+                                    <br><div>링크2: <a id="${title_address}2" href="${second_link}">${second_link}</a></div>
+                                    <br><div>링크3: <a id="${title_address}3" href="${third_link}">${third_link}</a></div>
+                                    <br><div>링크4: <a id="${title_address}4" href="${fourth_link}">${fourth_link}</a></div>
                                 </div>
-                                <button id="${title_address}" class="deleteButton">삭제</button>
+                                <div>
+                                    <button id="${title_address}" class="updateButton">수정</button>
+                                    <button id="${title_address}" class="deleteButton">삭제</button>
+                                </div>
                             </div>
                     `;
                 });
@@ -34,7 +37,23 @@
                         deleteDB(e.target.id);
                     });
                 });
-
+                [...document.getElementsByClassName("updateButton")].forEach(v => {
+                    v.addEventListener("click", (e) => {
+                        const text = document.getElementById(`${e.target.id}0`).innerHTML.split("<br>").join("\n");
+                        const link1 = document.getElementById(`${e.target.id}1`).innerHTML;
+                        const link2 = document.getElementById(`${e.target.id}2`).innerHTML;
+                        const link3 = document.getElementById(`${e.target.id}3`).innerHTML;
+                        const link4 = document.getElementById(`${e.target.id}4`).innerHTML;
+                        const [val1, val2] = e.target.id.split("_");
+                        $("#address").val(val1).prop("selected", true);
+                        $("#title").val(val2).prop("selected", true);
+                        $(".questionText").val(text);
+                        $("#first_link").val(link1);
+                        $("#second_link").val(link2);
+                        $("#third_link").val(link3);
+                        $("#fourth_link").val(link4);
+                    });
+                });
                 [...document.getElementsByClassName("qu")].forEach(v => {
                     v.addEventListener("click", (e) => {
                         setTimeout(() => {
