@@ -80,10 +80,11 @@ button {
     background-color: #ddd;
 }
 
-.dbList > div > button {
+.dbList > div > div > button {
+    font-size: 2rem;
     cursor: pointer;
     height: 100%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 }
