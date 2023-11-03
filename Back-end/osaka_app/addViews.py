@@ -74,6 +74,18 @@ def in_region(request): #어떤 지역 클릭해서 딱 들어왔을때
     print(GptOb.getter_userlist(user_key))
     return HttpResponse(q_result.question_text)
 
+def in_region2(request): #이걸로 바꿀거 
+    user_key = request.GET['user_key']
+    GptOb.append_user(user_key) #새로운 유저리스트 추가
+    region = request.GET['user_key'].split("_")[1]
+    q_result = QuestionList.objects.get(title_address=f"{region}_지역에 대해 소개해줘")
+    GptOb.append_user_q(user_key, q_result.title_address.split("_")[0] + q_result.title_address.split("_")[1])
+    GptOb.append_assistant_a(user_key, q_result.question_text)
+    region_q_list = QuestionList.objects.filter(title_address__contains=region) & QuestionList.objects.filter(title_address__contains="추천")
+    for region_q in region_q_list:
+        GptOb.append_user_q(user_key, region_q.title_address.split("_")[1])
+        GptOb.append_assistant_a(user_key, region_q.question_text)
+    return HttpResponse(q_result.question_text)
 
 def answer_q_list(request): #질문리스트에 있는 질문 클릭, 
     title_address = request.GET['title_address']
@@ -84,6 +96,12 @@ def answer_q_list(request): #질문리스트에 있는 질문 클릭,
     print(GptOb.getter_userlist(user_key))
     return HttpResponse(q_result.question_text)
 
+def answer_q_list2(request): #이걸로 바꿀거
+    title_address = request.GET['title_address']
+    user_key = request.GET['user_key']
+    q_result = QuestionList.objects.get(title_address = user_key.split('_')[1] + "_" + title_address)
+    response_ob = {"question_text" : q_result.question_text, "first_link" : q_result.first_link, "second_link" : q_result.second_link, "third_link" : q_result.third_link, "fourth_link" : q_result.fourth_link}
+    return JsonResponse(response_ob)
 
 def answer_gpt(request): #사용자가 질문창으로 질문함
     selected_region = request.GET['user_key'].split("_")[1]
