@@ -31,15 +31,6 @@ body {
     width: 1rem;
 }
 
-#testImg {
-    height: 70rem;
-    aspect-ratio: 0.768292683/1;
-    top: 50%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-}
-
 #chattingBox {
     display: flex;
     flex-direction: column;
@@ -200,7 +191,7 @@ body {
     width: 20%;
     height: 3.6rem;
 }
-.test {
+.profileImg {
     height: 100%;
     aspect-ratio: 1/1;
 }
@@ -237,12 +228,71 @@ body {
     content: "";
 }
 #submitArticle {
+    position: relative;
     border-radius: 50rem;
     display: flex;
     margin-bottom: 5%;
     margin-top: 3%;
     height: 7%;
     width: 90%;
+}
+#chatAlert {
+    display: none;
+    text-align: center;
+    z-index: 200;
+    color: #EFEFEF;
+    border-radius: 1rem;
+    background-color: #2A3DC5;
+    font-weight: 500;
+    font-size: 1.7rem;
+    padding: 2rem;
+    width: 42%;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    animation-name: nervous;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+#chatAlert::before {
+    border-radius: 50%;
+    margin-left: 50%;
+    margin-bottom: 7%;
+    transform: translate(-50%, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4rem;
+    aspect-ratio: 1/1;
+    background-color: #EFEFEF;
+    color: #2A3DC5;
+    font-size: 2.5rem;
+    content: "!";
+}
+#chatAlert.displayFlag {
+    display: inline-block;
+}
+@keyframes nervous {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+    3% {
+        transform: translate(-48%, -50%);
+    }
+    6% {
+        transform: translate(-52%, -50%);
+    }
+    9% {
+        transform: translate(-48%, -50%);
+    }
+    12% {
+        transform: translate(-52%, -50%);
+    }
+    15% {
+        transform: translate(-50%, -50%);
+    }
 }
 
 #chatInput {

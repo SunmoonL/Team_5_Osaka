@@ -53,7 +53,7 @@ def qestion_view(req):
 def question_create(req):
     #questionItem = QuestionList.objects.filter(title_address=req.POST["title_address"])
     if QuestionList.objects.filter(title_address=req.POST["title_address"]).exists():
-        QuestionList.objects.update(title_address = req.POST["title_address"], question_text = req.POST["question_text"], first_link = req.POST["first_link"], second_link = req.POST["second_link"], third_link = req.POST["third_link"], fourth_link = req.POST["fourth_link"])
+        QuestionList.objects.filter(title_address=req.POST["title_address"]).update(question_text = req.POST["question_text"], first_link = req.POST["first_link"], second_link = req.POST["second_link"], third_link = req.POST["third_link"], fourth_link = req.POST["fourth_link"])
         return HttpResponse("succes")
     else:
         QuestionList.objects.create(title_address = req.POST["title_address"], question_text = req.POST["question_text"], first_link = req.POST["first_link"], second_link = req.POST["second_link"], third_link = req.POST["third_link"], fourth_link = req.POST["fourth_link"])

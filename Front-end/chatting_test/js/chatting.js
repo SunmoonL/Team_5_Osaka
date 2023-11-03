@@ -1,15 +1,36 @@
 (() => {
+
+    let gptChatDelay = false;
     const userKey = `user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`;
-    console.log(userKey);
-    const submitChat = (userChat) => {
+
+    const chatAlert = () => {
+        const thisAlert = document.getElementById("chatAlert");
+        if (!thisAlert.classList.contains('displayFlag')) {
+            thisAlert.classList.add('displayFlag');
+            setTimeout(() => {
+                thisAlert.classList.remove('displayFlag');
+            }, 2000);
+        }
+    }
+    const submitChat = (userChat, routString) => {
+        if (gptChatDelay) { 
+            chatAlert();
+            return ; 
+        }
+        else {
+            document.getElementById("helpArticle").classList.remove('displayFlag');
+            document.getElementById("chatWrapBox").innerHTML += `<div class="userChat">${userChat}</div>`;
+            document.getElementById("chatWrapBox").innerHTML += `
+                    <div class="chatProfile">
+                        <img class="profileImg" src="./css/KakaoTalk_20231102_124943047.png" alt="">
+                        <p>AI 챗봇</p>
+                    </div><div class="gptChat waitChat"></div>`;
+            gptChatDelay = true;
+        }
+
         const xhttp = new XMLHttpRequest();
         const chatUl = document.getElementById("chatArticle");
-        document.getElementById("chatWrapBox").innerHTML += `<div class="userChat">${userChat}</div>`;
-        document.getElementById("chatWrapBox").innerHTML += `
-                <div class="chatProfile">
-                    <img class="test" src="./css/KakaoTalk_20231102_124943047.png" alt="">
-                    <p>AI 챗봇</p>
-                </div><div class="gptChat waitChat"></div>`;
+
         chatUl.scrollTop = chatUl.scrollHeight;
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -17,7 +38,10 @@
                 const initChat = [...xhttp.responseText];
                 const oneWordInit = () => {
                     const thisChat = initChat.shift();
-                    if (initChat.length === 0) {return ;}
+                    if (initChat.length === 0) {
+                        gptChatDelay = false;
+                        return ;
+                    }
                     if (thisChat === "\n") { targetChat.innerHTML += "<br>"; }
                     else { targetChat.innerHTML += thisChat; }
                     chatUl.scrollTop = chatUl.scrollHeight;
@@ -28,23 +52,22 @@
                 targetChat.classList.remove("waitChat"); 
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/answer_gpt?user_key=${encodeURIComponent(userKey+"_오사카만")}&title_address=${encodeURIComponent(userChat)}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10093/${routString}?user_key=${encodeURIComponent(userKey+"_오사카만")}&title_address=${encodeURIComponent(userChat)}`, true);
         xhttp.send();
     };
-    document.getElementById("chatInput").addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            const userChat = e.target.value;
-            submitChat(userChat);
-            e.target.value = "";
-        }
-    });
     const startChat = () => {
+        if (gptChatDelay) { 
+            chatAlert();
+            return ; 
+        }
+        gptChatDelay = true;
         const xhttp = new XMLHttpRequest();
+        const chatUl = document.getElementById("chatArticle");
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
                 document.getElementById("chatWrapBox").innerHTML += `
                 <div class="chatProfile">
-                    <img class="test" src="./css/KakaoTalk_20231102_124943047.png" alt="">
+                    <img class="profileImg" src="./css/KakaoTalk_20231102_124943047.png" alt="">
                     <p>AI 챗봇</p>
                 </div>
                 <div class="gptChat"></div>`;
@@ -53,10 +76,14 @@
                 const targetChat = getChat[getChat.length - 1];
                 const oneWordInit = () => {
                     const thisChat = initChat.shift();
-                    if (initChat.length === 0) {return ;}
+                    if (initChat.length === 0) {
+                        gptChatDelay = false;
+                        return ;
+                    }
                     if (thisChat === "\n") { targetChat.innerHTML += "<br>"; }
                     else { targetChat.innerHTML += thisChat; }
-                    setTimeout(oneWordInit, Math.random() * 110);
+                    chatUl.scrollTop = chatUl.scrollHeight;
+                    setTimeout(oneWordInit, Math.random() * 80);
                 };
                 oneWordInit();
             }
@@ -75,7 +102,13 @@
         xhttp.open("GET", `http://kkms4001.iptime.org:10093/del_user?user_key=${encodeURIComponent(userKey)}`, true);
         xhttp.send();
     });
-    startChat();
+    document.getElementById("chatInput").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            const userChat = e.target.value;
+            submitChat(userChat, "answer_gpt");
+            e.target.value = "";
+        }
+    });
     document.getElementById("helpButton").addEventListener("click", () => {
         const helpArticle = document.getElementById("helpArticle");
         if (helpArticle.classList.contains('displayFlag')) {
@@ -86,7 +119,14 @@
     });
     document.getElementById("chatButton").addEventListener("click", () => {
         const userChat = document.getElementById("chatInput");
-        submitChat(userChat.value);
+        submitChat(userChat.value, "answer_gpt");
         userChat.value = "";
     });
+    [...document.getElementsByClassName("questionList")].forEach(v => {
+        v.addEventListener("click", (e) => {
+            const userChat = e.target.innerHTML;
+            submitChat(userChat, "answer_q_list");
+        });
+    });
+    startChat();
 })();
