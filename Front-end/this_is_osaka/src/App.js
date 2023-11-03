@@ -24,7 +24,8 @@ const App = () => {
             <>
             <div className="contentBox">
               <TitleText/>
-              <RegionalList setDetailContent={setDetailContent} setDetailTitle={setDetailTitle} setImgFolder={setImgFolder}
+              <RegionalList setDetailContent={setDetailContent} setDetailTitle={setDetailTitle}
+                            setImgFolder={setImgFolder}
                             changeBackground={[BackgroundSrc, setBackground]} changePrevBackground={setPrevBackground}/>
             </div>
             </>
@@ -33,7 +34,7 @@ const App = () => {
             <>
               <Logo/>
               <div className="contentBox">
-                <Explanation detailTitle={detailTitle} detailContent={detailContent} ></Explanation>
+                <Explanation detailTitle={detailTitle} detailContent={detailContent} imgFolder={imgFolder}></Explanation>
                 <Chatting />
               </div>
             </>

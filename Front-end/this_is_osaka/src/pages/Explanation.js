@@ -21,12 +21,13 @@ const Explanation = ({children, detailTitle, detailContent, imgFolder}) => {
     }, []);
     */
     
-    const [changeCategory, setChangeCategory] = useState("")
 
-    const imgSrc = imgFolder/changeCategory
+    const [changeCategory, setChangeCategory] = useState("")
+    //const imgName = /^1\w*g\b/;
+    const questionImgSrc = `${process.env.PUBLIC_URL}/images/${imgFolder}/${changeCategory}`
+
 
     const QuestionList = ()=>{
-        console.log(changeCategory)
         return (
             <ul id="questionList">
                 <li onClick={ () => setChangeCategory('food') }>음식</li>
@@ -42,7 +43,7 @@ const Explanation = ({children, detailTitle, detailContent, imgFolder}) => {
                 <div className="imgBox">
                     <p className="imgTitle"># 스시</p>
                     <div className="darken"></div>
-                    <img src='images/{imgFolder}/{changeCategory}/${i}' />
+                    <img src={questionImgSrc}/>
                     <div><a href="https://www.naver.com/"></a></div>
                 </div>
             );
