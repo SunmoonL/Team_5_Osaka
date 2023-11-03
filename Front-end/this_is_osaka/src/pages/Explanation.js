@@ -40,7 +40,7 @@ const Explanation = ({children, detailTitle, detailContent, imgFolder}) => {
         const listItem = []
         for(let i=0; i<4; i++){
             listItem.push(
-                <div className="imgBox">
+                <div key={i} className="imgBox">
                     <p className="imgTitle"># 스시</p>
                     <div className="darken"></div>
                     <img src={questionImgSrc}/>
