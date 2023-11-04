@@ -3,6 +3,7 @@
 .Chatting{
     width:50%;
     height:100%;
+    float:left;
 }
 ::-webkit-scrollbar-thumb {
     background-color: #888;
@@ -30,10 +31,11 @@
     border-radius: .5rem;
     height: 70rem;
     aspect-ratio: 0.768292683/1;
-    top: 50%;
-    left: 70%;
-    transform: translate(-50%, -50%);
-    position: absolute;
+    //top: 50%;
+    //left: 70%;
+    //transform: translate(-50%, -50%);
+    //position: absolute;
+    position:relative;
 }
 #helpButton {
     position: relative;
