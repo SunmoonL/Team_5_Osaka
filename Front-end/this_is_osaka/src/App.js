@@ -5,6 +5,7 @@ import Chatting from './pages/Chatting';
 import RegionalList from './pages/RegionalList';
 import TitleText from './pages/TitleText';
 import Logo from './pages/Logo';
+import ContentsWrap from './pages/ContentsWrap';
 import {Route, Routes, useLocation} from "react-router-dom";
 import { useState, useEffect } from 'react';
 import './pages/scss/Common.scss'
@@ -30,13 +31,13 @@ const App = () => {
   }, []);
   return (
     <div className="App">
-      <Background BackgroundSrc={BackgroundSrc} prevBackgroundSrc={prevBackgroundSrc}>
-        
+      <Background BackgroundSrc={BackgroundSrc} prevBackgroundSrc={prevBackgroundSrc}></Background>
+      <ContentsWrap>
         <Routes>
           <Route path='/' element={
             <>
             <div className="contentBox">
-              <TitleText/>
+              <TitleText backgroundSet={[BackgroundSrc, setBackground, setPrevBackground]}/>
               <RegionalList setDetailContent={setDetailContent} setDetailTitle={setDetailTitle}
                             setImgFolder={setImgFolder}
                             changeBackground={[BackgroundSrc, setBackground]} changePrevBackground={setPrevBackground}/>
@@ -53,8 +54,9 @@ const App = () => {
             </>
           }></Route>
         </Routes>
+      </ContentsWrap>
+
           
-      </Background>
     </div>
   );
 }
