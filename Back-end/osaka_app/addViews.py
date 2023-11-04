@@ -12,7 +12,7 @@ class GptOb:
     
     @staticmethod
     def append_user(user_key):
-        GptOb.__user_list[user_key] = [{"role": "system", "content": "당신은 오사카여행 가이드이다."}] #{"role": "system", "content": "당신은 오사카 여행 추천 시스템입니다."}
+        GptOb.__user_list[user_key] = [{"role": "system", "content": "당신은 오사카 여행 가이드이다."}]
 
     @staticmethod
     def getter_userlist(user_key):
@@ -41,10 +41,8 @@ class GptOb:
         del GptOb.__user_list[user_key][3:7]
 
 
-def index2(req):
-    return HttpResponse("addViews")
 
-def question_list(req): #리스트 보기
+def question_list(request): #리스트 보기
     q_list = QuestionList.objects.all()
     res_ob = { "res_list" : []}
     for q in q_list:
@@ -52,7 +50,7 @@ def question_list(req): #리스트 보기
     return JsonResponse(res_ob)
 
 def qestion_view(request): 
-    questionItem = QuestionList.objects.get(title_address = req.POST["title_address"])
+    questionItem = QuestionList.objects.get(title_address = request.POST["title_address"])
     return JsonResponse({"title_address" : questionItem.title_address, "question_text" : questionItem.question_text, "first_link" : questionItem.first_link, "second_link" : questionItem.second_link, "third_link" : questionItem.third_link, "fourth_link" : questionItem.fourth_link})
 
 def question_create(request):
@@ -105,7 +103,7 @@ def answer_q_list2(request): #바뀐데이터에 따라 이 함수로 사용
     title_address = request.GET['title_address']
     user_key = request.GET['user_key']
     q_result = QuestionList.objects.get(title_address = user_key.split('_')[1] + "_" + title_address)
-    response_ob = {"question_text" : q_result.question_text, "first_link" : q_result.first_link, "second_link" : q_result.second_link, "third_link" : q_result.third_link, "fourth_link" : q_result.fourth_link}
+    response_ob = {"category" : "one_q_data", "question_text" : q_result.question_text, "first_link" : q_result.first_link, "second_link" : q_result.second_link, "third_link" : q_result.third_link, "fourth_link" : q_result.fourth_link}
     return JsonResponse(response_ob)
 
 def answer_gpt(request): #사용자가 질문창으로 질문함
@@ -124,7 +122,7 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
                 break
 
     if len(keyword_list) != 0 and denial_chek == False: #질문리스트 키워드 한개라도 포함, 예외단어 포함하지않을때만 DB에서 가져와서 리턴
-        json_ob = {"answer_list": []}
+        json_ob = {"answer_list": [], "category" : "q_list_data"}
         for keyword in keyword_list:
             q_result_list = QuestionList.objects.filter(title_address__contains=keyword) & QuestionList.objects.filter(title_address__contains=selected_region)
             #json_ob["answer_list"].append({"keyword" : keyword, "question_text" : q_result, "first_link" : q_result.first_link, "second_link" : q_result.second_link, "third_link" : q_result.third_link, "fourth_link" : q_result.fourth_link})
@@ -133,8 +131,8 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
         print(json_ob)
         return JsonResponse(json_ob)
 
-    messages = GptOb.getter_userlist(request.GET['user_key'])
-    print(len(messages))
+    #messages = GptOb.getter_userlist(request.GET['user_key'])
+    #print(len(messages))
     
     
     def gtp_api_request(messages,user_key):
@@ -171,7 +169,7 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
             GptOb.append_assistant_a(user_key, assistant_content)
             return assistant_content
                
-    GptOb.append_user_q(request.GET['user_key'], f"{selected_region}에 갈것이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
+    GptOb.append_user_q(request.GET['user_key'], f"{selected_region}에 갈 것이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
     messages = GptOb.getter_userlist(request.GET['user_key'])
     assistant_content = ""
     try:
@@ -185,11 +183,11 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
         print("max_tokens 방지 완료")
     except:
         GptOb.del_last_q(request.GET['user_key'])
-        assistant_content = "알맞은 답변을찾지못했습니다. 다시 질문해주세요."
+        assistant_content = "알맞은 답변을 찾지 못했습니다. 다시 질문해 주세요."
     finally:
         print(GptOb.getter_userlist(request.GET['user_key']))
-    json_ob = {"answer_list": []}
-    json_ob["answer_list"].append({"keyword" : "", "question_text" : assistant_content})
+    json_ob = {"answer_list": [], "category" : "gpt_data"}
+    json_ob["answer_list"].append({"question_text" : assistant_content})
     return JsonResponse(json_ob)
 
 
