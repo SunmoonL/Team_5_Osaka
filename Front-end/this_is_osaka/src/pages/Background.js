@@ -23,7 +23,6 @@ const Background = ({children, BackgroundSrc, prevBackgroundSrc}) => {
             <div className="darkenBox"></div>
             <img id="nowImg" className='nowImg' src={nowSrc}></img>
             <img id='prevImg' className='prevImg' src={prevSrc}></img>
-            {children}
         </div>
     );
 };
