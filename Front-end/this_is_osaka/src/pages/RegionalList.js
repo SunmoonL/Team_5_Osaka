@@ -42,12 +42,7 @@ const RegionalList = ( {changeBackground, changePrevBackground, setDetailTitle, 
                 if (BackgroundSrc !== regionaArray[i].backgroundSrc ) {
                     mouseOverFunc(i);
                 }
-            }} onClick={e => { mouseClickFunc(i); }}
-            //onMouseLeave={() => {
-                //setPrevBackground("main");
-                //setBackground("main.jpg");
-            //}}
-            >
+            }} onClick={e => { mouseClickFunc(i); }}>
                 <Link to="/detail_page" >{v.title}<span className="before">{v.title}</span><span className="after">{v.title}</span></Link>
             </div>
         );

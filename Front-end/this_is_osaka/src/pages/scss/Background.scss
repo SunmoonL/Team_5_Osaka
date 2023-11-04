@@ -23,26 +23,39 @@
 
 .prevImg {
     z-index: -1;
-    opacity:0;
+    opacity:0%;
 }
 .nowImg{
+    opacity: 1;
     z-index:2;
     animation-name: rightAni;
     animation-duration:5s;
 }
 
-.topAni{
-    animation:topAni;
+@keyframes rightAni{
+    0%{
+        transform: translate(-42%, -50%);
+        //opacity:0%;
+    }
+    20% {
+        //opacity:100%;
+    }
+    100%{
+        transform: translate(-50%, -50%);
+    }
 }
-.rightAni{
-    animation:rightAni;
-}
-.bottomAni{
-    animation:bottomAni;
-}
-.leftAni{
-    animation:leftAni;
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 @keyframes topAni{
     0%{
@@ -50,14 +63,6 @@
     }
     100%{
        top:50%;
-    }
-}
-@keyframes rightAni{
-    0%{
-        transform: translate(-42%, -50%);
-    }
-    100%{
-        transform: translate(-50%, -50%);
     }
 }
 @keyframes bottomAni{
@@ -68,6 +73,7 @@
        bottom:50%;
     }
 }
+
 @keyframes leftAni{
     0%{
         left:45%;
