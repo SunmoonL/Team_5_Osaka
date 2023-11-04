@@ -104,7 +104,8 @@ def answer_q_list2(request): #바뀐데이터에 따라 이 함수로 사용
     user_key = request.GET['user_key']
     q_result = QuestionList.objects.get(title_address = user_key.split('_')[1] + "_" + title_address)
     response_ob = {"answer_list": [], "category" : "q_list_data"}
-    response_ob["answer_list"].append({"question_text" : q_result.question_text, "first_link" : q_result.first_link, "second_link" : q_result.second_link, "third_link" : q_result.third_link, "fourth_link" : q_result.fourth_link})
+    title_keyword = q_result.title_address[3:].split(" ")[0]
+    response_ob["answer_list"].append({"keyword" : title_keyword, "question_text" : q_result.question_text, "first_link" : q_result.first_link, "second_link" : q_result.second_link, "third_link" : q_result.third_link, "fourth_link" : q_result.fourth_link})
     return JsonResponse(response_ob)
 
 def answer_gpt(request): #사용자가 질문창으로 질문함
@@ -141,7 +142,7 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
             messages = messages,
             temperature = 0,
             top_p = 0.5,
-            stop = "4",
+            stop = "5",
             #n=1,
             functions = [
                 {
