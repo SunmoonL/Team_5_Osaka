@@ -45,7 +45,7 @@ const RegionalList = ( {changeBackground, changePrevBackground, setDetailTitle, 
             }} onClick={e => { mouseClickFunc(i); }}
             onMouseLeave={() => {
                 setPrevBackground("main");
-                setBackground("osaka_castle.jpg");
+                setBackground("main.jpg");
             }}>
                 <Link to="/detail_page" >{v.title}<span className="before">{v.title}</span><span className="after">{v.title}</span></Link>
             </div>
