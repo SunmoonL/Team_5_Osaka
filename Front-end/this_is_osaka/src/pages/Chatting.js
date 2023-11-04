@@ -58,9 +58,26 @@ const Chatting = ({userKey, regional}) => {
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState === 4 && xhttp.status === 200) {
                 const targetChat = document.getElementsByClassName("waitChat")[0];
-                const initChat = routString === "answer_gpt" ? [...xhttp.responseText] : [...JSON.parse(xhttp.responseText)["question_text"]];
+                const category = JSON.parse(xhttp.responseText)["category"];
+                let saveChat = [];
+                let answerListIndex = 0;
+
+                if (category === "q_list_data" ) {
+                    const answerList = JSON.parse(xhttp.responseText)["answer_list"];
+                    while (answerListIndex < answerList.length) {
+                        console.log(answerList[answerListIndex]);
+                        const initChat = answerList[answerListIndex]["question_text"];
+                        if (answerListIndex !== 0) { saveChat = ["\n", "\n", ...saveChat]; }
+                        saveChat = [ ...initChat, ...saveChat];
+                        answerListIndex++;
+                    }
+                } else {
+                    const answerList = JSON.parse(xhttp.responseText)["answer_list"];
+                    const initChat = answerList[answerListIndex]["question_text"];
+                    saveChat = [ ...initChat, ...saveChat];
+                }
+                slowChat([...saveChat], chatUl, targetChat);
                 targetChat.classList.remove("waitChat");
-                slowChat(initChat, chatUl, targetChat);
             }
         };
         xhttp.open("GET", `http://kkms4001.iptime.org:10093/${routString}?user_key=${encodeURIComponent(userKey +"_"+regional)}&title_address=${encodeURIComponent(userChat)}`, true);
