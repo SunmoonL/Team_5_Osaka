@@ -19,6 +19,7 @@ const App = () => {
   const [userKey] = useState(`user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`); // 사용자 중복방지
   const location = useLocation();
   
+  
   if (location.pathname !== "/" && detailTitle === "main") {
     window.location.replace("/");
   }

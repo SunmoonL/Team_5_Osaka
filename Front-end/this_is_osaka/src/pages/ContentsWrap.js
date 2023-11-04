@@ -1,4 +1,4 @@
-//import './scss/ContentsWrap.scss';
+import './scss/ContentsWrap.scss';
 //import { useState, useEffect } from 'react';
 
 const ContentsWrap = ({children}) => {
