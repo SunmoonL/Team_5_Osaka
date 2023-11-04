@@ -125,7 +125,6 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
         json_ob = {"answer_list": [], "category" : "q_list_data"}
         for keyword in keyword_list:
             q_result_list = QuestionList.objects.filter(title_address__contains=keyword) & QuestionList.objects.filter(title_address__contains=selected_region)
-            #json_ob["answer_list"].append({"keyword" : keyword, "question_text" : q_result, "first_link" : q_result.first_link, "second_link" : q_result.second_link, "third_link" : q_result.third_link, "fourth_link" : q_result.fourth_link})
             for q_result in q_result_list:
                 json_ob["answer_list"].append({"keyword" : keyword, "question_text" : q_result.question_text, "first_link" : q_result.first_link, "second_link" : q_result.second_link, "third_link" : q_result.third_link, "fourth_link" : q_result.fourth_link})
         print(json_ob)
