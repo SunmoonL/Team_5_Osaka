@@ -31,9 +31,15 @@ class GptOb:
         for user_key, value in list(GptOb.__user_list.items()):
             if delete_key in user_key:
                 del GptOb.__user_list[user_key]
+
     @staticmethod
     def del_last_q(user_key): #해당 유저 마지막요소 삭제 -(질문취소할때 사용)
         del GptOb.__user_list[user_key][len(GptOb.__user_list[user_key]) - 1]
+
+    @staticmethod
+    def max_max_tokens_prevention(user_key):
+        del GptOb.__user_list[user_key][3:7]
+
 
 def index2(req):
     return HttpResponse("addViews")
@@ -42,25 +48,23 @@ def question_list(req): #리스트 보기
     q_list = QuestionList.objects.all()
     res_ob = { "res_list" : []}
     for q in q_list:
-        print("링크", q.first_link)
         res_ob["res_list"].append({"title_address" : q.title_address, "question_text" : q.question_text, "first_link" : q.first_link, "second_link" : q.second_link, "third_link" : q.third_link, "fourth_link" : q.fourth_link })
     return JsonResponse(res_ob)
 
-def qestion_view(req): 
+def qestion_view(request): 
     questionItem = QuestionList.objects.get(title_address = req.POST["title_address"])
     return JsonResponse({"title_address" : questionItem.title_address, "question_text" : questionItem.question_text, "first_link" : questionItem.first_link, "second_link" : questionItem.second_link, "third_link" : questionItem.third_link, "fourth_link" : questionItem.fourth_link})
 
-def question_create(req):
-    #questionItem = QuestionList.objects.filter(title_address=req.POST["title_address"])
-    if QuestionList.objects.filter(title_address=req.POST["title_address"]).exists():
-        QuestionList.objects.filter(title_address=req.POST["title_address"]).update(question_text = req.POST["question_text"], first_link = req.POST["first_link"], second_link = req.POST["second_link"], third_link = req.POST["third_link"], fourth_link = req.POST["fourth_link"])
+def question_create(request):
+    if QuestionList.objects.filter(title_address=request.POST["title_address"]).exists():
+        QuestionList.objects.filter(title_address=request.POST["title_address"]).update(question_text = request.POST["question_text"], first_link = request.POST["first_link"], second_link = request.POST["second_link"], third_link = request.POST["third_link"], fourth_link = request.POST["fourth_link"])
         return HttpResponse("succes")
     else:
-        QuestionList.objects.create(title_address = req.POST["title_address"], question_text = req.POST["question_text"], first_link = req.POST["first_link"], second_link = req.POST["second_link"], third_link = req.POST["third_link"], fourth_link = req.POST["fourth_link"])
+        QuestionList.objects.create(title_address = request.POST["title_address"], question_text = request.POST["question_text"], first_link = request.POST["first_link"], second_link = request.POST["second_link"], third_link = request.POST["third_link"], fourth_link = request.POST["fourth_link"])
         return HttpResponse("succes")
 
-def question_delete(req):
-    questionItem = QuestionList.objects.get(title_address = req.POST["title_address"])
+def question_delete(reqest):
+    questionItem = QuestionList.objects.get(title_address = reqest.POST["title_address"])
     questionItem.delete()
     return HttpResponse("succes")
 
@@ -97,7 +101,7 @@ def answer_q_list(request): #질문리스트에 있는 질문 클릭,
     print(GptOb.getter_userlist(user_key))
     return HttpResponse(q_result.question_text)
 
-def answer_q_list2(request): #이걸로 바꿀거
+def answer_q_list2(request): #바뀐데이터에 따라 이 함수로 사용
     title_address = request.GET['title_address']
     user_key = request.GET['user_key']
     q_result = QuestionList.objects.get(title_address = user_key.split('_')[1] + "_" + title_address)
@@ -106,12 +110,34 @@ def answer_q_list2(request): #이걸로 바꿀거
 
 def answer_gpt(request): #사용자가 질문창으로 질문함
     selected_region = request.GET['user_key'].split("_")[1]
-    print(selected_region)
-    GptOb.append_user_q(request.GET['user_key'], f"{selected_region}에 갈것이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
+    keyword_list = ["숙소", "맛집", "관광지"]
+    denial_list = ["외", "다른", "말고", "밖에"]
+    denial_chek = False
+    for keyword in [*keyword_list]:
+        if keyword not in request.GET["title_address"]:
+            keyword_list.remove(keyword)
+    #키워드 한개라도 포함하면 그때 검사
+    if len(keyword_list) != 0:
+        for denial in denial_list:
+            if denial in request.GET["title_address"]:
+                denial_chek = True
+                break
+
+    if len(keyword_list) != 0 and denial_chek == False: #질문리스트 키워드 한개라도 포함, 예외단어 포함하지않을때만 DB에서 가져와서 리턴
+        json_ob = {"answer_list": []}
+        for keyword in keyword_list:
+            q_result_list = QuestionList.objects.filter(title_address__contains=keyword) & QuestionList.objects.filter(title_address__contains=selected_region)
+            #json_ob["answer_list"].append({"keyword" : keyword, "question_text" : q_result, "first_link" : q_result.first_link, "second_link" : q_result.second_link, "third_link" : q_result.third_link, "fourth_link" : q_result.fourth_link})
+            for q_result in q_result_list:
+                json_ob["answer_list"].append({"keyword" : keyword, "question_text" : q_result.question_text, "first_link" : q_result.first_link, "second_link" : q_result.second_link, "third_link" : q_result.third_link, "fourth_link" : q_result.fourth_link})
+        print(json_ob)
+        return JsonResponse(json_ob)
+
     messages = GptOb.getter_userlist(request.GET['user_key'])
+    print(len(messages))
     
-            
-    try:
+    
+    def gtp_api_request(messages,user_key):
         completion = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
             messages = messages,
@@ -136,25 +162,38 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
                 }
             ]
         )
-        assistant_content = ""
         if completion.choices[0].message.get("function_call") != None:
             assistant_content = completion.choices[0].message["function_call"]["arguments"]["result"].strip()
-            GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
-            print("function_call")
+            GptOb.append_assistant_a(user_key, assistant_content)
+            return assistant_content
         else:
             assistant_content = completion.choices[0].message["content"].strip()
-            GptOb.append_assistant_a(request.GET['user_key'], assistant_content)
-            print("content")
-    except Exception as e:
+            GptOb.append_assistant_a(user_key, assistant_content)
+            return assistant_content
+               
+    GptOb.append_user_q(request.GET['user_key'], f"{selected_region}에 갈것이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
+    messages = GptOb.getter_userlist(request.GET['user_key'])
+    assistant_content = ""
+    try:
+        assistant_content = gtp_api_request(messages, request.GET["user_key"])
+    except openai.error.InvalidRequestError: #max_tokens 방지
+        print("max_tokens방지 시작")
+        GptOb.max_max_tokens_prevention(request.GET["user_key"])
+        messages = GptOb.getter_userlist(request.GET["user_key"])
+        #다시 요청------
+        assistant_content = gtp_api_request(messages, request.GET["user_key"])
+        print("max_tokens 방지 완료")
+    except:
         GptOb.del_last_q(request.GET['user_key'])
         assistant_content = "알맞은 답변을찾지못했습니다. 다시 질문해주세요."
-        print(e)
     finally:
         print(GptOb.getter_userlist(request.GET['user_key']))
-    return HttpResponse(assistant_content)
+    json_ob = {"answer_list": []}
+    json_ob["answer_list"].append({"keyword" : "", "question_text" : assistant_content})
+    return JsonResponse(json_ob)
 
 
 def del_user(request):
-    user_key = request.GET['user_key'] #_지역 없는 대표값으로 받음
+    user_key = request.GET['user_key'] #_지역 없는 그냥 유저 랜덤 키값으로 받음
     GptOb.del_user(user_key)
-    return HttpResponse("sc")
+    return HttpResponse("sucess")
