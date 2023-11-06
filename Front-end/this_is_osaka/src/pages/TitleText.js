@@ -2,13 +2,12 @@ import './scss/TitleText.scss';
 // import { useState, useEffect } from 'react';
 
 
-const TitleText = ({children, backgroundSet}) => {
-    const [BackgroundSrc, setBackground, setPrevBackground] = backgroundSet;
+const TitleText = ({children, regional}) => {
+    const [testRegional, setRegional] = regional;
     return (
         <div className="TitleText">
             <img className="logoImg" src="/images/logo.png" alt="THIS IS OSAKA" onMouseOver={() => {
-                setBackground("main.jpg");
-                setPrevBackground(BackgroundSrc);
+                setRegional("main");
             }} />
             {children}
         </div>
