@@ -6,14 +6,22 @@ const Explanation = ({children, detailTitle, detailContent, imgFolder}) => {
     const [changeCategory, setChangeCategory] = useState("")
     const questionImgSrc = `${process.env.PUBLIC_URL}/images/${imgFolder}/${changeCategory}/2.Takoyasu.jpg`
 
+    const categoryList = [{food:'음식'}, {hotel:'호텔'}, {place:'관광지'}] 
+    
+    const mouseClickFunc= (key, i) =>{
+        setChangeCategory(key) 
+        const questionList = document.getElementById("questionList").children;
+        questionList[i].classList.add('colorChange')
+    }
     const QuestionList = ()=>{
-        return (
-            <ul id="questionList">
-                <li onClick={ () => setChangeCategory('food') }>음식</li>
-                <li onClick={ () => setChangeCategory('hotel') }>호텔</li>
-                <li onClick={ () => setChangeCategory('place') }>관광지</li>
-            </ul>
-        )
+        const saveList = [];
+        categoryList.forEach((value, i)=>{
+            for(let key in value){
+                saveList.push(<li onClick={ () =>  mouseClickFunc(key, i) }>{value[key]}</li>)
+            }
+        })
+        return saveList;
+
     }
 
 
@@ -27,7 +35,7 @@ const Explanation = ({children, detailTitle, detailContent, imgFolder}) => {
                     </div>
                     <img className="explanImg" src={questionImgSrc}/>
                     <div className="mapGo">
-                        <a href="https://www.naver.com/">
+                        <a href="https://www.naver.com/" target="_blank">
                             <img src={`${process.env.PUBLIC_URL}/images/map.png`}/>
                         </a>
                     </div>
@@ -45,7 +53,9 @@ const Explanation = ({children, detailTitle, detailContent, imgFolder}) => {
         <div className="Explanation">
             <h3>{detailTitle}</h3>
             <p>{detailContent}</p>
-            {QuestionList()}
+            <ul id="questionList">
+                {QuestionList()}
+            </ul>
             <div className="questionImg">
                 {ExplanationImg()}
             </div>

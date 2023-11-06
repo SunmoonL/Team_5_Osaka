@@ -88,11 +88,27 @@
     ul{
         width:100%;
         li{
-            width:100px;
-            height:50px;
+            &:hover{
+                border:3px solid $main-color;
+                background-color:$white;
+                color:$main-color;
+            }
+            &.colorChange{
+                border:3px solid $main-color;
+                background-color:$white;
+                color:$main-color;
+            }
             cursor:pointer;
             float:left;
             margin-right:20px; 
+            border:3px solid #9D9D9D;
+            background-color:rgba(0, 0, 0, 75%);
+            color:$white;
+            font-size:20px;
+            padding:10px 20px;
+            border-radius: 25px;
+            font-weight:600;
+            
         }
     }
 }
