@@ -1,12 +1,10 @@
 @import './Common.scss';
 
 .RegionalList{
-    width:50%;
     display:flex;
     flex-wrap:wrap;
-    justify-content: center;
-    align-items: center;
     position: absolute;
+    justify-content: center;
     left:50%;
     bottom:0;
     transform: translateX(-50%);
@@ -53,5 +51,26 @@
             }
             
         }
+    }
+}
+@media  (max-width:799px) {
+    .RegionalList{
+        flex-direction: column;
+        width:60%;
+        .listBtn{
+            margin:5px 0;
+            a{
+                font-size:20px;
+                span{
+                    font-size:20px;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width:800px) and (min-width:1600px) {
+    .RegionalList{
+        width:50%;
     }
 }

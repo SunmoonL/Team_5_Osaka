@@ -22,10 +22,21 @@ button{
     background:none;
 }
 .contentBox{
-    width:1500px;
+   //width:1600px;
     height:800px;
     position: relative;
     left:50%; top:50%;
     transform: translate(-50%,-50%);
 }
 
+@media  (max-width:799px) {
+    .contentBox{
+        width:100%;
+    }
+}
+
+@media (min-width:800px) and (max-width:1600px) {
+    .contentBox{
+        width:1600px;
+    }
+}
