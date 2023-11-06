@@ -23,20 +23,23 @@ button{
 }
 .contentBox{
    //width:1600px;
-    height:800px;
-    position: relative;
-    left:50%; top:50%;
-    transform: translate(-50%,-50%);
+    
 }
 
 @media  (max-width:799px) {
     .contentBox{
         width:100%;
+        height:auto;
     }
 }
 
 @media (min-width:800px) and (max-width:1600px) {
     .contentBox{
         width:1600px;
+        height:100%;
+        position: relative;
+        height:800px;
+        left:50%; top:50%;
+        transform: translate(-50%,-50%);
     }
 }

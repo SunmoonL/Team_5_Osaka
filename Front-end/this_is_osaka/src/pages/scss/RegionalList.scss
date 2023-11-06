@@ -1,12 +1,11 @@
 @import './Common.scss';
 
 .RegionalList{
+    //height:100%;
     display:flex;
     flex-wrap:wrap;
-    position: absolute;
-    justify-content: center;
     left:50%;
-    bottom:0;
+    position: absolute;
     transform: translateX(-50%);
     .listBtn{
         &:hover{
@@ -24,9 +23,11 @@
         cursor: pointer;
         background-color: rgba(0, 0, 0, 70%);
         border-radius: 30px;
-        padding: 10px 20px;
+        padding: 0 20px;
         margin:10px;
         text-align:center;
+        height:60px;
+        line-height:60px;
         overflow: hidden;
         a{
             color:rgba(0, 0, 0, 0);
@@ -56,9 +57,12 @@
 @media  (max-width:799px) {
     .RegionalList{
         flex-direction: column;
+        justify-content: flex-start;
+        padding-top:10%;
         width:60%;
         .listBtn{
             margin:5px 0;
+            width:100%;
             a{
                 font-size:20px;
                 span{
@@ -69,8 +73,12 @@
     }
 }
 
-@media (min-width:800px) and (min-width:1600px) {
+@media (min-width:1600px) {
     .RegionalList{
+        flex-direction:row;
+        justify-content: center;
+        align-items: center;
         width:50%;
+        bottom:0;
     }
 }

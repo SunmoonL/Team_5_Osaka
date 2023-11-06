@@ -1,15 +1,11 @@
 @import './Common.scss';
 
 .Explanation {
-    width: 60%;
     height:100%;
     float:left;
     position: relative;
     h3{
-        font-size:60px;
         color:$white;
-        font-weight:700;
-        padding:30px 0 15px;
     }
     p{
         font-size:25px;
@@ -125,16 +121,31 @@
 
 @media  (max-width:799px) {
     .Explanation{
+        width:100%;
+        top:0;
         p, #questionList, .questionImg{
             display:none;
         } 
+        h3{
+            font-size:30px;
+            text-align: center;
+            font-weight:500;
+            height:100px;
+            line-height:100px;
+        }
     }
 }
 
-@media (min-width:800px) and (max-width:1600px) {
+@media (min-width:1600px) {
    .Explanation{
+        width: 60%;
         p, #questionList, .questionImg{
             display:block;
-        } 
+        }
+        h3{
+            font-size:60px;
+            font-weight:700;
+            padding:30px 0 15px;
+        }
     }
 }
