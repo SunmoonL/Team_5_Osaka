@@ -1,6 +1,4 @@
 .LogoZone{
-    width:140px;
-    height:60px;
     position: fixed;
     left:30px; top:30px;
     z-index:20;
@@ -13,5 +11,18 @@
         &.logoIcon{
             float:right;
         }
+    }
+}
+@media  (max-width:799px) {
+    .LogoZone{
+        width: 75px;
+        height:30px;
+    }
+}
+
+@media (min-width:800px) and (max-width:1600px) {
+    .LogoZone{
+        width:140px;
+        height:60px;
     }
 }

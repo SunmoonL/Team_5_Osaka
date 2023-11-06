@@ -122,3 +122,19 @@
         bottom:100%;
     }
 }
+
+@media  (max-width:799px) {
+    .Explanation{
+        p, #questionList, .questionImg{
+            display:none;
+        } 
+    }
+}
+
+@media (min-width:800px) and (max-width:1600px) {
+   .Explanation{
+        p, #questionList, .questionImg{
+            display:block;
+        } 
+    }
+}

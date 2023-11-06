@@ -1,5 +1,14 @@
 .TitleText{
     text-align:center;
+    
+}
+@media  (max-width:799px) {
+    .logoImg{
+        width:60%;
+    }
+}
+
+@media (min-width:800px) and (max-width:1600px) {
     .logoImg{
         width:30%;
     }
