@@ -2,8 +2,9 @@ import './scss/Chatting.scss';
 import { useState, useEffect } from 'react';
 //import {Link} from "react-router-dom";
 
-const Chatting = ({userKey, regional, setContent}) => {
-    // 외않되
+const Chatting = ({userKey, regional, setContent, changeMapLink}) => {
+    // 외않되a
+    const [mapLink, setMapLink] = changeMapLink;
     const [helpArticleDisplay, sethelpArticle] = useState("");
     const [nowChat, setChat] = useState("");
     const [gptChatDelay, setDelay] = useState(false);
@@ -106,11 +107,13 @@ const Chatting = ({userKey, regional, setContent}) => {
                         const initContent = [[answerList[answerListIndex]["first_link"], answerList[answerListIndex]["second_link"], answerList[answerListIndex]["third_link"], answerList[answerListIndex]["fourth_link"], answerList[answerListIndex]["keyword"]]];
                         const initChat = answerList[answerListIndex]["question_text"];
                         
+                        console.log(initChat.split(/[1-4]./).filter((v, i) => i !== 0 && v.indexOf(":") !== -1).map(v => v.split(":")[0]));
                         if (answerListIndex !== 0) { saveChat = ["\n", "\n", ...saveChat]; }
                         saveChat = [ ...initChat, ...saveChat];
                         saveContent = [initContent, ...saveContent];
                         answerListIndex++;
                     }
+                    setMapLink([...mapLink, ...saveContent]);
                 } else {
                     const answerList = JSON.parse(xhttp.responseText)["answer_list"];
                     const initChat = answerList[answerListIndex]["question_text"];
