@@ -195,6 +195,17 @@
     display: inline-block;
     font-size: 1.5rem;
 }
+.imgBox {
+    margin-top: 5rem;
+    width: 100%;
+    overflow: hidden;
+}
+.imgBox > a{
+    font-size: 2rem;
+}
+.explanImg {
+    width: 100%;
+}
 .userChat {
     display: inline-block;
     margin-top: 3rem;
