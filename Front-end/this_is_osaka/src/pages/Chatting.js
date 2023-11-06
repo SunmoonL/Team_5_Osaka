@@ -1,7 +1,9 @@
 import './scss/Chatting.scss';
 import { useState, useEffect } from 'react';
 //import {Link} from "react-router-dom";
+
 const Chatting = ({userKey, regional, setContent}) => {
+    // 외않되
     const [helpArticleDisplay, sethelpArticle] = useState("");
     const [nowChat, setChat] = useState("");
     const [gptChatDelay, setDelay] = useState(false);
