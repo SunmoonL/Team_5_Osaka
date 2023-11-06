@@ -33,7 +33,17 @@ button{
     }
 }
 
-@media (min-width:800px) and (max-width:1600px) {
+@media (min-width:800px) and (max-width:1599px) {
+    .contentBox{
+        width:1600px;
+        height:100%;
+        position: relative;
+        height:800px;
+        left:50%; top:50%;
+        transform: translate(-50%,-50%);
+    }
+}
+@media (min-width:1600px){
     .contentBox{
         width:1600px;
         height:100%;

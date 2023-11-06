@@ -5,8 +5,7 @@ const Logo = ({children}) => {
     return (
         <div className="LogoZone">
             <Link to="/">
-                <img className="logoImg" src="/images/logo.png" alt="THIS IS OSAKA" />
-                <img className="logoIcon" src="/images/logoicon.png" alt="오사카성 아이콘"/>
+                <img className="logoImg" src="/images/logo_mobile.png" alt="THIS IS OSAKA" /> 
                 {children}
             </Link>
         </div>

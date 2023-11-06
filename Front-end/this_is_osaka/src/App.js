@@ -13,7 +13,7 @@ import './pages/scss/Common.scss'
 const App = () => {
   const [testRegional, setRegional] = useState("main");
   const [userKey] = useState(`user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`); // 사용자 중복방지
-  const [imgContent, addContent] = useState({food : null, hotel : null, location : null});
+  const [imgContent, addContent] = useState({food : false, hotel : false, location : false});
 
   const location = useLocation();
   if (location.pathname !== "/" && testRegional === "main") {
@@ -49,7 +49,7 @@ const App = () => {
             <>
               <Logo/>
               <div className="contentBox">
-                <Explanation regional={testRegional} ></Explanation>
+                <Explanation regional={testRegional} imgContent={imgContent} ></Explanation>
                 <Chatting setContent={[imgContent, addContent]} regional={testRegional} userKey={userKey}/>
               </div>
             </>

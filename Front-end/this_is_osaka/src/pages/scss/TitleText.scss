@@ -4,14 +4,17 @@
     
 }
 @media  (max-width:799px) {
-    .logoImg{
+    .mainTitle{
         width:60%;
         margin-top:10%;
     }
 }
 
-@media (min-width:1600px) {
-    .logoImg{
+@media (min-width:800px) and (max-width:1599px) {
+    .mainTitle{
         width:30%;
     }
+}
+@media (min-width:1600px){
+
 }

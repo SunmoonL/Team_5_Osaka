@@ -6,7 +6,7 @@ const TitleText = ({children, regional}) => {
     const [testRegional, setRegional] = regional;
     return (
         <div className="TitleText">
-            <img className="logoImg" src="/images/logo.png" alt="THIS IS OSAKA" onMouseOver={() => {
+            <img className="mainTitle" src="/images/logo.png" alt="THIS IS OSAKA" onMouseOver={() => {
                 setRegional("main");
             }} />
             {children}

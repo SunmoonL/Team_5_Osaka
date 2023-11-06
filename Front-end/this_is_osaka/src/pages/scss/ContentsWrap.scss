@@ -12,6 +12,12 @@
         overflow-x:hidden;
     }
 }
+@media (min-width:800px) and (max-width:1599px) {
+     .ContentsWrap{
+        overflow-y:hidden;
+        overflow-x:hidden;
+    }
+}
 @media (min-width:1600px) {
     .ContentsWrap{
         overflow-y:hidden;

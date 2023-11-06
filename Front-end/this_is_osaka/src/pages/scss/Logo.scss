@@ -2,21 +2,39 @@
     position: fixed;
     z-index:20;
     cursor: pointer;
-    img{
-        height:100%;
-    }
-}
-@media  (max-width:799px) {
-    .LogoZone{
-        height:60px;
-        left:10px; top:10px;
-    }
 }
 
-@media (min-width:800px){
+@media  (max-width:799px) {
+    .LogoZone{
+        width:120px;
+        height:100px;
+        margin-left:25px;
+        img{
+            width:100%;
+            position: absolute;
+            top:50%;
+            transform: translateY(-50%);
+        }
+    }
+}
+@media (min-width:800px) and (max-width:1599px) {
     .LogoZone{
         height:60px;
         left:30px; top:30px;
+         img{
+            width:100%;
+            height:100%;
+        }
+    }
+}
+@media (min-width:1600px){
+    .LogoZone{
+        height:60px;
+        left:30px; top:30px;
+         img{
+            width:100%;
+            height:100%;
+        }
     }
 }
 

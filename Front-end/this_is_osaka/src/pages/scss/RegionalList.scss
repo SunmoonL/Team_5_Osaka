@@ -63,6 +63,7 @@
         .listBtn{
             margin:5px 0;
             width:100%;
+            padding:0;
             a{
                 font-size:20px;
                 span{
@@ -72,7 +73,15 @@
         }
     }
 }
-
+@media (min-width:800px) and (max-width:1599px) {
+    .RegionalList{
+        flex-direction:row;
+        justify-content: center;
+        align-items: center;
+        width:50%;
+        bottom:0;
+    }
+}
 @media (min-width:1600px) {
     .RegionalList{
         flex-direction:row;
