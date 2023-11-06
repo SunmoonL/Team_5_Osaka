@@ -15,11 +15,11 @@
             background-color:rgba(55,78,242,0.7);
             transition: all 0.2s;
             .before{
-                top:-120%;
+                transform: translate(-50%, -120%);
                 transition-duration: 0.2s;
             }
             .after{
-                top:0%;
+                transform: translate(-50%, 0%);
                 transition-duration: 0.2s;
             }
         }
@@ -38,17 +38,16 @@
             span{
                 position: absolute;
                 left:50%;
-                transform: translateX(-50%);
                 font-size:25px;
                 width:100%;
                 text-align: center;
                 font-weight:500;
                 &.before{
-                    top:0%;
+                    transform: translate(-50%, 0%);
                     color:$white;
                 }
                 &.after{
-                    top:120%;
+                    transform: translate(-50%, 120%);
                     color:$white;
                 }
             }
