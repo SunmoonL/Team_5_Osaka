@@ -8,6 +8,16 @@ const Chatting = ({userKey, regional}) => {
     const [gptChatDelay, setDelay] = useState(false);
     const [chatList, addChat] = useState([]);
     const chatProfileSrc = `${process.env.PUBLIC_URL}/images/chat_profile.png`;
+    const nowRegional = {
+        "osaka_port": "오사카만",
+        "dotonbori" : "도톤보리",
+        "nanba": "난바",
+        "shitennogi": "시텐노지사원",
+        "osaka_north": "오사카시북부",
+        "osaka_castle": "오사카성",
+        "sakai&kisiwada":"사카이 & 기시와다",
+        "ikeda": "이케다"
+    }[regional];
     const chatAlert = () => {
         const thisAlert = document.getElementById("chatAlert");
         if (!thisAlert.classList.contains('displayFlag')) {
@@ -80,7 +90,7 @@ const Chatting = ({userKey, regional}) => {
                 targetChat.classList.remove("waitChat");
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/${routString}?user_key=${encodeURIComponent(userKey +"_"+regional)}&title_address=${encodeURIComponent(userChat)}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10093/${routString}?user_key=${encodeURIComponent(userKey +"_"+nowRegional)}&title_address=${encodeURIComponent(userChat)}`, true);
         xhttp.send();
     };
     const startChat = () => {
@@ -108,7 +118,7 @@ const Chatting = ({userKey, regional}) => {
                 slowChat(initChat, chatUl, targetChat);
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/in_region?user_key=${encodeURIComponent(userKey +"_"+regional)}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10093/in_region?user_key=${encodeURIComponent(userKey +"_"+nowRegional)}`, true);
         xhttp.send();
     };
 

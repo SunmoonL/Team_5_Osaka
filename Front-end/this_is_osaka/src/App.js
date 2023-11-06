@@ -11,18 +11,19 @@ import { useState, useEffect } from 'react';
 import './pages/scss/Common.scss'
 
 const App = () => {
-  const [BackgroundSrc, setBackground] = useState("main.jpg"); //메인이미지
-  const [prevBackgroundSrc, setPrevBackground] = useState("main.jpg"); //첫번째 배경 이미지
-  const [imgFolder, setImgFolder] = useState("") //이미지폴더 지정
-  const [detailTitle, setDetailTitle] = useState("main"); //상세페이지 제목
-  const [detailContent, setDetailContent] = useState(""); //상세페이지 제목과 관련된 내용
+  const [testRegional, setRegional] = useState("main");
   const [userKey] = useState(`user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`); // 사용자 중복방지
+  
   const location = useLocation();
-  
-  
-  if (location.pathname !== "/" && detailTitle === "main") {
+  if (location.pathname !== "/" && testRegional === "main") {
     window.location.replace("/");
   }
+  useEffect(() => {
+    if (location.pathname === "/" && testRegional !== "main") {
+      setRegional("main");
+    }
+  }, []);
+
   useEffect(() => {
     window.addEventListener('beforeunload', (e) => {
       const xhttp = new XMLHttpRequest();
@@ -32,16 +33,14 @@ const App = () => {
   }, []);
   return (
     <div className="App">
-      <Background BackgroundSrc={BackgroundSrc} prevBackgroundSrc={prevBackgroundSrc}></Background>
+      <Background regional={[testRegional]}></Background>
       <ContentsWrap>
         <Routes>
           <Route path='/' element={
             <>
             <div className="contentBox">
-              <TitleText backgroundSet={[BackgroundSrc, setBackground, setPrevBackground]}/>
-              <RegionalList setDetailContent={setDetailContent} setDetailTitle={setDetailTitle}
-                            setImgFolder={setImgFolder}
-                            changeBackground={[BackgroundSrc, setBackground]} changePrevBackground={setPrevBackground}/>
+              <TitleText regional={[testRegional, setRegional]}/>
+              <RegionalList regional={[testRegional, setRegional]}/>
             </div>
             </>
           }></Route>
@@ -49,8 +48,8 @@ const App = () => {
             <>
               <Logo/>
               <div className="contentBox">
-                <Explanation detailTitle={detailTitle} detailContent={detailContent} imgFolder={imgFolder}></Explanation>
-                <Chatting regional={detailTitle} userKey={userKey}/>
+                <Explanation regional={testRegional} ></Explanation>
+                <Chatting regional={testRegional} userKey={userKey}/>
               </div>
             </>
           }></Route>

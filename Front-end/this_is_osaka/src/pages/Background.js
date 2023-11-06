@@ -1,20 +1,14 @@
 import './scss/Background.scss';
 import { useState, useEffect } from 'react';
 
-const Background = ({children, BackgroundSrc, prevBackgroundSrc}) => {
-    
-    const nowSrc = `${process.env.PUBLIC_URL}/images/osaka_main_img/${BackgroundSrc}`;
-    const prevSrc = `${process.env.PUBLIC_URL}/images/osaka_main_img/${prevBackgroundSrc}`;
+const Background = ({children, regional}) => {
+    const [testRegional] = regional;
+    const nowSrc = `${process.env.PUBLIC_URL}/images/osaka_main_img/${testRegional}.jpg`;
     
     useEffect(() => {
-        const prevImg = document.getElementById("prevImg");
         const nowImg = document.getElementById("nowImg");
-        
-        prevImg.classList.remove("prevImg");
         nowImg.classList.remove("nowImg");
-        
-        void prevImg.offsetWidth;
-        prevImg.classList.add("prevImg");
+        void nowImg.offsetWidth;
         nowImg.classList.add("nowImg");
     });
 
@@ -22,7 +16,6 @@ const Background = ({children, BackgroundSrc, prevBackgroundSrc}) => {
         <div className="Background">
             <div className="darkenBox"></div>
             <img id="nowImg" className='nowImg' src={nowSrc}></img>
-            <img id='prevImg' className='prevImg' src={prevSrc}></img>
             {children}
         </div>
     );

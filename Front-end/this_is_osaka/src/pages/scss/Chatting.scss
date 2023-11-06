@@ -196,6 +196,7 @@
     font-size: 1.5rem;
 }
 .userChat {
+    display: inline-block;
     margin-top: 3rem;
     border-radius: 1rem 1rem 0 1rem;
     position: relative;
@@ -206,7 +207,8 @@
     background-color: #334BF3;
     color: #eee;
     max-width: calc(70% - 3.6rem);
-    left: 30%;
+    left: 100%;
+    transform: translate(-100%, 0);
 }
 .userChat::after {
     width: 0;
