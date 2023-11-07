@@ -36,7 +36,7 @@
     z-index: 10;
     cursor: pointer;
     border: 0;
-    top: 5%;
+    right:0; top:0;
     font-size: 3rem;
     font-weight: 900;
     color: #fafafa;
@@ -318,7 +318,7 @@
 @media  (max-width:799px) {
     .Chatting{
         width:100%;
-        height:100%;
+        height: calc(100vh - 60px);
         position:relative;
         bottom:0;
         #chattingBox{
@@ -326,7 +326,7 @@
             background-color: rgba(255, 255, 255, 20%);
         }
         #helpButton{
-            right:3%;
+            margin:3% 3% 0 0;
         }
     }
 }
@@ -343,7 +343,7 @@
             font-weight:700;
         }
         #helpButton{
-            right:9%;
+            margin:8%;
         }
     }
 }
@@ -360,7 +360,7 @@
             font-weight:700;
         }
         #helpButton{
-            right:9%;
+            margin:8%;
         }
     }
 }
