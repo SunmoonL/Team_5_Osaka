@@ -113,7 +113,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                         const initChat = answerList[answerListIndex]["question_text"];
                         const initStore = initChat.split(/[1-4]. /).filter((v, i) => i !== 0 && v.indexOf(":") !== -1).map(v => v.split(":")[0]);
                         
-                        console.log(initContent[0][4]);
+                        console.log(initChat.split(/[1-4]. /));
                         saveStore = {...saveStore, [{"맛집" : "food", "숙소" : "hotel", "관광지" : "location"}[initContent[0][4]]]:initStore.map((v, i) => {
                             return [`#${v}`, initContent[0][i]];
                         })};

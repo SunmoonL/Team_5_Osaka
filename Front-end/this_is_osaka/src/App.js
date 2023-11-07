@@ -18,7 +18,6 @@ const App = () => {
   const [storeName, setStoreName] = useState({})//가게이름
 
   const location = useLocation();
-  console.log(imgContent);
   if (location.pathname !== "/" && testRegional === "main") {
     window.location.replace("/");
   }

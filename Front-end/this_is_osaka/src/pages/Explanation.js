@@ -36,7 +36,6 @@ const Explanation = ({children, regional, imgContent, storeName}) => {
     let explanationImg = [];
     
     if (storeName[changeCategory] !== undefined) {
-        console.log(storeName[changeCategory]);
         explanationImg = storeName[changeCategory].map((v, i) => {
             if (v === undefined) { return; }
             return (
