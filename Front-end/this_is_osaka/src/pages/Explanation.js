@@ -24,7 +24,7 @@ const Explanation = ({children, regional, imgContent, storeName}) => {
         "ikeda": "오사카 북부의 자연 트레킹 및 브로드웨이식 공연 감상"
     }[regional];
     const categoryClick = category => setChangeCategory(category);
-    const categoryList = [["음식", "food"], ["호텔", "hotel"], ["관광지", "location"]].map((v, i) => {
+    const categoryList = [["맛집", "food"], ["숙소", "hotel"], ["관광지", "location"]].map((v, i) => {
         if (imgContent[v[1]]) {
             return (
                 <li key={i} onClick={e => categoryClick(v[1])}> {v[0]}</li>
