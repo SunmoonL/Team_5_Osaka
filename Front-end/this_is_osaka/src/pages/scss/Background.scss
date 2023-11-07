@@ -21,15 +21,15 @@
     }
 }
 
-.prevImg {
-    z-index: -1;
-    opacity:0%;
-}
 .nowImg{
+    display: none;
     opacity: 1;
     z-index:2;
     animation-name: rightAni;
     animation-duration:5s;
+}
+.displayFlag {
+    display: block;
 }
 
 @keyframes rightAni{
@@ -40,12 +40,6 @@
         transform: translate(-50%, -50%);
     }
 }
-
-
-
-
-
-
 
 
 
