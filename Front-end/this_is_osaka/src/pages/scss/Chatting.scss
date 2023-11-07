@@ -291,12 +291,12 @@
     letter-spacing:.5px
 }
 
-@media  (max-width:799px) {
+@media  (max-width:810px) {
     .Chatting{
+        top: 60px;
         width:100%;
-        height: calc(100vh - 60px);
+        height: calc(100% - 60px);
         position:relative;
-        bottom:0;
         #chattingBox{
             border-radius:0%;
             background-color: none;
@@ -322,7 +322,9 @@
                 .mapGo{
                     width:15%;
                     aspect-ratio: 1/1;
-                    right:3%; bottom:10%;
+                    left: 97%; 
+                    top: 90%;
+                    transform: translate(-100%, -100%);
                     position: absolute;
                 }
                 .explanImg{
@@ -354,7 +356,7 @@
         
     }
 }
-@media (min-width:800px) and (max-width:1399px) {
+@media (min-width:811px) and (max-width:1399px) {
     .Chatting{
         width:45%;
         height:100%;

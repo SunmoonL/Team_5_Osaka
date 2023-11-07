@@ -54,8 +54,8 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                     targetChat.innerHTML += `
                     <div class="m_imgBox">
                         <a href="${thisLink}" target="_blank">
-                            <img class="mapGo" src="${process.env.PUBLIC_URL}/images/map.png" alt="지도 바로가기" >
                             <img class="explanImg" src="${process.env.PUBLIC_URL}/images/${regional}/${contentList}/${5 - saveContent[contentIndex][thisIndex].length}.jpg" />
+                            <img class="mapGo" src="${process.env.PUBLIC_URL}/images/map.png" alt="지도 바로가기" >
                         </a>
                     </div>
                     `;

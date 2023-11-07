@@ -3,7 +3,6 @@
 .Explanation {
     height:100%;
     float:left;
-    position: relative;
     h3{
         color:$white;
     }
@@ -114,6 +113,7 @@
     .Explanation{
         width:100%;
         height:60px;
+        position: fixed;
         top:0;
         p, #questionList, .questionImg{
             display:none;
@@ -131,6 +131,7 @@
 @media (min-width:800px) and (max-width:1399px) {
    .Explanation{
         width: 50%;
+        position: relative;
         p, #questionList, .questionImg{
             display:block;
         }
@@ -157,6 +158,7 @@
 @media (min-width:1400px){
     .Explanation{
         width: 65%;
+        position: relative;
         p, #questionList, .questionImg{
             display:block;
         }
