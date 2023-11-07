@@ -1,6 +1,5 @@
 import './scss/Chatting.scss';
 import { useState, useEffect } from 'react';
-//import {Link} from "react-router-dom";
 
 const Chatting = ({userKey, regional, setContent, setStore}) => {
     const [storeName, setStoreName] = setStore;
@@ -84,7 +83,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                 <div key={chatList.length}>
                     <div className="userChat">{userChat}</div>
                     <div className="chatProfile">
-                        <img className="profileImg" src={`${chatProfileSrc}`} />
+                        <img className="profileImg" src={`${chatProfileSrc}`} alt="오사카 챗봇"/>
                         <p>오사카 챗봇</p>
                     </div>
                     <div className="gptChat waitChat"></div>`
@@ -146,7 +145,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
         addChat([...chatList, 
             <div key={chatList.length}>
                 <div className="chatProfile">
-                    <img className="profileImg" src={`${chatProfileSrc}`} />
+                    <img className="profileImg" src={`${chatProfileSrc}`} alt="오사카 챗봇"/>
                     <p>오사카 챗봇</p>
                 </div>
                 <div className="gptChat"></div>

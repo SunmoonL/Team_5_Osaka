@@ -1,8 +1,5 @@
 import './scss/RegionalList.scss';
-// import { useState, useEffect } from 'react';
 import {Link} from "react-router-dom";
-import { useState, useEffect } from 'react';
-import Explanation from './Explanation';
 
 const RegionalList = ( {regional} ) => {
     const regionaArray = [

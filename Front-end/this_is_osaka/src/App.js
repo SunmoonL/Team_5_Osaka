@@ -12,17 +12,17 @@ import './pages/scss/Common.scss'
 
 const App = () => {
   
-  const [testRegional, setRegional] = useState("main");
+  const [regionalName, setRegional] = useState("main");
   const [userKey] = useState(`user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`); // 사용자 중복방지
   const [imgContent, addContent] = useState({food : false, hotel : false, location : false});
   const [storeName, setStoreName] = useState({})//가게이름
 
   const location = useLocation();
-  if (location.pathname !== "/" && testRegional === "main") {
+  if (location.pathname !== "/" && regionalName === "main") {
     window.location.replace("/");
   }
   useEffect(() => {
-    if (location.pathname === "/" && testRegional !== "main") {
+    if (location.pathname === "/" && regionalName !== "main") {
       setRegional("main");
     }
   }, []);
@@ -36,14 +36,14 @@ const App = () => {
   }, []);
   return (
     <div className="App">
-      <Background regional={[testRegional]}></Background>
+      <Background regional={[regionalName]}></Background>
       <ContentsWrap>
         <Routes>
           <Route path='/' element={
             <>
             <div className="contentBox">
-              <TitleText regional={[testRegional, setRegional]}/>
-              <RegionalList regional={[testRegional, setRegional]}/>
+              <TitleText regional={[regionalName, setRegional]}/>
+              <RegionalList regional={[regionalName, setRegional]}/>
             </div>
             </>
           }></Route>
@@ -51,8 +51,8 @@ const App = () => {
             <>
               <Logo/>
               <div className="contentBox">
-                <Explanation storeName={storeName} regional={testRegional} imgContent={imgContent} ></Explanation>
-                <Chatting setStore={[storeName, setStoreName]} setContent={[imgContent, addContent]} regional={testRegional} userKey={userKey}/>
+                <Explanation storeName={storeName} regional={regionalName} imgContent={imgContent} ></Explanation>
+                <Chatting setStore={[storeName, setStoreName]} setContent={[imgContent, addContent]} regional={regionalName} userKey={userKey}/>
               </div>
             </>
           }></Route>
