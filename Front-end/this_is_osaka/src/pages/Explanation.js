@@ -7,8 +7,8 @@ const Explanation = ({children, regional, imgContent}) => {
         "osaka_port": "오사카만", 
         "dotonbori" : "도톤보리", 
         "nanba": "난바",
-        "shitennogi": "시텐노지사원", 
-        "osaka_north": "오사카시북부", 
+        "shitennogi": "시텐노지 사원", 
+        "osaka_north": "오사카시 북부", 
         "osaka_castle": "오사카성",
         "sakai&kisiwada":"사카이 & 기시와다", 
         "ikeda": "이케다"
