@@ -183,9 +183,7 @@
     width: 100%;
     overflow: hidden;
 }
-.m_imgBox > a{
-    font-size: 2rem;
-}
+
 .explanImg {
     width: 100%;
 }
@@ -295,12 +293,13 @@
 #chatButton {
     cursor: pointer;
     color: $white;
-    font-weight: 900;
+    font-weight: 500;
     font-size: 1.6rem;
     background: $main-color;
     border: 0;
     border-radius: 0 50rem 50rem 0;
     width: 17%;
+    letter-spacing:.5px
 }
 
 @media  (max-width:799px) {
@@ -322,7 +321,6 @@
             width: 4rem;
             height: 4rem;
             font-size:2rem;
-            padding-left:0.2rem;
         }
         .gptChat {
             font-size: 1.5rem;
@@ -335,8 +333,10 @@
             padding: 1rem 1.8rem;
         }
         .m_imgBox {
-            margin-top: 3rem;
             display:block;
+            a{
+                font-size: 2rem;
+            }
         }
         #helpArticle{
             div:nth-of-type(1) {
@@ -379,7 +379,10 @@
             padding: 1rem 1.8rem;
         }
         .m_imgBox {
-            margin-top: 5rem;
+            display:none;
+            a{
+                font-size: 2rem;
+            }
         }
         #helpArticle{
             div:nth-child(1) {
@@ -421,8 +424,10 @@
             padding: 1rem 1.8rem;
         }
         .m_imgBox {
-            margin-top: 5rem;
             display:none;
+            a{
+                font-size: 2rem;
+            }
         }
         #helpArticle{
             div:nth-child(1) {
@@ -435,8 +440,6 @@
                 font-size: 1.6rem;
             }
         }
-        #chatButton{
-
-        }
+        
     }
 }
