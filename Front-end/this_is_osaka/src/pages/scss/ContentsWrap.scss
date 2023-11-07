@@ -8,19 +8,23 @@
 }
 @media  (max-width:799px) {
     .ContentsWrap{
-        //overflow-y:scroll;
+        overflow-y:hidden;
         overflow-x:hidden;
     }
 }
 @media (min-width:800px) and (max-width:1599px) {
      .ContentsWrap{
-        overflow-y:hidden;
-        overflow-x:hidden;
+        overflow-y:scroll;
+        overflow-x:scroll;
     }
 }
 @media (min-width:1600px) {
     .ContentsWrap{
-        overflow-y:hidden;
+        overflow-y: scroll;
         overflow-x:hidden;
+        &::-webkit-scrollbar{
+            display:none;
+        }
     }
+    
 }
