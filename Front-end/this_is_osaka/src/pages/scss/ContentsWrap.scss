@@ -4,18 +4,24 @@
     position:absolute;
     top:0; left:0;
     z-index:5;
-    
 }
+
 @media  (max-width:799px) {
     .ContentsWrap{
-        overflow-y:hidden;
+        overflow-y:scroll;
         overflow-x:hidden;
+        &::-webkit-scrollbar{
+            display:none;
+        }
     }
 }
 @media (min-width:800px) and (max-width:1599px) {
      .ContentsWrap{
         overflow-y:hidden;
         overflow-x:hidden;
+        &::-webkit-scrollbar{
+            display:none;
+        }
     }
 }
 @media (min-width:1600px) {

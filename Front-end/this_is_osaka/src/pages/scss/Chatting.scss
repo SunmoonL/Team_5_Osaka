@@ -1,19 +1,11 @@
 @import './Common.scss';
 
-
-
-
 #chattingBox {
     display: flex;
     flex-direction: column;
     align-items: center;
     width:100%; height:100%;
     aspect-ratio: 0.768292683/1;
-    //height: 70rem;
-    //top: 50%;
-    //left: 70%;
-    //transform: translate(-50%, -50%);
-    //position: absolute;
     position:relative;
 }
 #helpButton {
@@ -35,11 +27,8 @@
     flex-direction: column;
     justify-content: space-evenly;
     border-radius: .5rem;
-    width: 70%;
     height: 35%;
     border: 0;
-    margin-top: 5%;
-    left: 9%;
     background: $main-color;
     position: absolute;
 }
@@ -180,12 +169,10 @@
 }
 .m_imgBox {
     margin-top: 5rem;
-    width: 100%;
+    //width: 100%;
     overflow: hidden;
 }
-.m_imgBox > a{
-    font-size: 2rem;
-}
+
 .explanImg {
     width: 100%;
 }
@@ -295,20 +282,21 @@
 #chatButton {
     cursor: pointer;
     color: $white;
-    font-weight: 900;
+    font-weight: 500;
     font-size: 1.6rem;
     background: $main-color;
     border: 0;
     border-radius: 0 50rem 50rem 0;
     width: 17%;
+    letter-spacing:.5px
 }
 
-@media  (max-width:799px) {
+@media  (max-width:810px) {
     .Chatting{
+        top: 60px;
         width:100%;
-        height: calc(100vh - 60px);
+        height: calc(100% - 60px);
         position:relative;
-        bottom:0;
         #chattingBox{
             border-radius:0%;
             background-color: none;
@@ -316,13 +304,6 @@
         .chatProfile > p {
             color:$white;
             text-shadow: 1px 1px 3px $black;
-        }
-        #helpButton{
-            margin:5% 10% 0 0 ;
-            width: 4rem;
-            height: 4rem;
-            font-size:2rem;
-            padding-left:0.2rem;
         }
         .gptChat {
             font-size: 1.5rem;
@@ -335,10 +316,32 @@
             padding: 1rem 1.8rem;
         }
         .m_imgBox {
-            margin-top: 3rem;
             display:block;
+            a{
+                position:relative;
+                .mapGo{
+                    width:15%;
+                    aspect-ratio: 1/1;
+                    left: 97%; 
+                    top: 90%;
+                    transform: translate(-100%, -100%);
+                    position: absolute;
+                }
+                .explanImg{
+                    height:100%;
+                }
+            }
+        }
+        #helpButton{
+            width: 4rem;
+            height: 4rem;
+            font-size:2rem;
+            position:fixed;
+            margin:2% 2% 0 0;
         }
         #helpArticle{
+            width:60%;
+            right:5%;
             div:nth-of-type(1) {
                 padding-left: 1rem;
                 height: 20%;
@@ -353,20 +356,14 @@
         
     }
 }
-@media (min-width:800px) and (max-width:1599px) {
+@media (min-width:811px) and (max-width:1399px) {
     .Chatting{
-        width:35%;
+        width:45%;
         height:100%;
         float:right;
         #chattingBox{
             border-radius: .5rem;
             background-color: #EFEFEF;
-        }
-        #helpButton{
-            margin:5% 8% 0 0;
-            width: 5rem;
-            height: 5rem;
-            font-size: 5rem;
         }
         .gptChat {
             font-size: 1.7rem;
@@ -379,9 +376,21 @@
             padding: 1rem 1.8rem;
         }
         .m_imgBox {
-            margin-top: 5rem;
+            display:none;
+            a{
+                font-size: 2rem;
+            }
+        }
+        #helpButton{
+            margin:5% 8% 0 0;
+            width: 5rem;
+            height: 5rem;
+            font-size: 3rem;
         }
         #helpArticle{
+            width:70%;
+            left:9%;
+            margin-top: 5%;
             div:nth-child(1) {
                 padding-left: 1rem;
                 height: 25%;
@@ -395,7 +404,7 @@
         
     }
 }
-@media (min-width:1600px) {
+@media (min-width:1400px) {
     .Chatting{
         width:35%;
         height:100%;
@@ -403,12 +412,6 @@
         #chattingBox{
             border-radius: .5rem;
             background-color: #EFEFEF;
-        }
-        #helpButton{
-            margin:5% 8% 0 0;
-            width: 5rem;
-            height: 5rem;
-            font-size: 3rem;
         }
         .gptChat {
             font-size: 1.7rem;
@@ -421,10 +424,21 @@
             padding: 1rem 1.8rem;
         }
         .m_imgBox {
-            margin-top: 5rem;
             display:none;
+            a{
+                font-size: 2rem;
+            }
+        }
+        #helpButton{
+            margin:5% 8% 0 0;
+            width: 5rem;
+            height: 5rem;
+            font-size: 3rem;
         }
         #helpArticle{
+            width:70%;
+            left:9%;
+            margin-top: 5%;
             div:nth-child(1) {
                 padding-left: 1rem;
                 height: 25%;
@@ -435,8 +449,6 @@
                 font-size: 1.6rem;
             }
         }
-        #chatButton{
-
-        }
+        
     }
 }

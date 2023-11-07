@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 //import {Link} from "react-router-dom";
 
 const Chatting = ({userKey, regional, setContent, setStore}) => {
-    // 외않되a
     const [storeName, setStoreName] = setStore;
     const [helpArticleDisplay, sethelpArticle] = useState("");
     const [nowChat, setChat] = useState("");
@@ -54,14 +53,17 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                     const thisLink = saveContent[contentIndex][thisIndex].shift();
                     targetChat.innerHTML += `
                     <div class="m_imgBox">
-                        <img class="explanImg" src="${process.env.PUBLIC_URL}/images/${regional}/${contentList}/${5 - saveContent[contentIndex][thisIndex].length}.jpg" />
-                        <a href="${thisLink}" target="_blank">바로가기</a>
+                        <a href="${thisLink}" target="_blank">
+                            <img class="explanImg" src="${process.env.PUBLIC_URL}/images/${regional}/${contentList}/${5 - saveContent[contentIndex][thisIndex].length}.jpg" />
+                            <img class="mapGo" src="${process.env.PUBLIC_URL}/images/map.png" alt="지도 바로가기" >
+                        </a>
                     </div>
                     `;
                     if (saveContent[contentIndex][thisIndex].length === 1) { 
                         jumpCount++;
                         contentIndex++; 
                     }
+                    initChat.shift();
                 }
             }
             chatUl.scrollTop = chatUl.scrollHeight;

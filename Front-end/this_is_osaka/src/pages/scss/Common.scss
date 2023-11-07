@@ -1,9 +1,9 @@
-$gradation-color: linear-gradient(to bottom, #7D83EC, #334BF3);
 $main-color:#374EF2;
 $font-ko: 'Noto Sans KR', sans-serif;
 $font-en: 'Almarai', sans-serif;
 $white:#fafafa;
 $black:#222222;
+
 *{
     color:$black;
     font-family: $font-ko;
@@ -21,35 +21,36 @@ button{
     border:none;
     background:none;
 }
-.contentBox{
-   //width:1600px;
-    
-}
+
 
 @media  (max-width:799px) {
     .contentBox{
         width:100%;
-        height:auto;
+        height:100%;
+        overflow-y:scroll;
+        overflow-x:hidden;
+        &::-webkit-scrollbar{
+            display:none;
+        }
     }
 }
 
-@media (min-width:800px) and (max-width:1599px) {
+@media (min-width:800px) and (max-width:1399px) {
     .contentBox{
-        width:1600px;
-        height:100%;
+        width:95%;
+        height:80%;
         position: relative;
-        height:800px;
         left:50%; top:50%;
         transform: translate(-50%,-50%);
     }
 }
-@media (min-width:1600px){
+
+@media (min-width:1400px){
     .contentBox{
-        width:1600px;
-        height:100%;
+        width:1400px;
         position: relative;
-        height:800px;
-        left:50%; top:100px;
+        height:80%;
+        left:50%; top:10%;
         transform: translateX(-50%);
     }
 }

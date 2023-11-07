@@ -19,23 +19,28 @@
 }
 @media (min-width:800px) and (max-width:1599px) {
     .LogoZone{
-        height:60px;
-        left:30px; top:30px;
+        height:7%;
+        overflow:hidden;
+        padding:1%;
         a{display: inline;}
          img{
             width:100%;
             height:100%;
+            
         }
     }
 }
+
 @media (min-width:1600px){
     .LogoZone{
-        height:60px;
-        left:30px; top:30px;
+        height:7%;
+        overflow:hidden;
+        padding:1%;
         a{display: inline;}
          img{
             width:100%;
             height:100%;
+            
         }
     }
 }
