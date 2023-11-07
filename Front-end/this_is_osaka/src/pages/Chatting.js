@@ -63,6 +63,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                         jumpCount++;
                         contentIndex++; 
                     }
+                    initChat.shift();
                 }
             }
             chatUl.scrollTop = chatUl.scrollHeight;
