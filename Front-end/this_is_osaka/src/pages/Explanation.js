@@ -1,8 +1,8 @@
 import './scss/Explanation.scss';
 import { useState, useEffect } from 'react';
 
-const Explanation = ({children, regional, imgContent}) => {
-    const [changeCategory, setChangeCategory] = useState("food")
+const Explanation = ({children, regional, imgContent, storeName}) => {
+    const [changeCategory, setChangeCategory] = useState("")
     const nowRegional = {
         "osaka_port": "오사카만", 
         "dotonbori" : "도톤보리", 
@@ -32,24 +32,28 @@ const Explanation = ({children, regional, imgContent}) => {
         } else {
             return ;
         }
-
     });
-    const explanationImg = ["# 스시", "# 우동", "# 돈까스", "# 타코야끼"].map((v, i) => {
-        return (
-            <div key={i} className="imgBox">
-                <div className="darken">
-                    <p className="imgTitle">{v}</p>
-                </div>
-                <a href="https://www.naver.com/" target="_blank">
-                <img className="explanImg" src={`${process.env.PUBLIC_URL}/images/${regional}/${changeCategory}/${i+1}.jpg`} />
-                    <div className="mapGo">
-                        <img src={`${process.env.PUBLIC_URL}/images/map.png`} />
+    let explanationImg = [];
+    
+    if (storeName[changeCategory] !== undefined) {
+        console.log(storeName[changeCategory]);
+        explanationImg = storeName[changeCategory].map((v, i) => {
+            if (v === undefined) { return; }
+            return (
+                <div key={i} className="imgBox">
+                    <div className="darken">
+                        <p className="imgTitle">{v[0]}</p>
                     </div>
-                </a>
-            </div>
-        );
-    });
-
+                    <a href={v[1]} target="_blank">
+                        <img className="explanImg" src={`${process.env.PUBLIC_URL}/images/${regional}/${changeCategory}/${i + 1}.jpg`} />
+                        <div className="mapGo">
+                            <img src={`${process.env.PUBLIC_URL}/images/map.png`} />
+                        </div>
+                    </a>
+                </div>
+            );
+        });
+    }
     return (
         <div className="Explanation">
             <h3>{nowRegional}</h3>

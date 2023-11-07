@@ -2,9 +2,9 @@ import './scss/Chatting.scss';
 import { useState, useEffect } from 'react';
 //import {Link} from "react-router-dom";
 
-const Chatting = ({userKey, regional, setContent, changeMapLink}) => {
+const Chatting = ({userKey, regional, setContent, setStore}) => {
     // 외않되a
-    const [mapLink, setMapLink] = changeMapLink;
+    const [storeName, setStoreName] = setStore;
     const [helpArticleDisplay, sethelpArticle] = useState("");
     const [nowChat, setChat] = useState("");
     const [gptChatDelay, setDelay] = useState(false);
@@ -35,11 +35,12 @@ const Chatting = ({userKey, regional, setContent, changeMapLink}) => {
         let contentIndex = 0;
         let jumpCount = 0;
         const oneWordInit = () => {
-            const thisChat = initChat.shift();
             if (initChat.length === 0) {
                 setDelay(false);
                 return;
             }
+
+            const thisChat = initChat.shift();
             if (thisChat === "\n") { targetChat.innerHTML += "<br>"; }
             else { targetChat.innerHTML += thisChat; }
             if (saveContent !== undefined && thisChat === "\n" && initChat[0] === "\n") {
@@ -62,7 +63,6 @@ const Chatting = ({userKey, regional, setContent, changeMapLink}) => {
                         contentIndex++; 
                     }
                 }
-
             }
             chatUl.scrollTop = chatUl.scrollHeight;
             setTimeout(oneWordInit, Math.random() * 70);
@@ -74,8 +74,8 @@ const Chatting = ({userKey, regional, setContent, changeMapLink}) => {
             chatAlert();
             return;
         }
-        if (userChat.trim() === "") {
-            alert("이놈!");
+        else if (userChat.trim() === "") {
+            return;
         }
         else {
             addChat([...chatList, 
@@ -102,6 +102,8 @@ const Chatting = ({userKey, regional, setContent, changeMapLink}) => {
                 const category = JSON.parse(xhttp.responseText)["category"];
                 let saveChat = [];
                 let saveContent = [];
+                let saveImg = {};
+                let saveStore = {};
                 let answerListIndex = 0;
 
                 if (category === "q_list_data" ) {
@@ -109,14 +111,20 @@ const Chatting = ({userKey, regional, setContent, changeMapLink}) => {
                     while (answerListIndex < answerList.length) {
                         const initContent = [[answerList[answerListIndex]["first_link"], answerList[answerListIndex]["second_link"], answerList[answerListIndex]["third_link"], answerList[answerListIndex]["fourth_link"], answerList[answerListIndex]["keyword"]]];
                         const initChat = answerList[answerListIndex]["question_text"];
+                        const initStore = initChat.split(/[1-4]. /).filter((v, i) => i !== 0 && v.indexOf(":") !== -1).map(v => v.split(":")[0]);
                         
-                        console.log(initChat.split(/[1-4]./).filter((v, i) => i !== 0 && v.indexOf(":") !== -1).map(v => v.split(":")[0]));
+                        console.log(initContent[0][4]);
+                        saveStore = {...saveStore, [{"맛집" : "food", "숙소" : "hotel", "관광지" : "location"}[initContent[0][4]]]:initStore.map((v, i) => {
+                            return [`#${v}`, initContent[0][i]];
+                        })};
+                        saveImg = {...saveImg, [{"맛집" : "food", "숙소" : "hotel", "관광지" : "location"}[initContent[0][4]]] :true};
                         if (answerListIndex !== 0) { saveChat = ["\n", "\n", ...saveChat]; }
                         saveChat = [ ...initChat, ...saveChat];
                         saveContent = [initContent, ...saveContent];
                         answerListIndex++;
                     }
-                    setMapLink([...mapLink, ...saveContent]);
+                    setStoreName({...storeName, ...saveStore});
+                    addContent({...imgContent, ...saveImg});
                 } else {
                     const answerList = JSON.parse(xhttp.responseText)["answer_list"];
                     const initChat = answerList[answerListIndex]["question_text"];
@@ -180,6 +188,9 @@ const Chatting = ({userKey, regional, setContent, changeMapLink}) => {
     useEffect(() => {
         startChat();
     }, []);
+    useEffect(() => {
+        addContent({food : false, hotel : false, location : false});
+    }, [])
     return (
         <div className="Chatting">
             <section id="chattingBox">
