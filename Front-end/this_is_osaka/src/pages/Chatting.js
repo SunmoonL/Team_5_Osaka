@@ -74,6 +74,9 @@ const Chatting = ({userKey, regional, setContent, changeMapLink}) => {
             chatAlert();
             return;
         }
+        if (userChat.trim() === "") {
+            alert("이놈!");
+        }
         else {
             addChat([...chatList, 
                 <div key={chatList.length}>

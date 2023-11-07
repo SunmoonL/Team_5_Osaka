@@ -24,7 +24,6 @@ const Background = ({children, regional}) => {
             <img id="osaka_castle" className='nowImg' src={`${process.env.PUBLIC_URL}/images/osaka_main_img/osaka_castle.jpg`}></img>
             <img id="sakai&kisiwada" className='nowImg' src={`${process.env.PUBLIC_URL}/images/osaka_main_img/sakai&kisiwada.jpg`}></img>
             <img id="ikeda" className='nowImg' src={`${process.env.PUBLIC_URL}/images/osaka_main_img/ikeda.jpg`}></img>
-            
             {children}
         </div>
     );
