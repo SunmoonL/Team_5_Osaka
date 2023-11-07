@@ -1,9 +1,9 @@
-$gradation-color: linear-gradient(to bottom, #7D83EC, #334BF3);
 $main-color:#374EF2;
 $font-ko: 'Noto Sans KR', sans-serif;
 $font-en: 'Almarai', sans-serif;
 $white:#fafafa;
 $black:#222222;
+
 *{
     color:$black;
     font-family: $font-ko;
@@ -21,10 +21,7 @@ button{
     border:none;
     background:none;
 }
-.contentBox{
-   //width:1600px;
-    
-}
+
 
 @media  (max-width:799px) {
     .contentBox{
@@ -42,6 +39,7 @@ button{
         transform: translate(-50%,-50%);
     }
 }
+
 @media (min-width:1400px){
     .contentBox{
         width:1400px;

@@ -5,71 +5,75 @@
     position: relative;
     width: 100vw;
     height: 100vh;
-    .darkenBox{
-        width:100%; height:100%;
-        background-color:rgba(0, 0, 0, 25%);
-        position:absolute;
-        z-index:0;
+
+    .darkenBox {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 25%);
+        position: absolute;
+        z-index: 0;
     }
-    >img{
+
+    >img {
         z-index: -2;
         position: absolute;
-        width:120%; height:100%;
-        left:50%; top:50%;
+        width: 120%;
+        height: 100%;
+        left: 50%;
+        top: 50%;
         transform: translate(-50%, -50%);
-        object-fit:cover;
+        object-fit: cover;
     }
 }
 
-.nowImg{
+.nowImg {
     display: none;
     opacity: 1;
-    z-index:2;
+    z-index: 2;
     animation-name: rightAni;
-    animation-duration:5s;
+    animation-duration: 5s;
 }
+
 .displayFlag {
     display: block;
 }
 
-@keyframes rightAni{
-    0%{
+@keyframes rightAni {
+    0% {
         transform: translate(-45%, -50%);
     }
-    100%{
+
+    100% {
         transform: translate(-50%, -50%);
     }
 }
 
-
-
-
-
-
-
-@keyframes topAni{
-    0%{
-        top:40%
+@keyframes topAni {
+    0% {
+        top: 40%
     }
-    100%{
-       top:50%;
-    }
-}
-@keyframes bottomAni{
-    0%{
-        bottom:45%
-    }
-    100%{
-       bottom:50%;
+
+    100% {
+        top: 50%;
     }
 }
 
-@keyframes leftAni{
-    0%{
-        left:45%;
+@keyframes bottomAni {
+    0% {
+        bottom: 45%
     }
-    100%{
-       left:50%;
+
+    100% {
+        bottom: 50%;
     }
 }
 
+@keyframes leftAni {
+    0% {
+        left: 45%;
+    }
+
+    100% {
+        left: 50%;
+    }
+}

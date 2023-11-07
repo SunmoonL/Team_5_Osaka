@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 //import {Link} from "react-router-dom";
 
 const Chatting = ({userKey, regional, setContent, setStore}) => {
-    // 외않되a
     const [storeName, setStoreName] = setStore;
     const [helpArticleDisplay, sethelpArticle] = useState("");
     const [nowChat, setChat] = useState("");
