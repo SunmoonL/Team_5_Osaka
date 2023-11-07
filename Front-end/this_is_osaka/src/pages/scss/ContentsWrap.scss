@@ -8,7 +8,7 @@
 }
 @media  (max-width:799px) {
     .ContentsWrap{
-        //overflow-y:scroll;
+        overflow-y:hidden;
         overflow-x:hidden;
     }
 }
@@ -20,7 +20,11 @@
 }
 @media (min-width:1600px) {
     .ContentsWrap{
-        overflow-y:hidden;
+        overflow-y: scroll;
         overflow-x:hidden;
+        &::-webkit-scrollbar{
+            display:none;
+        }
     }
+    
 }
