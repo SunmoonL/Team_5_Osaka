@@ -42,7 +42,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
             const thisChat = initChat.shift();
             if (thisChat === "\n") { targetChat.innerHTML += "<br>"; }
             else { targetChat.innerHTML += thisChat; }
-            if (saveContent !== undefined && thisChat === "\n" && initChat[0] === "\n") {
+            if (saveContent.length > 0 && thisChat === "\n" && initChat[0] === "\n") {
                 if (jumpCount > 0) { jumpCount--; }
                 else {
                     const contentList = {
@@ -160,7 +160,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                 const initChat = [...xhttp.responseText];
                 const getChat = document.getElementsByClassName("gptChat");
                 const targetChat = getChat[getChat.length - 1];
-                slowChat(initChat, chatUl, targetChat);
+                slowChat(initChat, chatUl, targetChat, []);
             }
         };
         xhttp.open("GET", `http://kkms4001.iptime.org:10093/in_region?user_key=${encodeURIComponent(userKey +"_"+nowRegional)}`, true);
