@@ -29,8 +29,6 @@
     border-radius: .5rem;
     height: 35%;
     border: 0;
-    
-    
     background: $main-color;
     position: absolute;
 }
@@ -171,7 +169,7 @@
 }
 .m_imgBox {
     margin-top: 5rem;
-    width: 100%;
+    //width: 100%;
     overflow: hidden;
 }
 
@@ -320,7 +318,16 @@
         .m_imgBox {
             display:block;
             a{
-                font-size: 2rem;
+                position:relative;
+                .mapGo{
+                    width:15%;
+                    aspect-ratio: 1/1;
+                    right:3%; bottom:10%;
+                    position: absolute;
+                }
+                .explanImg{
+                    height:100%;
+                }
             }
         }
         #helpButton{
