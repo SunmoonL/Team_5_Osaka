@@ -30,7 +30,7 @@ const Explanation = ({children, regional, imgContent}) => {
                 <li key={i} onClick={e => categoryClick(v[1])}> {v[0]}</li>
             );
         } else {
-            return <></>;
+            return ;
         }
 
     });

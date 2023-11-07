@@ -22,7 +22,9 @@ const RegionalList = ( {regional} ) => {
         saveList.push(
             <div className="listBtn" key={i}  onMouseEnter={e => {
                 setRegional(v.regional);
-            }}>
+            }} onTouchStart={e=>{
+                setRegional(v.regional);
+            }} > 
                 <Link to="/detail_page" >{v.title}<span className="before">{v.title}</span><span className="after">{v.title}</span></Link>
             </div>
         );

@@ -52,7 +52,7 @@ const Chatting = ({userKey, regional, setContent, changeMapLink}) => {
                     }[saveContent[contentIndex][thisIndex][saveContent[contentIndex][thisIndex].length - 1]];
                     const thisLink = saveContent[contentIndex][thisIndex].shift();
                     targetChat.innerHTML += `
-                    <div class="imgBox">
+                    <div class="m_imgBox">
                         <img class="explanImg" src="${process.env.PUBLIC_URL}/images/${regional}/${contentList}/${5 - saveContent[contentIndex][thisIndex].length}.jpg" />
                         <a href="${thisLink}" target="_blank">바로가기</a>
                     </div>

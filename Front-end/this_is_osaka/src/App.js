@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react';
 import './pages/scss/Common.scss'
 
 const App = () => {
+  
   const [testRegional, setRegional] = useState("main");
   const [userKey] = useState(`user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`); // 사용자 중복방지
   const [imgContent, addContent] = useState({food : false, hotel : false, location : false});
