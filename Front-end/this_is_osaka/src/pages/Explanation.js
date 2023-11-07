@@ -34,7 +34,7 @@ const Explanation = ({children, regional, imgContent, storeName}) => {
         }
     });
     let explanationImg = [];
-    
+
     if (storeName[changeCategory] !== undefined) {
         explanationImg = storeName[changeCategory].map((v, i) => {
             if (v === undefined) { return; }
@@ -53,6 +53,15 @@ const Explanation = ({children, regional, imgContent, storeName}) => {
             );
         });
     }
+    useEffect(() => {
+        if (imgContent["food"]) {
+            setChangeCategory("food");
+        } else if (imgContent["hotel"]) {
+            setChangeCategory("hotel");
+        } else if (imgContent["location"]) {
+            setChangeCategory("location");
+        }
+    }, [imgContent]);
     return (
         <div className="Explanation">
             <h3>{nowRegional}</h3>
