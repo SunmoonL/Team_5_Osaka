@@ -60,6 +60,8 @@ const Explanation = ({children, regional, imgContent, storeName}) => {
             setChangeCategory("hotel");
         } else if (imgContent["location"]) {
             setChangeCategory("location");
+        } else {
+            setChangeCategory("");
         }
     }, [imgContent]);
     return (
