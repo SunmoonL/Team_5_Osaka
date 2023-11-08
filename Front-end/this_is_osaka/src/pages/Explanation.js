@@ -53,9 +53,9 @@ const Explanation = ({children, regional, imgContent, storeName}) => {
         });
     }
     useEffect(() => {    // 조건을 확인 후 Content가 있다면 그 Content를 현재 카테고리로 변경, 없다면 빈값으로 변경하는 구문
-        if (imgContent["food"]) { setChangeCategory("food");} 
+        if (imgContent["location"]) { setChangeCategory("location");} 
+        else if (imgContent["food"]) { setChangeCategory("food");} 
         else if (imgContent["hotel"]) { setChangeCategory("hotel");} 
-        else if (imgContent["location"]) { setChangeCategory("location");} 
         else { setChangeCategory(""); }
     }, [imgContent]);   // 랜더링직후와 imgContent의 변경이 일어날때 실행되는 구문
     return (

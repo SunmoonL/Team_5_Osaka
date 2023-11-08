@@ -21,7 +21,6 @@ const App = () => {
   if (location.pathname !== "/" && regionalName === "main") { // 상태에 맞는 위치에서 벗어날 경우 메인 페이지로 이동
     window.location.replace("/");
   }
-제
   useEffect(() => {
     window.addEventListener('beforeunload', () => { // 유저키를 서버로 보내서 대화내용 삭제
       const xhttp = new XMLHttpRequest();
