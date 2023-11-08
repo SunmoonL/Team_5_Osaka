@@ -108,8 +108,8 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                 const category = JSON.parse(xhttp.responseText)["category"];        // 비동기로 받은 채팅의 종류
                 let saveChat = [];          // 비동기로 받은 채팅을 저장하는 임시 배열
                 let saveContent = [];       // 비동기로 받은 content를 저장하는 임시 배열
-                let saveImg = {};           // 비동기로 받은 content의 공개 여부를 저장하는 임시 배열
-                let saveStore = {};         // 비동기로 받은 가게의 이름과 위치 정보를 저장하는 임시배열
+                let saveImg = {};           // 비동기로 받은 content의 공개 여부를 저장하는 임시 객체
+                let saveStore = {};         // 비동기로 받은 가게의 이름과 위치 정보를 저장하는 임시 객체
                 let answerListIndex = 0;    // 비동기로 받은 리스트의 인덱스
 
                 if (category === "q_list_data" ) {  // DB에 저장된 답변으로 들어올때 실행되는 구문
