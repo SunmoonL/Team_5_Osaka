@@ -52,6 +52,11 @@
                 background-color: rgba(0,0,0,80%);
                 transition-duration: 0.4s;
                 cursor: pointer;
+                p {
+                    width:70%;
+                    word-break:keep-all;
+                    display: inline-block;
+                }
             }
             .explanImg{
                 position:absolute;
