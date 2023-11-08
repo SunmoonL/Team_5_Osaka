@@ -150,7 +150,8 @@
         }
         .explanImg{
             height:110%;
-            width:auto;
+            width:110%;
+            object-fit: cover;
         }
     }
 }
@@ -173,7 +174,9 @@
             font-weight:600;
         }
         .explanImg{
-            width:100%;
+            height:110%;
+            width:110%;
+            object-fit: cover;
         }
     }
 }
