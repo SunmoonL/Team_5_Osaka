@@ -12,28 +12,24 @@ import './pages/scss/Common.scss'
 
 const App = () => {
   
-  const [regionalName, setRegional] = useState("main");
+  const [regionalName, setRegional] = useState("main"); // 현재 위치
   const [userKey] = useState(`user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`); // 사용자 중복방지
-  const [imgContent, addContent] = useState({food : false, hotel : false, location : false});
-  const [storeName, setStoreName] = useState({})//가게이름
+  const [imgContent, addContent] = useState({food : false, hotel : false, location : false}); // 요소 이미지 확인
+  const [storeName, setStoreName] = useState({}) //가게이름
+  const location = useLocation(); // 라우터 정보 가져오기
 
-  const location = useLocation();
-  if (location.pathname !== "/" && regionalName === "main") {
+  if (location.pathname !== "/" && regionalName === "main") { // 상태에 맞는 위치에서 벗어날 경우 메인 페이지로 이동
     window.location.replace("/");
   }
-  useEffect(() => {
-    if (location.pathname === "/" && regionalName !== "main") {
-      setRegional("main");
-    }
-  }, []);
 
   useEffect(() => {
-    window.addEventListener('beforeunload', (e) => {
+    window.addEventListener('beforeunload', (e) => { // 유저키를 서버로 보내서 대화내용 중복 방지
       const xhttp = new XMLHttpRequest();
       xhttp.open("GET", `http://kkms4001.iptime.org:10093/del_user?user_key=${encodeURIComponent(userKey)}`, true);
       xhttp.send();
     });
   }, []);
+
   return (
     <div className="App">
       <Background regional={[regionalName]}></Background>
