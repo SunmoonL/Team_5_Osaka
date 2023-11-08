@@ -62,6 +62,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                         jumpCount++;
                         contentIndex++; 
                     }
+                    targetChat.innerHTML += `<div class="spaceBar"></div>`;
                     initChat.shift();
                 }
             }
