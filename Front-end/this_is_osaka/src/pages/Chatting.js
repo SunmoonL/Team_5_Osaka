@@ -156,13 +156,13 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                 <div className="gptChat"></div>
             </div>
         ]);
-        setDelay(true);       // gpt의 채팅이 시작했다는 걸 알리는 코드
+        setDelay(true);      // gpt의 채팅이 시작했다는 걸 알리는 코드
         const xhttp = new XMLHttpRequest();
-        const chatUl = document.getElementById("chatArticle");
+        const chatUl = document.getElementById("chatArticle");  // 채팅이 입력될때 항상 하단에 채팅창을 고정시킬 DOM 객체
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState === 4 && xhttp.status === 200) {
-                const initChat = [...xhttp.responseText];
-                const gptChat = document.getElementsByClassName("gptChat")[0];
+                const initChat = [...xhttp.responseText];                       // 비동기로 들어온 gpt의 채팅
+                const gptChat = document.getElementsByClassName("gptChat")[0];  // gpt의 채팅이 들어갈 DOM 객체
                 slowChat(initChat, chatUl, gptChat, []);
             }
         };
@@ -170,29 +170,29 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
         xhttp.send();
     };
 
-    const chatInputEvent = (e) => setChat(e.target.value);
-    const chatInputSbmitEvent = (e) => {
+    const chatInputEvent = (e) => setChat(e.target.value); // 유저가 채팅창에 글자를 입력할때마다 state 변경
+    const chatInputSbmitEvent = (e) => {        // 채팅입력 도중 엔터키를 누르면 전송
         if (e.key === "Enter") {
             submitChat(nowChat, "answer_gpt");
             setChat("");
         }
     };
-    const chatButtonEvent = () => {
+    const chatButtonEvent = () => {             // 채팅입력 도중 전송버튼을 누르면 전송
         submitChat(nowChat, "answer_gpt");
         setChat("");
     };
-    const helpButtonEvent = () => {
+    const helpButtonEvent = () => {             // 도움말 페이지를 토글 형식으로현
         if (helpArticleDisplay === "") { sethelpArticle('displayFlag'); }
         else { sethelpArticle(''); }
     };
-    const questionListEvent = (e) => {
+    const questionListEvent = (e) => {          // 도움말을 클릭하면 해당 내용을 보내는 함수
         const userChat = e.target.innerHTML;
         submitChat(userChat, "answer_q_list");
     };
-    useEffect(() => {
+    useEffect(() => {                           // 지역에 들어왔을때 단 한번 첫번째로 실행되는 구문
         startChat();
     }, []);
-    useEffect(() => {
+    useEffect(() => {                           // content 초기화
         addContent({food : false, hotel : false, location : false});
     }, []);
 
