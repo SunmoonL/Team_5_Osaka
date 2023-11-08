@@ -148,7 +148,6 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
             messages = messages,
             temperature = 0,
             top_p = 0.5,
-            stop = "5",
             #n=1,
             functions = [
                 {
