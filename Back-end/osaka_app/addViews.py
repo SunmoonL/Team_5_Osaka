@@ -16,7 +16,7 @@ class GptOb:
         GptOb.__user_list[user_key] = [{"role": "system", "content": "당신은 오사카 여행 가이드이다."}]
 
     @staticmethod
-    def append_user2(user_key):
+    def append_user2(user_key):#------------------------이걸로바뀜
         selected_region = user_key.split("_")[1]
         GptOb.__user_list[user_key] = [{"role": "system", "content": f"당신은 오사카 여행 {selected_region} 지역 가이드이다."}]
 
@@ -116,8 +116,11 @@ def answer_q_list2(request): #바뀐데이터에 따라 이 함수로 사용
 
 def answer_gpt(request): #사용자가 질문창으로 질문함
     selected_region = request.GET['user_key'].split("_")[1]
+    print(selected_region)
+    print(request.GET["user_key"])
+    print(request.GET["title_address"])
     keyword_list = ["숙소", "맛집", "관광지"]
-    denial_list = ["외", "다른", "말고", "밖에"]
+    denial_list = ["외", "다른", "말고", "그밖에", "아니"]
     denial_chek = False
     for keyword in [*keyword_list]:
         if keyword not in request.GET["title_address"]:
@@ -138,44 +141,29 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
         print(json_ob)
         return JsonResponse(json_ob)
 
-    #messages = GptOb.getter_userlist(request.GET['user_key'])
-    #print(len(messages))
-    
     
     def gpt_api_request(messages,user_key):
+        print( "메세지:", messages)
         completion = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
             messages = messages,
             temperature = 0,
-            top_p = 0.5,
-            #n=1,
-            functions = [
-                {
-                    "name": "result",
-                    "description": "주어진 주제에 답변하기",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "result": {
-                                "type": "string",
-                                "description": "주어진 주제에 답변하기",
-                            }
-                        },
-                        "required": ["result"],
-                    },
-                }
-            ]
+            top_p = 0.5
         )
+        '''
         if completion.choices[0].message.get("function_call") != None:
             assistant_content = completion.choices[0].message["function_call"]["arguments"]["result"].strip()
             GptOb.append_assistant_a(user_key, assistant_content)
             return assistant_content
+        
         else:
             assistant_content = completion.choices[0].message["content"].strip()
             GptOb.append_assistant_a(user_key, assistant_content)
             return assistant_content
-        
-
+        '''
+        assistant_content = completion.choices[0].message["content"].strip()
+        GptOb.append_assistant_a(user_key, assistant_content)
+        return assistant_content
 
 
 
@@ -218,7 +206,8 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
         assistant_content = "알맞은 답변을 찾지 못했습니다. 다시 질문해 주세요."
         print(e)
     finally:
-        print(GptOb.getter_userlist(request.GET['user_key']))
+        #print(GptOb.getter_userlist(request.GET['user_key']))
+        print()
     json_ob = {"answer_list": [], "category" : "gpt_data"}
     json_ob["answer_list"].append({"question_text" : assistant_content})
     return JsonResponse(json_ob)
