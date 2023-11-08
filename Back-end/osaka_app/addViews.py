@@ -213,9 +213,10 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
         assistant_content = gpt_api_request(messages, request.GET["user_key"])
         #assistant_content = gpt_api_request2(messages, request.GET["user_key"])---------------------------
         print("max_tokens 방지 완료")
-    except:
+    except Exception as e:
         GptOb.del_last_q(request.GET['user_key'])
         assistant_content = "알맞은 답변을 찾지 못했습니다. 다시 질문해 주세요."
+        print(e)
     finally:
         print(GptOb.getter_userlist(request.GET['user_key']))
     json_ob = {"answer_list": [], "category" : "gpt_data"}
