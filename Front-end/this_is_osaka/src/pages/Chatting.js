@@ -75,11 +75,9 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
         if (gptChatDelay) {
             chatAlert();
             return;
-        }
-        else if (userChat.trim() === "") {
+        } else if (userChat.trim() === "") {
             return;
-        }
-        else {
+        } else {
             addChat([...chatList, 
                 <div key={chatList.length}>
                     <div className="userChat">{userChat}</div>
@@ -87,7 +85,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                         <img className="profileImg" src={`${chatProfileSrc}`} alt="오사카 챗봇"/>
                         <p>오사카 챗봇</p>
                     </div>
-                    <div className="gptChat waitChat"></div>`
+                    <div className="gptChat waitChat"></div>
                 </div>
             ]);
             sethelpArticle('');
@@ -191,7 +189,8 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
     }, []);
     useEffect(() => {
         addContent({food : false, hotel : false, location : false});
-    }, [])
+    }, []);
+
     return (
         <div className="Chatting">
             <section id="chattingBox">
