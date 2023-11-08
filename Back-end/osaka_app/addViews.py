@@ -7,12 +7,18 @@ from osaka_app import key
 
 openai.api_key = key.api_key
 
+
 class GptOb:
     __user_list = {}
     
     @staticmethod
     def append_user(user_key):
         GptOb.__user_list[user_key] = [{"role": "system", "content": "당신은 오사카 여행 가이드이다."}]
+
+    @staticmethod
+    def append_user2(user_key):
+        selected_region = user_key.split("_")[1]
+        GptOb.__user_list[user_key] = [{"role": "system", "content": f"당신은 오사카 여행 {selected_region} 지역 가이드이다."}]
 
     @staticmethod
     def getter_userlist(user_key):
@@ -136,13 +142,12 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
     #print(len(messages))
     
     
-    def gtp_api_request(messages,user_key):
+    def gpt_api_request(messages,user_key):
         completion = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
             messages = messages,
             temperature = 0,
             top_p = 0.5,
-            stop = "5",
             #n=1,
             functions = [
                 {
@@ -169,22 +174,49 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
             assistant_content = completion.choices[0].message["content"].strip()
             GptOb.append_assistant_a(user_key, assistant_content)
             return assistant_content
+        
+
+
+
+
+
+    def gpt_api_request2(messages,user_key): #-----------------------------------바뀔거
+        selected_region = user_key.split("_")[1]
+        region_model_list = {"이케다" : "ft:gpt-3.5-turbo-0613:osaka::8IEirXmE", "도톤보리" : "ft:gpt-3.5-turbo-0613:osaka::8IO3UnwV"}
+        completion = openai.ChatCompletion.create(
+            model = region_model_list[selected_region],
+            messages = messages,
+            temperature = 0,
+            top_p = 0.5,
+            stop="5",
+            #n=1,
+        )
+        assistant_content = completion.choices[0].message["content"].strip()
+        GptOb.append_assistant_a(user_key, assistant_content)
+        return assistant_content
+
+
                
-    GptOb.append_user_q(request.GET['user_key'], f"{selected_region}에 갈 것이다. {request.GET['title_address']}") #userkey : 랜덤값_지역
+    GptOb.append_user_q(request.GET['user_key'], f"{selected_region}에 갈 것이다. 오사카 여행 가이드의 입장에서 {request.GET['title_address']} 4개의 예시를 추천해줘.") #userkey : 랜덤값_지역
+    #------------------------------------------------------------윗줄 이밑에껄로 바뀔거
+    #GptOb.append_user_q(request.GET['user_key'], request.GET['title_address'])
     messages = GptOb.getter_userlist(request.GET['user_key'])
     assistant_content = ""
     try:
-        assistant_content = gtp_api_request(messages, request.GET["user_key"])
+        assistant_content = gpt_api_request(messages, request.GET["user_key"])
+        #assistant_content = gpt_api_request2(messages, request.GET["user_key"])----------------------------
     except openai.error.InvalidRequestError: #max_tokens 방지
         print("max_tokens방지 시작")
         GptOb.max_max_tokens_prevention(request.GET["user_key"])
         messages = GptOb.getter_userlist(request.GET["user_key"])
         #다시 요청------
-        assistant_content = gtp_api_request(messages, request.GET["user_key"])
+        assistant_content = gpt_api_request(messages, request.GET["user_key"])
+        #assistant_content = gpt_api_request2(messages, request.GET["user_key"])---------------------------
         print("max_tokens 방지 완료")
-    except:
+    except Exception as e:
         GptOb.del_last_q(request.GET['user_key'])
         assistant_content = "알맞은 답변을 찾지 못했습니다. 다시 질문해 주세요."
+        print(e)
     finally:
         print(GptOb.getter_userlist(request.GET['user_key']))
     json_ob = {"answer_list": [], "category" : "gpt_data"}
