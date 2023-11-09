@@ -45,6 +45,10 @@ class GptOb: #정적 클래스를 사용하여 유저마다 유효한 GPT 요청
     @staticmethod
     def max_max_tokens_prevention(user_key):
         del GptOb.__user_list[user_key][3:7]
+    
+    @staticmethod
+    def get_last_a(user_key): #gpt의 마지막답변 가져오기 - 답변끊겼을때 사용
+        return GptOb.__user_list[user_key][len(GptOb.__user_list[user_key]) - 1]
 
 
 
@@ -121,7 +125,7 @@ def answer_q_list2(request): #바뀐데이터에 따라 이 함수로 사용
 def answer_gpt(request): #사용자가 질문창으로 질문함
     selected_region = request.GET['user_key'].split("_")[1]
     keyword_list = ["숙소", "맛집", "관광지"] #----미리준비된 DB데이터 키워드 -(빠르고 정확한 답변을 위해 사용)
-    denial_list = ["외", "다른", "말고", "그밖에", "아니", "라멘", "우동", "스시", "초밥"] #해당 예외 단어 리스트에 포함된 키워드 갖고있으면 GPT에게 물어보기 
+    denial_list = ["외", "다른", "말고", "그밖에", "아니", "라멘", "우동", "스시", "초밥", "생선"] #해당 예외 단어 리스트에 포함된 키워드 갖고있으면 GPT에게 물어보기 
     denial_chek = False #예외 단어 포함여부
     for keyword in [*keyword_list]:
         if keyword not in request.GET["title_address"]:
@@ -157,47 +161,34 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
             temperature = 0,
             top_p = 0.5
         )
-        '''
-        if completion.choices[0].message.get("function_call") != None:
-            assistant_content = completion.choices[0].message["function_call"]["arguments"]["result"].strip()
-            GptOb.append_assistant_a(user_key, assistant_content)
-            return assistant_content
         
-        else:
-            assistant_content = completion.choices[0].message["content"].strip()
-            GptOb.append_assistant_a(user_key, assistant_content)
-            return assistant_content
-        '''
         assistant_content = completion.choices[0].message["content"].strip()
         GptOb.append_assistant_a(user_key, assistant_content) #GptOb 클래스를 사용해 gpt응답 content값을 static 속성인 유저 리스트 안에 현재 유저의 키값으로 대화 추가
+        if assistant_content[len(assistant_content)-1] not in [".", "?", "!"]: #답변끊김현상확인
+            break_num = assistant_content.split("\n\n")[len(assistant_content.split("\n\n"))-1][0] #답변끊긴 항목번호 리턴
+            return break_num
         return assistant_content
 
 
-
-
-    def gpt_api_request2(messages,user_key): #-----------------------------------바뀔거 #파인튜닝 과정을 거친 GPT모델을 활용해 지역별 질문 응답받기
-        selected_region = user_key.split("_")[1]
-        region_model_list = {"이케다" : "ft:gpt-3.5-turbo-0613:osaka::8IEirXmE", "도톤보리" : "ft:gpt-3.5-turbo-0613:osaka::8IO3UnwV"}
-        completion = openai.ChatCompletion.create(
-            model = region_model_list[selected_region],
-            messages = messages,
-            temperature = 0.2, #생성 표본 다양성을 조절하여 일관성있는 출력결과 생성
-            top_p = 0.5, #토큰 선택 기준을 제어하여 츌력 결과의 다양성 조절
-            #n=1,
-        )
-        assistant_content = completion.choices[0].message["content"].strip()
-        GptOb.append_assistant_a(user_key, assistant_content)
-        return assistant_content
-
-
-               
-    #GptOb.append_user_q(request.GET['user_key'], f"{selected_region}에 갈 것이다. 오사카 여행 가이드의 입장에서 {request.GET['title_address']} 4가지의 예시를 추천해줘.") #userkey : 랜덤값_지역
-    #------------------------------------------------------------윗줄 이밑에껄로 바뀔거
     GptOb.append_user_q(request.GET['user_key'], f"{selected_region}에여행갈것이다.{request.GET['title_address'].replace(' ', '')}")
     messages = GptOb.getter_userlist(request.GET['user_key'])
     assistant_content = ""
     try:
         assistant_content = gpt_api_request(messages, request.GET["user_key"])
+        if len(assistant_content) == 1:#끊긴 항목번호로 받았을 경우
+            print("끊김현상해결시작")
+            last_assistant_content = GptOb.get_last_a(request.GET["user_key"])["content"] #해당유저의 질문&응답 리스트에서 마지막 GPT답변 가져오기
+            last_list = last_assistant_content.split("\n\n")
+            del last_list[len(last_list)-1] #끊긴 항목번호 삭제
+            prev_assistant_content = "\n\n".join(last_list) + "\n\n" #끊긴 항목번호 바로 전 항목답변까지 문자열로 합치기
+            GptOb.append_user_q(request.GET['user_key'], f"{assistant_content}번항목계속말해줘") #GPT에게 continue 요청
+            messages = GptOb.getter_userlist(request.GET['user_key'])
+            next_assistant_content = gpt_api_request(messages, request.GET["user_key"])
+            next_list = next_assistant_content.split("\n\n")
+            del  next_list[0] #직전 항목에 이어서 답변한 응답에 첫 설명부분 자르기
+            next_result_content = "\n\n".join(next_list) #이어 답변한
+            print(prev_assistant_content + next_result_content)
+            assistant_content = prev_assistant_content + next_result_content
         #assistant_content = gpt_api_request2(messages, request.GET["user_key"])----------------------------
     except openai.error.InvalidRequestError: #max_tokens 방지
         print("max_tokens방지 시작")
