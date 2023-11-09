@@ -1,7 +1,7 @@
 import openai
 
 
-openai.api_key = "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"
+openai.api_key = ""
 
 
 messages = [{"role": "system", "content": "당신은 오사카 여행 가이드이다."}]
