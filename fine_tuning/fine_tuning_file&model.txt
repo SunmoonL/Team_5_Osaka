@@ -1,3 +1,8 @@
--이케다 file_id : file-qdiBmhZtfbUedXgLHaoIGaOP     model : ft:gpt-3.5-turbo-0613:osaka::8IEirXmE
--도톤보리 file_id : file-NUZXqPIkwRzhuOC2R5Lm0Ffj   model : ft:gpt-3.5-turbo-0613:osaka::8IO3UnwV
--시텐노지 file_id : file-c7863SSc9abZ5Y712AV3tMVJ   model:
+-이케다 file_id : file-qdiBmhZtfbUedXgLHaoIGaOP             model : ft:gpt-3.5-turbo-0613:osaka::8IEirXmE
+-도톤보리 file_id : file-NUZXqPIkwRzhuOC2R5Lm0Ffj           model : ft:gpt-3.5-turbo-0613:osaka::8IO3UnwV
+-시텐노지 사원 file_id : file-c7863SSc9abZ5Y712AV3tMVJ      model: ft:gpt-3.5-turbo-0613:osaka::8IVlEETP
+-오사카성 file_id : file-Hhn4iVVtcoFooD80ILKcVluu           model:
+
+-모든지역 file_id : file-U78s81RKUeVO0k2hbtZPvyGc           model:ft:gpt-3.5-turbo-0613:osaka::8IbyJAsp
+
+-모든지역2 file_id : file-NLalAVlPHdco5bOBbLoM8i0Q
