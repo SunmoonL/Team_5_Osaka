@@ -1,17 +1,14 @@
 import './scss/Background.scss';
 import { useEffect } from 'react';
 
-const Background = ({children, regional}) => {
-    const [regionalName] = regional; // 햔재 지역
-    
+const Background = ({children, regionalName}) => {
     useEffect(() => {
-        const nowFlag = document.getElementsByClassName("displayFlag")[0]; // 이전 사진의 DOM객체 참조
-        const nowImg = document.getElementById(regionalName); // 현재 지역의 이름을 ID로 갖고 있는 img DOM객체 참조
+        const prevImg = document.getElementsByClassName("displayFlag")[0]; // 이전 사진의 DOM객체 참조
+        const nowImg = document.getElementById(regionalName);              // 현재 지역의 이름을 ID로 갖고 있는 img DOM객체 참조
         
-        nowFlag.classList.remove("displayFlag"); // 이전 사진의 flag를 삭제해서 display:none 활성화
-        nowImg.classList.add("displayFlag"); // 현재 지역에 flag를 추가해서 display:none 무력화
-    });
-        
+        prevImg.classList.remove("displayFlag");    // 이전 사진의 flag를 삭제해서 display:none 활성화
+        nowImg.classList.add("displayFlag");        // 현재 지역에 flag를 추가해서 display:none 무력화
+    }, [regionalName]);
     return (
         <div className="Background">
             <div className="darkenBox"></div>

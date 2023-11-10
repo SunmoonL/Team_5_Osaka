@@ -28,13 +28,19 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
             }, 2000);
         }
     };
+    const scrollMoveToBottom = () => {
+        const chatUl = document.getElementById("chatArticle");
+        chatUl !== null && (chatUl.scrollTop = chatUl.scrollHeight); 
+    };
     const contentInit = (thisIndex, contentIndex, saveContent, targetChat, initChat, jumpCount) => { // 모바일에서 채팅안에 요소를 넣기위한 함수
+        const thisCategory = saveContent[contentIndex][thisIndex].pop();
         const contentList = {
             "관광지": "location",
             "맛집": "food",
             "숙소": "hotel"
-        }[saveContent[contentIndex][thisIndex][saveContent[contentIndex][thisIndex].length - 1]];
+        }[thisCategory];
         const thisLink = saveContent[contentIndex][thisIndex].shift();
+        saveContent[contentIndex][thisIndex].push(thisCategory);
         targetChat.innerHTML += `
                     <div class="m_imgBox">
                         <a href="${thisLink}" target="_blank">
@@ -51,7 +57,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
         initChat.shift();
         return [contentIndex, jumpCount];
     };
-    const slowChat = (initChat, chatUl, targetChat, saveContent) => { // gpt의 채팅이 하나씩 나오도록하고 contentInit 함수를 실행 시키기위한 함수
+    const slowChat = (initChat, targetChat, saveContent) => { // gpt의 채팅이 하나씩 나오도록하고 contentInit 함수를 실행 시키기위한 함수
         let thisIndex = 0;
         let contentIndex = 0;
         let jumpCount = 0;
@@ -68,7 +74,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                     [contentIndex, jumpCount] = contentInit(thisIndex, contentIndex, saveContent, targetChat, initChat, jumpCount);
                 }
             }
-            chatUl.scrollTop = chatUl.scrollHeight;             // 채팅창이 항상 밑에있게 해주는 코드
+            scrollMoveToBottom();               // 채팅창이 항상 밑에있게 해주는 코드
             if (initChat.length !== 0) {
                 setTimeout(oneWordInit, Math.random() * 70);    // 0.ms ~ 70ms 사이의 랜덤한 시간마다 재귀를 시켜주는 코드
             } else {
@@ -84,7 +90,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
         } else if (userChat.trim() === "") {        // 유저가 whitespace로만 이루어진 채팅을 썼을때 함수를 종료하는 조건
             return;
         } else {
-            addChat([...chatList,                           // 새로 들어온 유저 채팅을 추가하고 답변을 할 gpt 채팅을 추가하는 코드
+            addChat([...chatList,                   // 새로 들어온 유저 채팅을 추가하고 답변을 할 gpt 채팅을 추가하는 코드
                 <div key={chatList.length}>
                     <div className="userChat">{userChat}</div>
                     <div className="chatProfile">
@@ -99,9 +105,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
         }
 
         const xhttp = new XMLHttpRequest();
-        const chatUl = document.getElementById("chatArticle");
 
-        chatUl.scrollTop = chatUl.scrollHeight;
         xhttp.onreadystatechange = () => {                          // 비동기로 값이 오면 실행되는 함수
             if (xhttp.readyState === 4 && xhttp.status === 200) {   // 비동기의 통신 결과가 정상적인지 확인하는 조건
                 const targetChat = document.getElementsByClassName("waitChat")[0];  // 마지막에 추가한 gpt의 DOM 객체
@@ -135,7 +139,7 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
                     const initChat = answerList[answerListIndex]["question_text"];
                     saveChat = [ ...initChat, ...saveChat];
                 }
-                slowChat([...saveChat], chatUl, targetChat, saveContent); // 한글자씩 실행되는 함수 호출
+                slowChat([...saveChat], targetChat, saveContent); // 한글자씩 실행되는 함수 호출
                 targetChat.classList.remove("waitChat");
             }
         };
@@ -158,12 +162,12 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
         ]);
         setDelay(true);      // gpt의 채팅이 시작했다는 걸 알리는 코드
         const xhttp = new XMLHttpRequest();
-        const chatUl = document.getElementById("chatArticle");  // 채팅이 입력될때 항상 하단에 채팅창을 고정시킬 DOM 객체
+        
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState === 4 && xhttp.status === 200) {
                 const initChat = [...xhttp.responseText];                       // 비동기로 들어온 gpt의 채팅
                 const gptChat = document.getElementsByClassName("gptChat")[0];  // gpt의 채팅이 들어갈 DOM 객체
-                slowChat(initChat, chatUl, gptChat, []);
+                slowChat(initChat, gptChat, []);
             }
         };
         xhttp.open("GET", `http://kkms4001.iptime.org:10093/in_region?user_key=${encodeURIComponent(userKey +"_"+nowRegional)}`, true);
@@ -195,7 +199,9 @@ const Chatting = ({userKey, regional, setContent, setStore}) => {
     useEffect(() => {                           // content 초기화
         addContent({food : false, hotel : false, location : false});
     }, []);
-
+    useEffect(() => {                           // 채팅입력시 스크롤 하단 고정
+        scrollMoveToBottom();
+    }, [chatList]);
     return (
         <div className="Chatting">
             <section id="chattingBox">
