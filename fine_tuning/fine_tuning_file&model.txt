@@ -3,6 +3,8 @@
 -시텐노지 사원 file_id : file-c7863SSc9abZ5Y712AV3tMVJ      model: ft:gpt-3.5-turbo-0613:osaka::8IVlEETP
 -오사카성 file_id : file-Hhn4iVVtcoFooD80ILKcVluu           model:
 
--모든지역 file_id : file-U78s81RKUeVO0k2hbtZPvyGc           model:ft:gpt-3.5-turbo-0613:osaka::8IbyJAsp
+-모든지역 file_id : file-U78s81RKUeVO0k2hbtZPvyGc           model: ft:gpt-3.5-turbo-0613:osaka::8IbyJAsp
 
--모든지역2 file_id : file-NLalAVlPHdco5bOBbLoM8i0Q
+-모든지역2 file_id : file-NLalAVlPHdco5bOBbLoM8i0Q          model: ft:gpt-3.5-turbo-0613:osaka::8IhfBxkx
+
+-라멘 다코야끼 데이터추가 file_id : file-T3APZkE1s0yWDhSBiKrmcZCx      model : ft:gpt-3.5-turbo-0613:osaka::8J75TYQo
