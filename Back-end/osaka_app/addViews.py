@@ -3,8 +3,8 @@ from osaka_app.models import QuestionList
 from django.http import JsonResponse
 import openai
 from osaka_app import key
-
-
+from osaka_app import food_list
+'''
 openai.api_key = key.api_key
 
 
@@ -91,17 +91,6 @@ def in_region2(request): #------------------------
     GptOb.append_user(user_key) #새로운 유저리스트 추가 - GptOb 클래스 사용으로 유저 & 지역마다 gpt 대화 리스트 갖고있도록 함.
     region = request.GET['user_key'].split("_")[1]
     q_result = QuestionList.objects.get(title_address=f"{region}_지역에 대해 소개해줘") #유저키_지역 에서 지역을 가져와 기본 글이 될 지역소개를 DB에서 획득
-    #여기서------------------------
-    '''
-    GptOb.append_user_q(user_key, q_result.title_address.split("_")[0] + q_result.title_address.split("_")[1])
-    GptOb.append_assistant_a(user_key, q_result.question_text)
-    region_q_list = QuestionList.objects.filter(title_address__contains=region) & QuestionList.objects.filter(title_address__contains="추천")
-    for region_q in region_q_list:
-        GptOb.append_user_q(user_key, region_q.title_address.split("_")[1])
-        GptOb.append_assistant_a(user_key, region_q.question_text)
-    print(GptOb.getter_userlist(user_key))
-    '''
-    #---------------------여기까지는 파인튜닝으로 바꾸면 없애기 --원래 이걸로 prompt 대화 형식으로 메시지 쌓아서 학습시키는 거였음
     return HttpResponse(q_result.question_text)
 
 def answer_q_list(request): #질문리스트에 있는 질문 클릭, 
@@ -124,8 +113,8 @@ def answer_q_list2(request): #바뀐데이터에 따라 이 함수로 사용
 
 def answer_gpt(request): #사용자가 질문창으로 질문함
     selected_region = request.GET['user_key'].split("_")[1]
-    keyword_list = ["숙소", "맛집", "관광지"] #----미리준비된 DB데이터 키워드 -(빠르고 정확한 답변을 위해 사용)
-    denial_list = ["외", "다른", "말고", "그밖에", "아니", "라멘", "우동", "스시", "초밥", "생선"] #해당 예외 단어 리스트에 포함된 키워드 갖고있으면 GPT에게 물어보기 
+    keyword_list = ["숙소", "맛집", "관광지"] #----미리준비된 DB데이터의 질문컬럼 키워드
+    denial_list = ["외", "다른", "말고", "그밖에", "아니", "아닌", *food_list.food_list] #예외 단어 리스트로 DB데이터과 GPT데이터 응답으로 구분
     denial_chek = False #예외 단어 포함여부
     for keyword in [*keyword_list]:
         if keyword not in request.GET["title_address"]:
@@ -137,15 +126,15 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
                 denial_chek = True
                 break
 
-    if len(keyword_list) != 0 and denial_chek == False: #질문리스트 키워드 한개라도 포함, 예외단어 포함하지않을때만 DB에서 해당 키워드 관련 데이터들 가져와서 json으로 전송
-        json_ob = {"answer_list": [], "category" : "q_list_data"} #category키로 데이터 유형 지정해서 Front-end단에 응답보내기
+    if len(keyword_list) != 0 and denial_chek == False: #질문리스트 키워드 한개라도 포함, 예외단어 포함하지않을때만 DB에서 해당 키워드 관련 데이터 가져와서 json으로 전송
+        json_ob = {"answer_list": [], "category" : "q_list_data"} #category키로 데이터 유형 지정해서(DB데이터 / GPT데이터) Front-end단에 응답보내기
         for keyword in keyword_list:
             q_result_list = QuestionList.objects.filter(title_address__contains=keyword) & \
             QuestionList.objects.filter(title_address__contains=selected_region)
             for q_result in q_result_list:
-                json_ob["answer_list"].append({"keyword" : keyword, 
-                                               "question_text" : q_result.question_text, 
-                                               "first_link" : q_result.first_link, 
+                json_ob["answer_list"].append({"keyword" : keyword,  #질문리스트DB 질문컬럼 키워드
+                                               "question_text" : q_result.question_text, #질문리스트DB의 답변 데이터
+                                               "first_link" : q_result.first_link, #질문리스트DB의 현재 지역과 키워드에 해당하는 관련 링크들
                                                "second_link" : q_result.second_link, 
                                                "third_link" : q_result.third_link, 
                                                "fourth_link" : q_result.fourth_link
@@ -156,10 +145,10 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
     
     def gpt_api_request(messages,user_key): #GPT 요청 함수
         completion = openai.ChatCompletion.create(
-            model = "ft:gpt-3.5-turbo-0613:osaka::8IhfBxkx",
+            model = "ft:gpt-3.5-turbo-0613:osaka::8IhfBxkx", #준비한 데이터셋으로 파인튜닝한 모델 사용
             messages = messages,
-            temperature = 0,
-            top_p = 0.5
+            temperature = 0.2, #텍스트의 다양성 조절
+            top_p = 0.5 # 텍스트 생성의 토큰 선택 폭 조절
         )
         
         assistant_content = completion.choices[0].message["content"].strip()
@@ -189,7 +178,6 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
             next_result_content = "\n\n".join(next_list) #이어 답변한
             print(prev_assistant_content + next_result_content)
             assistant_content = prev_assistant_content + next_result_content
-        #assistant_content = gpt_api_request2(messages, request.GET["user_key"])----------------------------
     except openai.error.InvalidRequestError: #max_tokens 방지
         print("max_tokens방지 시작")
         GptOb.max_max_tokens_prevention(request.GET["user_key"]) #해당 지역 유저키의 질문응답리스트에서 오래된 데이터 삭제 후 재요청하여 max_tokens방지
@@ -213,3 +201,4 @@ def del_user(request):
     user_key = request.GET['user_key'] #_지역 없는 그냥 유저 랜덤 키값으로 받음
     GptOb.del_user(user_key)
     return HttpResponse("sucess")
+'''

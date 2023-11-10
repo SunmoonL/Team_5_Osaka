@@ -27,3 +27,4 @@ yarn-error.log*
 #apikey
 key.py
 fine_tuning_test.py
+fine_tuning.py
