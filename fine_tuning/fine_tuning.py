@@ -1,5 +1,5 @@
 import openai
-openai.api_key = "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"
+openai.api_key = ""
 '''
 openai.File.create(
     file=open("test.jsonl", "rb"),

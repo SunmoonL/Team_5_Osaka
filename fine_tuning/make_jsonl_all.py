@@ -237,8 +237,9 @@ new_list = []
 for region_item in osaka_all_list:
     if region_item[2]["content"][len(region_item[2]["content"]) - 1] != ".":
         print(region_item)
+
+
 #지역별 질문 & 응답 리스트를 gpt의 파인튜닝 학습을 위한 jsonl 형식으로 파싱하는 과정
-'''
 for list_item in osaka_all_list:
     keyword_list = ["약국", "경찰서", "편의점", "병원", "카페", "ATM", "다코야끼", "라멘", "초밥", "우동", "회"] #다양한 어투로 반복학습 시킬 데이터 키워드 리스트
     for keyword in keyword_list:
@@ -256,4 +257,3 @@ with open("osaka_all_region4.jsonl", "w") as file: #위 과정에서 완성된 �
     for i in range(num_data):
         json_line = json.dumps({"messages" : new_list[i]})
         file.write(json_line + "\n")
-'''
