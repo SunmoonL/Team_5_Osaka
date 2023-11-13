@@ -8,3 +8,4 @@
 -모든지역2 file_id : file-NLalAVlPHdco5bOBbLoM8i0Q          model: ft:gpt-3.5-turbo-0613:osaka::8IhfBxkx
 
 -라멘 다코야끼 데이터추가 file_id : file-T3APZkE1s0yWDhSBiKrmcZCx      model : ft:gpt-3.5-turbo-0613:osaka::8J75TYQo
+-음식 추가 file_id : file-bfLeppYikqHo1JFYivVYDCNT

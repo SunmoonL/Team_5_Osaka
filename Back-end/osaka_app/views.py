@@ -145,7 +145,7 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
 
     def gpt_api_request(messages,user_key): #GPT API요청 함수
         completion = openai.ChatCompletion.create(
-            model = "ft:gpt-3.5-turbo-0613:osaka::8J75TYQo", #준비한 데이터셋으로 파인튜닝한 모델 사용
+            model = "ft:gpt-3.5-turbo-0613:osaka::8K8irfoe", #준비한 데이터셋으로 파인튜닝한 모델 사용
             messages = messages,
             temperature = 0.2, #텍스트의 다양성 조절
             top_p = 0.5 # 텍스트 생성의 토큰 선택 폭 조절
@@ -153,15 +153,14 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
         
         assistant_content = completion.choices[0].message["content"].strip()
         GptOb.append_assistant_a(user_key, assistant_content) #GptOb 클래스를 사용해 GPT응답객체의 content값을 해당 유저 리스트 안에 대화 추가
-        if assistant_content[len(assistant_content)-1] not in [".", "?", "!"]: #답변끊김현상확인
-            break_num = assistant_content.split("\n\n")[len(assistant_content.split("\n\n"))-1][0] #답변끊긴 항목번호 리턴
+        if assistant_content[len(assistant_content)-1] not in [".", "?", "!"]:                          #답변끊김현상확인
+            break_num = assistant_content.split("\n\n")[len(assistant_content.split("\n\n"))-1][0]      #답변끊긴 항목번호 리턴
             return break_num
         return assistant_content
 
-    #여기서 유저 질문넣기 전에 검사--해서 변환해서 넣기 공백제거한걸로 검사
     user_question = request.GET['title_address'].replace(' ', '')
-    filter_list = filter_keyword.filter_keyword_list
-    for filter_ob in filter_list:
+    filter_list = filter_keyword.filter_keyword_list                            #같은 키워드이지만 다양한 표기법으로 표현된 단어 리스트
+    for filter_ob in filter_list:                                               #훈련한 키워드에 맞게 알맞은 표기법으로 바꾸는 과정
         for filter_txt in filter_ob["filtered_str"].split(" "):
             if filter_txt in user_question:
                 user_question = user_question.replace(filter_txt, filter_ob["correct_str"])
@@ -171,19 +170,19 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
     assistant_content = ""
     try:
         assistant_content = gpt_api_request(messages, request.GET["user_key"])
-        if len(assistant_content) == 1: #답변이 끊긴 경우, 끊긴 항목의 번호로 반환받음
+        if len(assistant_content) == 1:                                                     #답변이 끊긴 경우, 끊긴 항목의 번호로 반환받음
             print("끊김현상해결시작")
-            last_assistant_content = GptOb.get_last_a(request.GET["user_key"])["content"] #해당 유저의 질문&응답 리스트에서 마지막 GPT답변 가져오기
+            last_assistant_content = GptOb.get_last_a(request.GET["user_key"])["content"]   #마지막 GPT답변 가져오기
             last_list = last_assistant_content.split("\n\n")
-            del last_list[len(last_list)-1] #답변이 끊긴 항목 번호의 텍스트 삭제
-            prev_assistant_content = "\n\n".join(last_list) + "\n\n" #답변이 끊긴 항목번호의 바로 전 항목답변까지 문자열로 합치기
-            GptOb.append_user_q(request.GET['user_key'], f"{assistant_content}번항목계속말해줘") #GPT에게 continue 요청
+            del last_list[len(last_list)-1]                                                 #답변이 끊긴 항목 번호의 텍스트 삭제
+            prev_assistant_content = "\n\n".join(last_list) + "\n\n"                        #답변이 끊긴 항목번호의 바로 전 항목답변까지 문자열로 합치기
+            GptOb.append_user_q(request.GET['user_key'], f"{assistant_content}번항목계속말해줘")  #GPT에게 continue 요청
             messages = GptOb.getter_userlist(request.GET['user_key'])
             next_assistant_content = gpt_api_request(messages, request.GET["user_key"])
             next_list = next_assistant_content.split("\n\n")
-            del  next_list[0] #continue요청후 응답 첫 설명 부분 자르기
-            next_result_content = "\n\n".join(next_list) #continue요청의 응답텍스트를 문자열로 합치기
-            assistant_content = prev_assistant_content + next_result_content #답변 끊기기 직전 텍스트와 continue요청 텍스트 합치기 
+            del  next_list[0]                                                                #continue요청후 응답 첫 설명 부분 자르기
+            next_result_content = "\n\n".join(next_list)                                     #continue요청의 응답텍스트를 문자열로 합치기
+            assistant_content = prev_assistant_content + next_result_content                 #답변 끊기기 직전 텍스트와 continue요청 텍스트 합치기 
 
     except openai.error.InvalidRequestError: #max_tokens 에러 예외처리
         print("max_tokens방지 시작")
