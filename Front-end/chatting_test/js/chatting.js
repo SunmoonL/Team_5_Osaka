@@ -35,7 +35,7 @@
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
                 const targetChat = document.getElementsByClassName("waitChat")[0];
-                const initChat = [...xhttp.responseText];
+                const initChat = [...JSON.parse(xhttp.responseText)["answer_list"][0]["question_text"]];
                 const oneWordInit = () => {
                     const thisChat = initChat.shift();
                     if (initChat.length === 0) {
@@ -52,7 +52,7 @@
                 targetChat.classList.remove("waitChat"); 
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/${routString}?user_key=${encodeURIComponent(userKey+"_오사카만")}&title_address=${encodeURIComponent(userChat)}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10053/${routString}?user_key=${encodeURIComponent(userKey+"_오사카만")}&title_address=${encodeURIComponent(userChat)}`, true);
         xhttp.send();
     };
     const startChat = () => {
@@ -88,7 +88,7 @@
                 oneWordInit();
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/in_region?user_key=${encodeURIComponent(userKey+"_오사카만")}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10053/in_region?user_key=${encodeURIComponent(userKey+"_오사카만")}`, true);
         xhttp.send();
     };
     window.addEventListener('beforeunload', () => {
@@ -99,7 +99,7 @@
             }
         };
         
-        xhttp.open("GET", `http://kkms4001.iptime.org:10093/del_user?user_key=${encodeURIComponent(userKey)}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10053/del_user?user_key=${encodeURIComponent(userKey)}`, true);
         xhttp.send();
     });
     document.getElementById("chatInput").addEventListener("keydown", (e) => {
