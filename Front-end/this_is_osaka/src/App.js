@@ -14,8 +14,8 @@ const App = () => {
   
   const [regionalName, setRegional] = useState("main"); // 현재 위치
   const [userKey] = useState(`user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`); // 사용자 중복방지
-  const [imgContent, addContent] = useState({food : false, hotel : false, location : false}); // 요소 이미지 확인
-  const [storeName, setStoreName] = useState({}) //가게이름
+  const [imgContent, addContent] = useState({food : false, hotel : false, location : false});   // 요소 이미지 확인
+  const [storeName, setStoreName] = useState({})        // 가게이름
   const location = useLocation(); // 라우터 정보 가져오기
 
   if (location.pathname !== "/" && regionalName === "main") { // 상태에 맞는 위치에서 벗어날 경우 메인 페이지로 이동
@@ -31,7 +31,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Background regional={[regionalName]}></Background>
+      <Background regionalName={regionalName}></Background>
       <ContentsWrap>
         <Routes>
           <Route path='/' element={
@@ -53,8 +53,6 @@ const App = () => {
           }></Route>
         </Routes>
       </ContentsWrap>
-
-          
     </div>
   );
 }
