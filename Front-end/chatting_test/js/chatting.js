@@ -1,5 +1,5 @@
 (() => {
-
+    selected_region = "사카이 & 기시와다"
     let gptChatDelay = false;
     const userKey = `user${new Date().getTime()}${Math.floor(Math.random() * 9999)}`;
 
@@ -52,7 +52,7 @@
                 targetChat.classList.remove("waitChat"); 
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10053/${routString}?user_key=${encodeURIComponent(userKey+"_오사카만")}&title_address=${encodeURIComponent(userChat)}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10053/${routString}?user_key=${encodeURIComponent(userKey+`_${selected_region}`)}&title_address=${encodeURIComponent(userChat)}`, true);
         xhttp.send();
     };
     const startChat = () => {
@@ -88,7 +88,7 @@
                 oneWordInit();
             }
         };
-        xhttp.open("GET", `http://kkms4001.iptime.org:10053/in_region?user_key=${encodeURIComponent(userKey+"_오사카만")}`, true);
+        xhttp.open("GET", `http://kkms4001.iptime.org:10053/in_region?user_key=${encodeURIComponent(userKey+`_${selected_region}`)}`, true);
         xhttp.send();
     };
     window.addEventListener('beforeunload', () => {
