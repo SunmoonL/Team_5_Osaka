@@ -5,14 +5,24 @@ html, body {
     height: 100%;
     font-size: 10px;
     overflow: hidden;
+    background-color: #F4F6F9;
 }
-
+h1{
+    font-size:2.5rem;
+    color:#333;
+    width:120rem;
+    text-align: left;
+    position: relative;
+    left: 50%;
+    transform: translateX(-40%);
+}
+h1:nth-of-type(1){padding-bottom:10px;}
+h1:nth-of-type(2){padding:20px 0 10px 0;}
 #admin {
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 4rem;
-    border: 1px solid black;
     width: 120rem;
     height: 80rem;
     top: 50%;
@@ -22,66 +32,117 @@ html, body {
     padding: 1rem;
 }
 #saveDB {
-    height: 50%;
+    width:70%;
+    padding:4% 5% 6% 5% ;
+    border:1px solid #d9d9d9;
+    border-radius: 10px;
+    background-color:#fafafa;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;   
+    justify-content: space-between;
+    position: relative;
+}
+#saveButton{
+   position: absolute;
+   right:6%;
+   bottom:8%;
+   cursor: pointer;
 }
 #readDB {
-    width: 100%;
-    height: 50%;
+    width: 70%;
+    padding:4% 5%;
+    border:1px solid #d9d9d9;
+    background-color:#fafafa;
+    border-radius: 10px;
+    height: 42.4%;
     display: flex;
     flex-direction: column;
-    align-items: center;   
+    align-items: center; 
 }
-#titleAddress {
-    width: 30rem;
-    margin: 2rem;
-    padding-top: 5rem;
+#titleAddress{
+    width: 48%;
     height: 18rem;
     display: flex;
     flex-direction: column;  
-    justify-content: center;  
 }
-.titleAddress {
-    margin-bottom: .5rem;
-    padding: .4rem;
-    font-size: 1.2rem;
+#titleAddress:nth-of-type(1) { 
+    justify-content: center; 
+}
+#titleAddress:nth-of-type(2) { 
+    justify-content: space-around;
+}
+.titleAddress, #address, #title {
+    padding:5px;
+    font-size: 14px;
 }
 .questionText {
     font-size: 1.2rem;
     padding: .4rem;
     height: 10rem;
-
+    resize: none;
 }
 button {
-    padding: .4rem;
-    margin: .5rem;
-    font-size: 2.5rem;
+    padding: 5px 15px;
+    font-size: 15px;
     display: flex;
+    background-color:#1A267D;
+    border:none;
+    color:#fafafa;
+    border-radius:10px;
 }
 .dbList {
     overflow-y: scroll;
     overflow-x: clip;
     margin: 0.5rem;
-    border: 1px solid #666;
-    height: 80%;
-    width: 70%;
+    width: 100%;
 }
+.dbList::-webkit-scrollbar{
+    width:5px;
+
+}
+.dbList::-webkit-scrollbar-track-piece{
+    background-color: #d9d9d9;
+}
+.dbList::-webkit-scrollbar-thumb {
+        background-color: #6d6d6d;
+        border-radius: .8rem;
+    }
+/*
+&::-webkit-scrollbar-thumb {
+        background-color:#6D6D6D;
+        border-radius: .8rem;
+    }
+
+    &::-webkit-scrollbar-track-piece {
+        background-color: #d9d9d9;
+        border-radius: .8rem;
+    }
+    &::-webkit-scrollbar-button {
+        width: 0;
+        height: 0;
+    }
+    &::-webkit-scrollbar {
+        width: 1rem;
+    }
+    */
 .dbList > div {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #666;
     height: 4rem;
-    font-size: 2rem;
-    width: 100%;
+    font-size: 16px;
+    padding-left:10px;
+    width: 98.5%;
+}
+.dbList > div:nth-of-type(odd){
+    background-color: #e3e3e3;
 }
 .dbList > div:hover {
     background-color: #ddd;
 }
 
 .dbList > div > div > button {
-    font-size: 2rem;
     cursor: pointer;
     height: 100%;
     display: inline-flex;
