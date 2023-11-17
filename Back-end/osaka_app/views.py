@@ -159,7 +159,7 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
         )
         assistant_content = completion.choices[0].message["content"].strip()
         GptOb.append_assistant_a(user_key, assistant_content)           #GptOb 클래스를 사용해 해당 유저 리스트 안에 대화 추가
-        if assistant_content[len(assistant_content)-1] not in [".", "?", "!"] or assistant_content[len(assistant_content)-2].isdigit() == True:                       #답변끊김 현상 확인
+        if assistant_content[len(assistant_content)-1] not in [".", "?", "!"] or assistant_content[len(assistant_content)-2].isdigit() == True:  #답변끊김 현상 확인
             break_num = assistant_content.split("\n\n")[len(assistant_content.split("\n\n"))-1][0]   #답변끊긴 항목번호 리턴
             return break_num
         return assistant_content
