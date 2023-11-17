@@ -146,7 +146,6 @@ def answer_gpt(request): #사용자가 질문창으로 질문함
                                                "third_link" : q_result.third_link, 
                                                "fourth_link" : q_result.fourth_link
                                                 })
-        print(json_ob)
         return JsonResponse(json_ob)
     
 
